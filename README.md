@@ -13,6 +13,8 @@ A Standalone PCB Chess Board with OnBoard Machine
 
 ### _A chess board that sees every piece, lights every move, and thinks alongside you - no external modules required._
 
+<img src="./Pictures/FullBoard.png">
+
 </div>
 
 ---
@@ -31,11 +33,24 @@ Built as an open-source hardware product - every schematic, PCB file and line of
 
 # Gallery
 
+<div align="center">
+
+<img src="">
+<img src="">
+<img src="">
+<img src="">
+
+</div>
 
 ---
 
 # Zine
 
+<div align="center">
+
+<img src="./Assets/Zine.png" width="100%">
+
+</div>
 
 ---
 
@@ -62,15 +77,26 @@ The project is also an increidible journey into embedded hardware and PCB design
 
 ## Hardware
 
-### 1. Order the PCB
+### Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware
 
-Navigate to:
+### 1. Order the PCBs and 3D Model
+
+Navigate to: (For PCBs)
 
 ```bash
 Hardware/Gerbers/
 ```
 
 Upload the included Gerber files to your preferred PCB manufacturer and order the boards.
+
+Navigate to: (For 3D Model)
+```bash
+Hardware/3D_Printing/
+```
+
+Upload the G-Code files to your preferred manufacturer and order the parts. (*Always print the magnetic pieces*)
+
+The latest version is recommended but if you prefer any older version feel free to use it.
 
 ### 2. Order the Components
 
@@ -82,17 +108,16 @@ Hardware/BOM/BOM.csv
 
 Order all parts before starting your assembly and sort them out because there will be a lot of them.
 
-## 3. Solder SMD Components
+### 3. Solder SMD Components
 
 Considering that you have chosen to solder them personally you should follow the following steps:
 
-Start with the smallest SMD passives before moving to ICs:
+Start with the smallest SMD passives before moving to ICs (Refer to the schematic alway before soldering):
 
-- Hall effect sensors (AH1806-W-7) on the front face, one per square
-- Shit register ICs (74HC165BQ) on the front
-- Level shifter (SN74AHCT125D) for APA102C data lines
-- LiOn charger IC and its passive components available in the schematic
-
+- All 0402 decoupling capacitors (100nF) across the board
+- Bulk capacitors (1μF, 4.7μF, 10μF, 22μF) near power Ics
+- USB-C CC resistors (5.1KΩ)
+- All signal and bias resistors per schematic
 
 Recommended tools:
 - Flux
@@ -101,42 +126,80 @@ Recommended tools:
 - Solder paste + hot air
 - Helping hands with a magnifying glass
 
-### 4. Install the LED Array
+### 4. Solder Power ICs
 
-- Solder all 64 APA102C RGB LEDs onto the Upper PCB.
-- These are oriented - check the cathode marker on each pad before placing.
-- Ensure every LED sits completely flat before reflow
+Solder the power subsystem in order - validate each stage before starting the next:
 
-### 5. Install the ESP32-S3 Module
+- **U3** (BQ24074RGT) - LiOn charger, VQFN-16. Solder with hot air; confirm EPAD contact/
+- **TH1** (NTC thermistor) - battery temperature input for the charger IC
+(Notice: If you are unable to find an NTC thermisto, a 10K ohm resistor will work just fine as a subsitude)
+- **U4** (TPS61023DRLT) + **1uH1** (XEL4030-102MEC) - 5V boost converter for LED rail.
+- **U5** (AP2112K-3.3TRG1) - 3.3V LDO for ESP32 and logic
+- **U145, U146** (REUF300) - PTC resettable fuses on power rails
+- **U144** (USBLC6-2P6) - USB ESP protection
+- **J2** (USB4110GFA) - USB-C receptacle 
+- **D1, D2** - charging status LEDs
 
-- Solder the ESP32-S3-WROOM-2 module onto its castellated pads.
-- Verify the antenna area is clear - no copper, no components within the 15mm keepout zone (except the screw nearby).
-- Confirm via grid under the module makes solid contact with the EPAD ground pads.
+Verify whether 5V and 3.3V rails are correct before including anything else.
 
-### 6. Install the OLED Display
+### 5. Solder the Sensor and Shift Register Array
 
-- Solder or socket the SSD1306 128x64 OLED in its designated position
-- Double-check I2C address.
+- **U79-U142** - 64x AH1806-W-7 hall effect sensors (SOT-23, active-LOW)
+- **U6-U13** - 8 74HC165BQ shift registers (SSOP-16/QFN, daisy chained)
+- Verify sensor orientation - pin 1 marker must align with PCB silkscreen
 
-### 7. Install Buttons, Switch, and COnnectors
+### 6. Solder the LED Array
 
-- Solder both player clock buttons (active-LOW, external pull-ups already on PCB).
-- Solder the USB-C charging connector.
+- **U14-U77** - 64x APA102C RGB LEDs (5050)
+- Theese are orientations-sensitive - follow the schematic and confirm the cathode corner marker before placing every row
+- Ensure every LED sits completely flat before reflow; a lifted pad will break the entire following part of the chain.
 
-### 8. Install Bettery Holders
+### 7. Solder the Level Shifter
 
-- Insert both LiOn 18650 battery holders and confirm polarity marking before connecting cells.
-- Do not connect LiOn cells untill all soldering is complete
+- **U143** (SN74AHCT125D) - bridges the ESP32's 3.3V outputs to the 5V APA102C DATA and CLK lines
+- Without this component the APA102C will be under constant failirue.
 
-### 9. Assemble the Enclosure
+### 8. Install the ESP32-S3 Module
 
-- ...
+- Solder **U1** (ESP32-S3-WROOM2) onto its castellated pads.
+- The antenna area requires a **15mm keepout zone** on the base PCB - no copper, no vias (except the screw nearby).
+- Confirm the via grid under the module makes solid contact with all EPAD ground pads
 
-### 10. Install Chess Pieces
+### 9. Install the Display and Connectors
+- **DS2** - 2.4" 128x64 OLED, I²C interface
+- **J1/J4 on Main PCB** Samtec ZF1-15-92-X-WT-X board connectors
+- **J3 on Upper PCB** Samtec ZF1-15-92-X-WT-X board connectors
+- **J7 on Clock PCB** Samtec ZF1-15-92-X-WT-X board connectors
 
-- Each chess piece has a designated hole for inserting magnets on the bottom with size (YxZ)
-- Magnet polarity must be consistent - south pole facing down towards the sensors of the board.
-- Verify detection by powering the board and placing a piece on each starting square during the first boot.
+### 10. Install User Interface Components
+
+- **S3, S4** (TL3315NF250Q) - player clock buttons
+- **SW2** (Omron B3FS) - Boot button
+
+### 11. Install Battery Holders and Cells
+
+- Solder **BT1, BT2** (Keystone 1043) - 18650 cell holders
+- Do not insert cells untill all soldering is fully complete
+- Confirm polarity markings on PCB silkscreen before inserting cells
+
+### 12. Assemble the Enclosure
+
+***Materials needed for assembling:***
+
+- 32x Neodymium magnet in circle with dimensions: 20cm diameter x 5cm height
+- 6x Neodymium magnet in a rectangle with dimensions 5x10x2cm
+- Glue, any type just make sure to get a strong one
+- 11x M3 screw nuts (more is fine in case you loose some)
+- Notice: If you dont get screws with the OLED screen you will have to acquire them personally
+
+***Steps for assembling***
+
+The main part of the assembling is sticking the magnets in their appropriate places. 
+There are 2 places where they should be placed:
+- The rectangular magnets should be placed 3x on the lid used for closing the bottom of the chess board where on one side you will find 3 rectangular holes and 3x inside of the chess board where you will the same 3 rectangular insertions. Apply glue inside of them and stick the magnets inside. **BE CAREFUL** and place the pair of three magnets with opposite polarities. So if the closing lid has the north pole facing outwards, make sure to have the south pole facing outwards on the chess board.
+- The circular magnets are designated to go into the chess pieces. Same procedure, apply glue and stick them. **Make sure to place the south pole outwards because otherwise the hall effect sensors will have a poor reading**
+- Verify detection by powering the board and placing every piece on their starting square during first boot.
+
 
 ---
 
@@ -194,8 +257,43 @@ Exit with 'Ctrl+]'.
 
 # BOM
 
-...
-
+| Designator | Function | Value / Part | Package | Qty | Price (USD) | Link |
+|---|---|---|---|---|---|---|
+| U1 | MCU Module | ESP32-S3-WROOM-2 N32R16V | LCC-54 | 1 | $12 | [DigiKey](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-2-N32R16V/25811280) |
+| U79–U142 | Hall Effect Sensor | AH1806-W-7 | SOT-23 | 64 | $20 | [Mouser](https://www.mouser.com/ProductDetail/Diodes-Incorporated/AH1806-W-7?qs=eSfX1CQlHqqRKgthoXGrzg%3D%3D&srsltid=AfmBOoqvt9XKLP8jc6GHH0L_jmNus1_TszQpJJyJu60i3bDtAeJsRl4r) |
+| U6–U13 | Shift Register | 74HC165BQ_115 | QFN-17 | 8 | $12.60 | [DigiKey](https://www.digikey.com/en/products/detail/nexperia-usa-inc/74HC165BQ-115/1966015?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
+| U14–U77 | Addressable RGB LED | APA102C | SON-6 (5050) | 64 | $30 | [Sparkfun](https://www.sparkfun.com/apa102c-5050-smd-addressable-rgb-led-cut-tape.html) |
+| U143 | Level Shifter | SN74AHCT125D | SOIC-14 | 1 | $1.2 | [Ti](https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125D) |
+| DS2 | OLED Display | 128×64 2.4" I²C | SSD1309 | 1 | $7.35 | [AliExpress](https://www.aliexpress.com/item/1005005241315177.html) |
+| BT1, BT2 | 18650 Battery Holder | Keystone 1043 | THT | 2 | $5.82 | [Mouser](https://www.mouser.com/ProductDetail/Keystone-Electronics/1043?utm_campaign=mouser&qs=%2F7TOpeL5Mz6j%2FnxeOA1rsg%3D%3D&utm_medium=online&utm_source=snapedaonline&utm_content=modelunipart_id=214578&manufacturer=Keystone) |
+| U3 | LiOn Charger IC | BQ24074RGT | VQFN-16 | 1 | $2.48 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/BQ24074RGTR/2047269) |
+| U4 | Boost Converter (5V) | TPS61023DRLT | SOT-6 | 1 | $1.2 | [Ti](https://www.ti.com/product/TPS61023/part-details/TPS61023DRLT?HQS=ocb-tistore-invf-buynowlink_model-invf-store-snapeda-wwe) |
+| 1uH1 | Power Inductor | XEL4030-102MEC (1µH) | XEL4030 | 1 | $2.17 | [Mouser](https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=4653188&manufacturer=Coilcraft&part_name=XEL4030-102MEC&search_term=None) |
+| U5 | 3.3V LDO Regulator | AP2112K-3.3TRG1 | SOT-25 | 1 | $0.25 | [DigiKey](https://www.digikey.com/en/products/detail/diodes-incorporated/AP2112K-3-3TRG1/4470746?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
+| U144 | USB ESD Protection | USBLC6-2P6 | SOT-666 | 1 | $0.63 | [DigiKey](https://www.digikey.com/en/products/detail/stmicroelectronics/USBLC6-2P6/1007440?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
+| U145, U146 | PTC Resettable Fuse | RUEF300 (3A) | Radial | 2 | $1.04 | [DigiKey](https://www.digikey.com/en/products/detail/littelfuse-inc/RUEF300/5015983) |
+| TH1 | NTC Thermistor | Thermistor_NTC | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/tdk/NTCG103JF103FT1/614628) |
+| J2 | USB-C Receptacle | USB4110GFA | SMD | 1 | $1.27 | [Mouser](https://www.mouser.com/ProductDetail/GCT/USB4110-GF-A?qs=KUoIvG%2F9IlYiZvIXQjyJeA%3D%3D&srsltid=AfmBOoqFJ-91enIyu9A26tSaC9mGIXgz0BrHN1BArDjjXIR4G4HD0bAR) |
+| J1, J3, J4, J7 | Board Connector | Samtec ZF1-15-02-X-WT-X | SMD | 4 | $6.8 | [Samtec](https://www.samtec.com/products/zf1-15-02-tm-wt?utm_source=snapeda.com&utm_medium=referral&utm_campaign=%20s2x_snapeda_ppc) |
+| S3, S4 | Player Clock Button | TL3315NF250Q | SMD | 2 | $0.21 | [SG](https://sg.element14.com/e-switch/tl3315nf250q/switch-tactile-spst-50ma-15vdc/dp/2773594) |
+| SW2 | Boot Switch | Omron B3FS | SMD | 1 | €0.64 | [DigiKey](https://www.digikey.ee/en/products/detail/omron-electronics-inc-emc-div/B3FS-1000P/277814) |
+| D1, D2 | Charging LED | LED | 0402 | 2 | $0.92 | [Mouser](https://www.mouser.com/ProductDetail/ams-OSRAM/Q65111A7377?qs=sGAEpiMZZMv0DJfhVcWlKwb9uSCDLxPf%2FYHVt4kOg1XhmEL4WLxLEQ%3D%3D) |
+| R3, R4 | USB-C CC Resistor | 5.1kΩ | 0402 | 2 | $0.32 | [DigiKey](https://www.digikey.ca/en/products/detail/yageo/RC0402FR-075K1L/726624) |
+| R5 | Charge Current Set | 800Ω | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0402FT806R/1761693) |
+| R6 | Charge Set | 1.2kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402JR-071K2L/726411) |
+| R7 | Charge Set | 2kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402FR-072KL/2827565) |
+| R8, R11, R13, R35, R36 | Pull / Bias | 100kΩ | 0603 | 5 | $0.50 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889) |
+| R9 | Pull / Bias | 100kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402FR-07100KL/726526) |
+| R12 | Bias | 750kΩ | 0805 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/bourns-inc/CR0805-FX-7503ELF/3785110) |
+| R10 | Current Limit | 330Ω | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402FR-07330RL/726594) |
+| R14, R15, R24, R25, R41, R42 | Series Damping | 33Ω | 01005 | 6 | $0.96 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0100JR-0733RL/5916398) |
+| R16–R19 | Pull-up / Pull-down | 10kΩ | 0402 | 4 | $0.40 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/AC0402FR-0710KL/5895030) |
+| R23, R34, R43, R44 | Pull-up / Pull-down | 10kΩ | 0201 | 4 | $0.40 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0201FR-0710KL/1948870) |
+| R22, R30, R31 | Series Damping | 33Ω | 0402 | 3 | $0.30 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402JR-0733RL/726467) |
+| C (various) | Decoupling / Bulk | 100nF, 1µF, 4.7µF, 10µF, 22µF | 0402/0603/0805/1206 | 105 | $16 | [Amazon](https://www.amazon.com/Bridgold-111Types-Capacitor-1pF-10uF-3-9pF-22uF/dp/B0C196FBK3/ref=sr_1_10?dib=eyJ2IjoiMSJ9.Sik-1N6T3B22pMHx3gZwssQe9HV9aXahGuDaX-uB1yfBLuMOqud5ObrWRTFUEP5qQT2cI_n6L6fgTxfF61UY6m7jwAR2JlYfwWtNi5UCKX4QVam3zu4P14UT01DyXCllphzxt5CmLBpMIcKJr-lpdFgCHgOWfw1AMDWRa0VJgoOHSTB1Ejcqxwg_bRNHyVE3csjNCQKdCS_s7IOfQRityBtC0y6ZoSuw4EYrFxCoT9w.R-0uFALOYO601m_UiLGERn05S21OQveJX7LUG-RrBD0&dib_tag=se&keywords=SMD%2BCapacitor&qid=1781345348&sr=8-10&th=1) |
+| C17, C18 | CP_EIA-7343-20_Kemet-V | 100µF | 2917 | 2 | $8.68 | [DigiKey](https://www.digikey.com/en/products/detail/kemet/T494V107K016AT/818726) |
+| **TOTAL** | *approx. $145* | | | | | |
+ 
 ---
 
 # Features
@@ -263,9 +361,9 @@ Firmware features:
 Chess-Master-Board/
 |--- Firmware/
 |    |--- main/
-|        |--- hal/ # LED, sensor, OLED, button, battery drivers
+|        |--- hal/    # LED, sensor, OLED, button, battery drivers
 |        |--- engine/ # mcu-max integration
-|        |--- game/ # FreeRTOS state machine + chess rules
+|        |--- game/   # FreeRTOS state machine + chess rules
 |        |--- main.c/
 |--- Hardware/
 |    |--- Schematic/
