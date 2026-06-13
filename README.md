@@ -91,10 +91,10 @@ Upload the included Gerber files to your preferred PCB manufacturer and order th
 
 Navigate to: (For 3D Model)
 ```bash
-Hardware/3D_Printing/
+Hardware/3D_Printing/V2_Chess_3D
 ```
 
-Upload the G-Code files to your preferred manufacturer and order the parts. (*Always print the magnetic pieces*)
+Upload the G-Code files to your preferred manufacturer and order the parts.
 
 The latest version is recommended but if you prefer any older version feel free to use it.
 
@@ -186,8 +186,8 @@ Verify whether 5V and 3.3V rails are correct before including anything else.
 
 ***Materials needed for assembling:***
 
-- 32x Neodymium magnet in circle with dimensions: 20cm diameter x 5cm height
-- 6x Neodymium magnet in a rectangle with dimensions 5x10x2cm
+- 32x Neodymium magnet in circle with dimensions: 20mm diameter x 5mm height
+- 6x Neodymium magnet in a rectangle with dimensions 5x10x2mm
 - Glue, any type just make sure to get a strong one
 - 11x M3 screw nuts (more is fine in case you loose some)
 - Notice: If you dont get screws with the OLED screen you will have to acquire them personally
@@ -292,8 +292,14 @@ Exit with 'Ctrl+]'.
 | R22, R30, R31 | Series Damping | 33Ω | 0402 | 3 | $0.30 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402JR-0733RL/726467) |
 | C (various) | Decoupling / Bulk | 100nF, 1µF, 4.7µF, 10µF, 22µF | 0402/0603/0805/1206 | 105 | $16 | [Amazon](https://www.amazon.com/Bridgold-111Types-Capacitor-1pF-10uF-3-9pF-22uF/dp/B0C196FBK3/ref=sr_1_10?dib=eyJ2IjoiMSJ9.Sik-1N6T3B22pMHx3gZwssQe9HV9aXahGuDaX-uB1yfBLuMOqud5ObrWRTFUEP5qQT2cI_n6L6fgTxfF61UY6m7jwAR2JlYfwWtNi5UCKX4QVam3zu4P14UT01DyXCllphzxt5CmLBpMIcKJr-lpdFgCHgOWfw1AMDWRa0VJgoOHSTB1Ejcqxwg_bRNHyVE3csjNCQKdCS_s7IOfQRityBtC0y6ZoSuw4EYrFxCoT9w.R-0uFALOYO601m_UiLGERn05S21OQveJX7LUG-RrBD0&dib_tag=se&keywords=SMD%2BCapacitor&qid=1781345348&sr=8-10&th=1) |
 | C17, C18 | CP_EIA-7343-20_Kemet-V | 100µF | 2917 | 2 | $8.68 | [DigiKey](https://www.digikey.com/en/products/detail/kemet/T494V107K016AT/818726) |
-| **TOTAL** | *approx. $145* | | | | | |
+| Neodymium magnets | Circle | N35-N52 | 20x5cm | 32(40) | $20 | [Amazon](https://www.amazon.com/TRYMAG-Decorative-Neodymium-Powerful-Scientific/dp/B0G4D78X7T/ref=pd_ci_mcx_di_int_sccai_cn_d_sccl_1_7/136-7378115-7020437?pd_rd_w=JVAsz&content-id=amzn1.sym.751acc83-5c05-42d0-a15e-303622651e1e&pf_rd_p=751acc83-5c05-42d0-a15e-303622651e1e&pf_rd_r=S49NM63KZQJV9PRHP6W2&pd_rd_wg=72OFc&pd_rd_r=0b37500f-f078-4104-9d5c-44c4b33a4363&pd_rd_i=B0FG839Q2X&th=1) | 
+| Neodymium magnets | Rectangular | N35-N52 | 5x10x2mm | 6(100) | $7.6 | [Amazon](https://www.amazon.com/dp/B0GK8XXS5P/ref=sspa_dk_detail_right_aax_0?sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfcmlnaHRfc2hhcmVk&th=1) |
+| BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
+| X | FFC Connector | 15-pin | 500mm | 3 | $5.79 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
+| **TOTAL** | *approx. $184* | | | | | |
  
+
+*Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
 ---
 
 # Features
@@ -303,8 +309,9 @@ Exit with 'Ctrl+]'.
 - **Onboard Chess Engine** - mcu-max, ~1800-2000 ELO at depth 8-10, fully integrated
 - **Dual Player Clocks** - dedicated hardware button per player
 - **OLED Display** - game state, clocks, engine status, battery level
-- **Battery Powered** - dual LiOn with onboard USB-C charging
+- **18650 Battery Powered** - dual LiOn with onboard USB-C charging
 - **Deep Sleep** - power saving mode and game state retained in RTC memory across scleep cycles
+- **Protected Power Rails** - PTC fuses and USB ESD protection on all external-facing lines
 - **Fully Custom PCB** - designed for shipping standards
 - **Open Source** - complete hardware + firmware available
 
@@ -312,7 +319,22 @@ Exit with 'Ctrl+]'.
 
 # Hardware Stack
 
-...
+| Subsystem | Component | Description|
+|---|---|---|
+| MCU | ESP32-S3-WROOM2 | 32MB Flash, 16MB PSRAM, Xtensa LX7 dual-core |
+| Sensors | AH1806-W-7 x 64 | Active-LOW hall effect, SOT-23|
+| Sensor Interface | 74HC165BQ x 8 | Parallel-in shift registers, daisy-chained |
+| LEDs | APA102C x 64 | Addressable RGB, SPI-compatible, 5V |
+| Level Shifter | SN74AHCT125D | 3.3V → 5V for APA102C DATA + CLK |
+| Display | 128x64 OLED 2.4" | I²C Interface |
+| Battery | Li-Ion 18650 batteries | |
+| Charger | BQ2407RGT | Single-cell Li-ion, USB-C input, NTC-monitored |
+| 5V Rail | TPS61023DRLT + XEL4030-102MEC | Boost converter for LED chain |
+| 3.3V Rail | AP2112K-3.3TRG1 | LDO for ESP32 and logic |
+| USB Protection | USBLC6-2P6 | ESD protection on USB-C lines |
+| Fusing | REUF300 x 2 | 3A PTC resetable fuses on power rails |
+| Firmware | ESP-IDF (FreeRTOS) | C, HAL + state machine architecture |
+| Chess Engine | mcu-max | MIT, pure C, negamax + alpha-beta, depth 8 |
 
 ---
 
@@ -321,7 +343,15 @@ Exit with 'Ctrl+]'.
 The PCB was designed specifically for this project and its layout.
 
 Key design requirements met:
-...
+- Via grid under module EPAD for grounding and thermal performance
+- Shared GPIO12 clock routing for APA102C chain and 74HC165 shift register chain
+- Integrated external pull-up for GPIO3
+- Passive components placed per Espressif hardware design guidelines
+- USB-C CC resistors for correct sinking identification
+- Charging temperature monitoring via NTC thermistor
+- 3 individual PCBs communicating between FFC cables
+- 2x4 Layered PCBs for great signal integrity and power supply troughout the whole board
+- Every piece is precisely placed according to the 3D chess board for the best workfoll
 
 ## PCB Layout
 <img src="./Pictures/...">
@@ -341,7 +371,14 @@ Key design requirements met:
 
 ---
 # Enclosure
-- ...
+- Simple to assemble
+- Firm and high-quality material for premium feel
+- The board is made out of PETG material
+- 100% fill on the top giving us crystal transparency for out LEDs
+- Tolerances given accordingly
+- Chess Pieces are made out of PLA
+
+*Feel free to change the materials according to your desire*
 
 <img src="./Pictures/...">
 
@@ -442,6 +479,6 @@ Chess engine: [mcu-max](https://github.com/Gissio/mcu-max) - MIT License
 
 ## CHESS MASTER BOARD
 
-### _Every mode, illuminated._
+### _Every move, illuminated._
 
 </div>
