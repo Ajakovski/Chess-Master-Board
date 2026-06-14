@@ -1,19 +1,19 @@
 <div align="center">
 
-# <img src="./Pictures/logo.png" alt="Chess Master Board Logo" width="100%>
 
-A Standalone PCB Chess Board with OnBoard Machine
+
+
+# A Standalone PCB Chess Board with OnBoard Machine
 
 <p>
-<img src="">
-<img src="">
-<img src="">
-<img src="">
+
+<img src="./Pictures/Full_Chess_Board-removebg-preview.png" width="55%" height= "500">
+
 </p>
 
 ### _A chess board that sees every piece, lights every move, and thinks alongside you - no external modules required._
 
-<img src="./Pictures/FullBoard.png">
+
 
 </div>
 
@@ -21,7 +21,7 @@ A Standalone PCB Chess Board with OnBoard Machine
 
 # Overview
 
-**Chess Master Board** is a fully self-contained phisical chess board built on a custom PCB.
+**Chess Master Board** is a fully self-contained phisical chess board with unique design built on a custom PCB.
 
 64 hall effect sensors beneath the board that give us the ability to track every single piece in real time. 64 addressable RGB LEDs that communicate with us about the game state directly trough the board surface - valid moves, check warnings, captures and chess engine suggestions in order for the player to achieve the best results againts its opponent or achieve a greater knowledge.
 
@@ -31,24 +31,12 @@ Built as an open-source hardware product - every schematic, PCB file and line of
 
 ---
 
-# Gallery
-
-<div align="center">
-
-<img src="">
-<img src="">
-<img src="">
-<img src="">
-
-</div>
-
----
 
 # Zine
 
 <div align="center">
 
-<img src="./Assets/Zine.png" width="100%">
+<img src="./Pictures/Master Chess Board Zine.png" width="100%">
 
 </div>
 
@@ -73,7 +61,7 @@ The project is also an increidible journey into embedded hardware and PCB design
 
 ---
 
-# Assebly Guide
+# Assembly Guide
 
 ## Hardware
 
@@ -84,15 +72,16 @@ The project is also an increidible journey into embedded hardware and PCB design
 Navigate to: (For PCBs)
 
 ```bash
-Hardware/Gerbers/
+Hardware/CAD/Gerbers/
 ```
 
 Upload the included Gerber files to your preferred PCB manufacturer and order the boards.
 
 Navigate to: (For 3D Model)
 ```bash
-Hardware/3D_Printing/V2_Chess_3D
+Hardware/3D_Printing/ (Both zip files.)
 ```
+Due to github memory restrictions they are split into 2 files. G-code Pieces features the black/white collection of pieces ready for printing and the V3 Chess 3D zip is equipped with the full set of information and g-code files for printing the board.
 
 Upload the G-Code files to your preferred manufacturer and order the parts.
 
@@ -198,6 +187,8 @@ The main part of the assembling is sticking the magnets in their appropriate pla
 There are 2 places where they should be placed:
 - The rectangular magnets should be placed 3x on the lid used for closing the bottom of the chess board where on one side you will find 3 rectangular holes and 3x inside of the chess board where you will the same 3 rectangular insertions. Apply glue inside of them and stick the magnets inside. **BE CAREFUL** and place the pair of three magnets with opposite polarities. So if the closing lid has the north pole facing outwards, make sure to have the south pole facing outwards on the chess board.
 - The circular magnets are designated to go into the chess pieces. Same procedure, apply glue and stick them. **Make sure to place the south pole outwards because otherwise the hall effect sensors will have a poor reading**
+- Every PCB has their own designated screw holes and how they should be placed. **Every PCB next to the screw hole has the side on where it should be placed.** (for eg. UR- Upper Right, DR - Down Right)
+- The Push buttons should be inserted from inside of the chess board before putting the screws on for the Clock PCB so that the buttons stay locked on top of the buttons built-in on the PCB.
 - Verify detection by powering the board and placing every piece on their starting square during first boot.
 
 
@@ -221,6 +212,7 @@ Follow the [official Espressif guide](https://docs.espressif.com/projects/esp-id
 ```bash
 git clone https://github.com/Ajakovski/chess-master-board.git
 cd chess-master-board
+cd Firmware
 ```
 
 ### 3. Set Target and Build
@@ -257,6 +249,8 @@ Exit with 'Ctrl+]'.
 
 # BOM
 
+**If you are refering from the BOM.csv file please use a converter csv to table because it will be hard for you to read the documentation. And as always you can recall from my githubs BOM anytime you want**
+
 | Designator | Function | Value / Part | Package | Qty | Price (USD) | Link |
 |---|---|---|---|---|---|---|
 | U1 | MCU Module | ESP32-S3-WROOM-2 N32R16V | LCC-54 | 1 | $12 | [DigiKey](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-2-N32R16V/25811280) |
@@ -272,12 +266,12 @@ Exit with 'Ctrl+]'.
 | U5 | 3.3V LDO Regulator | AP2112K-3.3TRG1 | SOT-25 | 1 | $0.25 | [DigiKey](https://www.digikey.com/en/products/detail/diodes-incorporated/AP2112K-3-3TRG1/4470746?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
 | U144 | USB ESD Protection | USBLC6-2P6 | SOT-666 | 1 | $0.63 | [DigiKey](https://www.digikey.com/en/products/detail/stmicroelectronics/USBLC6-2P6/1007440?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
 | U145, U146 | PTC Resettable Fuse | RUEF300 (3A) | Radial | 2 | $1.04 | [DigiKey](https://www.digikey.com/en/products/detail/littelfuse-inc/RUEF300/5015983) |
-| TH1 | NTC Thermistor | Thermistor_NTC | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/tdk/NTCG103JF103FT1/614628) |
+| TH1 | NTC Thermistor | NTCG103JF103FT1 | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/tdk/NTCG103JF103FT1/614628) |
 | J2 | USB-C Receptacle | USB4110GFA | SMD | 1 | $1.27 | [Mouser](https://www.mouser.com/ProductDetail/GCT/USB4110-GF-A?qs=KUoIvG%2F9IlYiZvIXQjyJeA%3D%3D&srsltid=AfmBOoqFJ-91enIyu9A26tSaC9mGIXgz0BrHN1BArDjjXIR4G4HD0bAR) |
 | J1, J3, J4, J7 | Board Connector | Samtec ZF1-15-02-X-WT-X | SMD | 4 | $6.8 | [Samtec](https://www.samtec.com/products/zf1-15-02-tm-wt?utm_source=snapeda.com&utm_medium=referral&utm_campaign=%20s2x_snapeda_ppc) |
 | S3, S4 | Player Clock Button | TL3315NF250Q | SMD | 2 | $0.21 | [SG](https://sg.element14.com/e-switch/tl3315nf250q/switch-tactile-spst-50ma-15vdc/dp/2773594) |
 | SW2 | Boot Switch | Omron B3FS | SMD | 1 | €0.64 | [DigiKey](https://www.digikey.ee/en/products/detail/omron-electronics-inc-emc-div/B3FS-1000P/277814) |
-| D1, D2 | Charging LED | LED | 0402 | 2 | $0.92 | [Mouser](https://www.mouser.com/ProductDetail/ams-OSRAM/Q65111A7377?qs=sGAEpiMZZMv0DJfhVcWlKwb9uSCDLxPf%2FYHVt4kOg1XhmEL4WLxLEQ%3D%3D) |
+| D1, D2 | Charging LED | Q65111A7377 | 0402 | 2 | $0.92 | [Mouser](https://www.mouser.com/ProductDetail/ams-OSRAM/Q65111A7377?qs=sGAEpiMZZMv0DJfhVcWlKwb9uSCDLxPf%2FYHVt4kOg1XhmEL4WLxLEQ%3D%3D) |
 | R3, R4 | USB-C CC Resistor | 5.1kΩ | 0402 | 2 | $0.32 | [DigiKey](https://www.digikey.ca/en/products/detail/yageo/RC0402FR-075K1L/726624) |
 | R5 | Charge Current Set | 800Ω | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0402FT806R/1761693) |
 | R6 | Charge Set | 1.2kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402JR-071K2L/726411) |
@@ -354,21 +348,53 @@ Key design requirements met:
 - Every piece is precisely placed according to the 3D chess board for the best workfoll
 
 ## PCB Layout
-<img src="./Pictures/...">
+### Main PCB
+
+
+*Some pictures may have been deformed in order to adjust their dimensions*
+
+<img src="./Pictures/Main PCB.png" width="80%" height="80%">
+
+### Upper PCB
+<img src="./Pictures/Upper PCB.png" width="100%" height="80%">
+
+### Clock PCB
+<img src="./Pictures/Clock PCB.png" width="100%" height=1600>
+
+
 
 ## Schematic
 ### Main PCB
-<img src="./Pictures/...">
+#### MCU/IC section
+<img src="./Pictures/MCU_Main_Sch.png" width="100%"> <br>
+#### Power Management section
+<img src="./Pictures/Power Management.png" width="100%">
 
 ### Upper PCB
-<img src="./Pictures/...">
+
+#### Hall Effect sensors
+<img src="./Pictures/Hall Effect.png" width="100%">
+
+#### RGB LED Matrix
+<img src="./Pictures/RGB LED Matrix.png" width="100%">
 
 ### Clock PCB
-<img src="./Pictures/...">
+<img src="./Pictures/Clock SCH.png" width="100%">
 
 ## Component Placement
-<img src="./Pictures/...">
 
+<div align="center">
+
+### Main PCB
+<img src="./Pictures/Main PCBC.png" width="50%">
+
+### Upper PCB
+<img src="./Pictures/Upper PCBC.png" width="50%">
+
+### Clock PCB
+<img src="./Pictures/Clock PCBC.png" width="50%">
+
+</div>
 ---
 # Enclosure
 - Simple to assemble
@@ -380,7 +406,7 @@ Key design requirements met:
 
 *Feel free to change the materials according to your desire*
 
-<img src="./Pictures/...">
+
 
 
 ---
@@ -424,8 +450,12 @@ Chess-Master-Board/
 - [X] Battery Monitoring
 - [X] 3D Models
 - [X] Final BOM
-- [ ] Assembly Zine
+- [ ] Create a Zine
 - [ ] Final Build
+- [ ] Create an IoT Version
+- [ ] Upgrade the 3D model
+- [ ] Improve the PCBs
+- [ ] Make different size variations
 
 ---
 

@@ -1,22 +1,16 @@
-/*
- * chess/board.c — Board representation and move application
- */
-
 #include "board.h"
 #include "config.h"
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
 
-/* ============================================================
- * STARTING POSITION
- * ============================================================ */
+
 
 void board_init_start(board_t *b)
 {
     memset(b, 0, sizeof(*b));
 
-    /* White pieces rank 1 (sq 0–7) */
+    
     static const piece_type_t back_row[8] = {
         PT_ROOK, PT_KNIGHT, PT_BISHOP, PT_QUEEN,
         PT_KING, PT_BISHOP, PT_KNIGHT, PT_ROOK
@@ -27,7 +21,7 @@ void board_init_start(board_t *b)
         b->pieces[SQ(f, 6)] = (piece_t){ PT_PAWN,     PC_BLACK };
         b->pieces[SQ(f, 7)] = (piece_t){ back_row[f], PC_BLACK };
     }
-    /* Ranks 3–6 already zeroed (PT_NONE) */
+
 
     b->castling    = CASTLE_WK | CASTLE_WQ | CASTLE_BK | CASTLE_BQ;
     b->en_passant  = SQ_NONE;
@@ -35,10 +29,6 @@ void board_init_start(board_t *b)
     b->halfmove    = 0;
     b->fullmove    = 1;
 }
-
-/* ============================================================
- * BITMASK HELPERS
- * ============================================================ */
 
 uint64_t board_occupied(const board_t *b)
 {
@@ -51,10 +41,6 @@ uint64_t board_occupied(const board_t *b)
     return mask;
 }
 
-/* ============================================================
- * KING SQUARE
- * ============================================================ */
-
 int board_king_sq(const board_t *b, piece_color_t color)
 {
     for (int sq = 0; sq < 64; sq++) {
@@ -66,17 +52,13 @@ int board_king_sq(const board_t *b, piece_color_t color)
     return SQ_NONE;
 }
 
-/* ============================================================
- * ATTACK DETECTION
- * These helpers are also used by rules.c for legal-move filtering.
- * ============================================================ */
 
 bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
 {
-    /* ── Pawns ──────────────────────────────────────────────────── */
+    
     int pawn_dir = (by == PC_WHITE) ? 1 : -1;
     int pf = SQ_FILE(sq);
-    int pr = SQ_RANK(sq) - pawn_dir;   /* Rank of attacking pawn */
+    int pr = SQ_RANK(sq) - pawn_dir; 
     if (pr >= 0 && pr < 8) {
         if (pf > 0) {
             int ps = SQ(pf-1, pr);
@@ -90,7 +72,7 @@ bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
         }
     }
 
-    /* ── Knights ────────────────────────────────────────────────── */
+
     static const int kdx[8] = {1,2, 2, 1,-1,-2,-2,-1};
     static const int kdy[8] = {2,1,-1,-2,-2,-1, 1, 2};
     for (int i = 0; i < 8; i++) {
@@ -103,8 +85,7 @@ bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
         }
     }
 
-    /* ── Sliding pieces (bishop, rook, queen) ─────────────────── */
-    /* Diagonals — bishop and queen */
+
     static const int diag_df[4] = { 1,-1, 1,-1};
     static const int diag_dr[4] = { 1, 1,-1,-1};
     for (int d = 0; d < 4; d++) {
@@ -121,7 +102,7 @@ bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
             f2 += diag_df[d]; r2 += diag_dr[d];
         }
     }
-    /* Orthogonals — rook and queen */
+
     static const int orth_df[4] = { 1,-1, 0, 0};
     static const int orth_dr[4] = { 0, 0, 1,-1};
     for (int d = 0; d < 4; d++) {
@@ -139,7 +120,7 @@ bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
         }
     }
 
-    /* ── King ───────────────────────────────────────────────────── */
+   
     {
         int rf = pf, rr = SQ_RANK(sq);
         for (int df = -1; df <= 1; df++) {
@@ -165,9 +146,7 @@ bool board_in_check(const board_t *b, piece_color_t color)
     return board_sq_attacked(b, ksq, enemy);
 }
 
-/* ============================================================
- * APPLY MOVE
- * ============================================================ */
+//Apply move
 
 void board_apply_move(board_t *b, move_t m)
 {
@@ -176,34 +155,30 @@ void board_apply_move(board_t *b, move_t m)
     piece_t  mover = b->pieces[from];
     piece_t  cap   = b->pieces[to];
 
-    /* ── Reset or increment 50-move counter ─────────────────────── */
     if (mover.type == PT_PAWN || cap.type != PT_NONE) {
         b->halfmove = 0;
     } else {
         b->halfmove++;
     }
 
-    /* ── Default move ───────────────────────────────────────────── */
+//Default mover
     b->pieces[to]   = mover;
     b->pieces[from] = (piece_t){ PT_NONE, PC_WHITE };
-
-    /* ── Castling: move rook ─────────────────────────────────────── */
     if (mover.type == PT_KING) {
         int df = SQ_FILE(to) - SQ_FILE(from);
         if (df == 2) {
-            /* Kingside */
+            // Kingside
             int rook_from = SQ(7, SQ_RANK(from));
             int rook_to   = SQ(5, SQ_RANK(from));
             b->pieces[rook_to]   = b->pieces[rook_from];
             b->pieces[rook_from] = (piece_t){ PT_NONE, PC_WHITE };
         } else if (df == -2) {
-            /* Queenside */
+            // Queenside
             int rook_from = SQ(0, SQ_RANK(from));
             int rook_to   = SQ(3, SQ_RANK(from));
             b->pieces[rook_to]   = b->pieces[rook_from];
             b->pieces[rook_from] = (piece_t){ PT_NONE, PC_WHITE };
         }
-        /* Revoke castling rights for this side */
         if (mover.color == PC_WHITE) {
             b->castling &= ~(CASTLE_WK | CASTLE_WQ);
         } else {
@@ -211,46 +186,40 @@ void board_apply_move(board_t *b, move_t m)
         }
     }
 
-    /* ── En passant capture ──────────────────────────────────────── */
+//En passant
     if (mover.type == PT_PAWN && to == b->en_passant) {
         int cap_rank = SQ_RANK(to) + ((mover.color == PC_WHITE) ? -1 : 1);
         int cap_sq   = SQ(SQ_FILE(to), cap_rank);
         b->pieces[cap_sq] = (piece_t){ PT_NONE, PC_WHITE };
     }
 
-    /* ── Update en passant target ────────────────────────────────── */
+
     b->en_passant = SQ_NONE;
     if (mover.type == PT_PAWN) {
         int dr = SQ_RANK(to) - SQ_RANK(from);
         if (dr == 2 || dr == -2) {
-            /* Double pawn push — set EP target square behind the pawn */
             b->en_passant = (int8_t)SQ(SQ_FILE(from),
                              (SQ_RANK(from) + SQ_RANK(to)) / 2);
         }
     }
 
-    /* ── Promotion ───────────────────────────────────────────────── */
     if (m.promo != PT_NONE) {
         b->pieces[to].type = m.promo;
     }
 
-    /* ── Revoke castling rights when rook moves or is captured ───── */
+//Castling right revoke
     if (from == SQ(0,0) || to == SQ(0,0)) b->castling &= ~CASTLE_WQ;
     if (from == SQ(7,0) || to == SQ(7,0)) b->castling &= ~CASTLE_WK;
     if (from == SQ(0,7) || to == SQ(0,7)) b->castling &= ~CASTLE_BQ;
     if (from == SQ(7,7) || to == SQ(7,7)) b->castling &= ~CASTLE_BK;
 
-    /* ── Switch active color + fullmove counter ──────────────────── */
     if (b->active == PC_BLACK) {
         b->fullmove++;
     }
     b->active = (b->active == PC_WHITE) ? PC_BLACK : PC_WHITE;
 }
 
-/* ============================================================
- * FEN GENERATION
- * ============================================================ */
-
+//FEN
 char piece_to_fen_char(piece_t p)
 {
     if (p.type == PT_NONE) return '.';
@@ -263,8 +232,6 @@ void board_to_fen(const board_t *b, char *buf, size_t len)
 {
     char *p = buf;
     char *end = buf + len - 1;
-
-    /* Piece placement — rank 8 down to rank 1 */
     for (int r = 7; r >= 0 && p < end; r--) {
         int empty = 0;
         for (int f = 0; f < 8; f++) {
@@ -279,11 +246,8 @@ void board_to_fen(const board_t *b, char *buf, size_t len)
         if (empty > 0) *p++ = (char)('0' + empty);
         if (r > 0)     *p++ = '/';
     }
-
-    /* Active color */
     p += snprintf(p, (size_t)(end - p), " %c ", (b->active == PC_WHITE) ? 'w' : 'b');
 
-    /* Castling */
     if (!(b->castling)) {
         if (p < end) *p++ = '-';
     } else {
@@ -293,7 +257,7 @@ void board_to_fen(const board_t *b, char *buf, size_t len)
         if ((b->castling & CASTLE_BQ) && p < end) *p++ = 'q';
     }
 
-    /* En passant target */
+    //en passant assign target
     if (b->en_passant == SQ_NONE) {
         p += snprintf(p, (size_t)(end - p), " -");
     } else {
@@ -305,14 +269,11 @@ void board_to_fen(const board_t *b, char *buf, size_t len)
         p += snprintf(p, (size_t)(end - p), " %s", ep);
     }
 
-    /* Halfmove and fullmove clocks */
     snprintf(p, (size_t)(end - p), " %d %d", b->halfmove, b->fullmove);
     buf[len - 1] = '\0';
 }
 
-/* ============================================================
- * UCI MOVE NOTATION
- * ============================================================ */
+
 
 void move_to_uci(move_t m, char *out)
 {
