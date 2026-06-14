@@ -7,8 +7,8 @@
 
 <p>
 
-<img src="./Pictures/Full_Chess_Board-removebg-preview.png" width="55%" height= "500">
-
+<img src="./Pictures/Full_Chess_Board-removebg-preview.png" width="40%" height= "500">
+<img src="./Pictures/STL_Chess_Board-removebg-preview.png" width="40%" height= "450">
 </p>
 
 ### _A chess board that sees every piece, lights every move, and thinks alongside you - no external modules required._
