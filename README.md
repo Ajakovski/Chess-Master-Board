@@ -72,7 +72,7 @@ The project is also an increidible journey into embedded hardware and PCB design
 Navigate to: (For PCBs)
 
 ```bash
-Hardware/CAD/Gerbers/
+Hardware/KiCad/Gerbers/
 ```
 
 Upload the included Gerber files to your preferred PCB manufacturer and order the boards.
@@ -92,7 +92,7 @@ The latest version is recommended but if you prefer any older version feel free 
 Whether you want to order it trough a PCBA concept or to solder it manually you should refer to the BOM file.
 
 ```bash
-Hardware/BOM/BOM.csv
+Hardware/BOM.csv
 ```
 
 Order all parts before starting your assembly and sort them out because there will be a lot of them.
@@ -428,11 +428,16 @@ Chess-Master-Board/
 |        |--- engine/ # mcu-max integration
 |        |--- game/   # FreeRTOS state machine + chess rules
 |        |--- main.c/
+|    |--- CMakeLists.txt
+|    |--- partitions.csv
+|    |--- sdkconfig
 |--- Hardware/
-|    |--- Schematic/
-|    |--- PCB/     
-|    |--- Gerbers/  
+|    |--- 3D_Printing/
+|    |--- KiCad/     
+|    |--- BOM.csv 
+|    |--- Component Libraries.zip 
 |--- Pictures/
+|--- LICENSE
 |--- README.md
 ```
 
