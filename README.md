@@ -65,7 +65,7 @@ The project is also an increidible journey into embedded hardware and PCB design
 
 ## Hardware
 
-### Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware
+*** Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware***
 
 ### 1. Order the PCBs and 3D Model
 
@@ -93,7 +93,9 @@ Whether you want to order it trough a PCBA concept or to solder it manually you 
 
 ```bash
 Hardware/BOM.csv
+Hardware/Component Libraries.zip
 ```
+All of the files for the components are placed into a zip file due to memory constraints.
 
 Order all parts before starting your assembly and sort them out because there will be a lot of them.
 
