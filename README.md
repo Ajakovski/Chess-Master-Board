@@ -450,8 +450,8 @@ Chess-Master-Board/
 - [X] Battery Monitoring
 - [X] 3D Models
 - [X] Final BOM
-- [ ] Create a Zine
-- [ ] Final Build
+- [X] Create a Zine
+- [X] Final Build
 - [ ] Create an IoT Version
 - [ ] Upgrade the 3D model
 - [ ] Improve the PCBs
