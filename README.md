@@ -439,6 +439,8 @@ Chess-Master-Board/
 |--- Pictures/
 |--- LICENSE
 |--- README.md
+|--- Chess Master Board Zine.pdf
+|--- chess-master-board-journal.md
 ```
 
 ---
