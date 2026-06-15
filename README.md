@@ -155,7 +155,7 @@ Verify whether 5V and 3.3V rails are correct before including anything else.
 - Confirm the via grid under the module makes solid contact with all EPAD ground pads
 
 ### 9. Install the Display and Connectors
-- **DS2** - 2.4" 128x64 OLED, I²C interface
+- **DS2** - 2.23" 128x32 OLED, I²C interface
 - **J1/J4 on Main PCB** Samtec ZF1-15-92-X-WT-X board connectors
 - **J3 on Upper PCB** Samtec ZF1-15-92-X-WT-X board connectors
 - **J7 on Clock PCB** Samtec ZF1-15-92-X-WT-X board connectors
@@ -258,7 +258,7 @@ Exit with 'Ctrl+]'.
 | U6–U13 | Shift Register | 74HC165BQ_115 | QFN-17 | 8 | $12.60 | [DigiKey](https://www.digikey.com/en/products/detail/nexperia-usa-inc/74HC165BQ-115/1966015?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
 | U14–U77 | Addressable RGB LED | APA102C | SON-6 (5050) | 64 | $30 | [Sparkfun](https://www.sparkfun.com/apa102c-5050-smd-addressable-rgb-led-cut-tape.html) |
 | U143 | Level Shifter | SN74AHCT125D | SOIC-14 | 1 | $1.2 | [Ti](https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125D) |
-| DS2 | OLED Display | 128×64 2.4" I²C | SSD1309 | 1 | $7.35 | [AliExpress](https://www.aliexpress.com/item/1005005241315177.html) |
+| DS2 | OLED Display | 128×32 2.23" I²C | SSD1305 | 1 | $9.5 | [AliExpress](https://www.aliexpress.com/item/1005008489357042.html?spm=a2g0o.productlist.main.9.1cd31P5n1P5nfd&algo_pvid=10006fad-7505-426f-8c02-2c3dbc745dfc&algo_exp_id=10006fad-7505-426f-8c02-2c3dbc745dfc-8&pdp_ext_f=%7B%22order%22%3A%229%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21567.22%21567.22%21%21%2165.40%2165.40%21%40212e520f17815127163675148eea9b%2112000045367691230%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=1Bi8k4hGK8K7&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008489357042%7C_p_origin_prod%3A#nav-description) |
 | BT1, BT2 | 18650 Battery Holder | Keystone 1043 | THT | 2 | $5.82 | [Mouser](https://www.mouser.com/ProductDetail/Keystone-Electronics/1043?utm_campaign=mouser&qs=%2F7TOpeL5Mz6j%2FnxeOA1rsg%3D%3D&utm_medium=online&utm_source=snapedaonline&utm_content=modelunipart_id=214578&manufacturer=Keystone) |
 | U3 | LiOn Charger IC | BQ24074RGT | VQFN-16 | 1 | $2.48 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/BQ24074RGTR/2047269) |
 | U4 | Boost Converter (5V) | TPS61023DRLT | SOT-6 | 1 | $1.2 | [Ti](https://www.ti.com/product/TPS61023/part-details/TPS61023DRLT?HQS=ocb-tistore-invf-buynowlink_model-invf-store-snapeda-wwe) |
@@ -290,7 +290,7 @@ Exit with 'Ctrl+]'.
 | Neodymium magnets | Rectangular | N35-N52 | 5x10x2mm | 6(100) | $7.6 | [Amazon](https://www.amazon.com/dp/B0GK8XXS5P/ref=sspa_dk_detail_right_aax_0?sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfcmlnaHRfc2hhcmVk&th=1) |
 | BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
 | X | FFC Connector | 15-pin | 500mm | 3 | $5.79 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
-| **TOTAL** | *approx. $184* | | | | | |
+| **TOTAL** | *approx. $186* | | | | | |
  
 
 *Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
@@ -320,7 +320,7 @@ Exit with 'Ctrl+]'.
 | Sensor Interface | 74HC165BQ x 8 | Parallel-in shift registers, daisy-chained |
 | LEDs | APA102C x 64 | Addressable RGB, SPI-compatible, 5V |
 | Level Shifter | SN74AHCT125D | 3.3V → 5V for APA102C DATA + CLK |
-| Display | 128x64 OLED 2.4" | I²C Interface |
+| Display | 128x32 OLED 2.23" | I²C Interface |
 | Battery | Li-Ion 18650 batteries | |
 | Charger | BQ2407RGT | Single-cell Li-ion, USB-C input, NTC-monitored |
 | 5V Rail | TPS61023DRLT + XEL4030-102MEC | Boost converter for LED chain |
@@ -350,10 +350,9 @@ Key design requirements met:
 ## PCB Layout
 ### Main PCB
 
-
 *Some pictures may have been deformed in order to adjust their dimensions*
 
-<img src="./Pictures/Main PCB.png" width="80%" height="80%">
+<img src="./Pictures/Main PCB2.png" width="80%" height="80%">
 
 ### Upper PCB
 <img src="./Pictures/Upper PCB.png" width="100%" height="80%">
@@ -386,15 +385,19 @@ Key design requirements met:
 <div align="center">
 
 ### Main PCB
-<img src="./Pictures/Main PCBC.png" width="50%">
+<img src="./Pictures/Main PCBA.png" width="50%">
 
 ### Upper PCB
-<img src="./Pictures/Upper PCBC.png" width="50%">
+<img src="./Pictures/Upper PCBC.png" width="60%"> <br>
+
 
 ### Clock PCB
-<img src="./Pictures/Clock PCBC.png" width="50%">
+<img src="./Pictures/Clock PCBA.png" width="50%">
+
+*Sorry for not including every 3D model, i had issues with the library assignment. Folder will be included for each module*
 
 </div>
+
 ---
 # Enclosure
 - Simple to assemble
@@ -405,9 +408,6 @@ Key design requirements met:
 - Chess Pieces are made out of PLA
 
 *Feel free to change the materials according to your desire*
-
-
-
 
 ---
 

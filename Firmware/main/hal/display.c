@@ -12,7 +12,7 @@ static const char *TAG = "display";
 #define SSD_CTRL_DATA 0x40
 
 
-static uint8_t s_fb[OLED_WIDTH * OLED_PAGES];  /* 1024 bytes */
+static uint8_t s_fb[OLED_WIDTH * OLED_PAGES];  /* 512 bytes */
 
 /* ============================================================ USED CODE REFERENCES FROM WEB FOR THIS SECTION
  * 5×7 ASCII FONT  (characters 0x20–0x7E)
@@ -88,17 +88,16 @@ static esp_err_t i2c_write_cmds(const uint8_t *cmds, size_t n)
 static void display_flush(void)
 {
     
-    static const uint8_t setup[] = {
-        0x21, 0x00, 0x7F,   
-        0x22, 0x00, 0x07,   
-    };
+    for(int page=0;page<OLED_PAGES; page++){
+        uint8_t cmds[3] = {(uint8_t)(0xB0 | page), 0x00, 0x10};
+    }
     i2c_write_cmds(setup, sizeof(setup));
 
     i2c_cmd_handle_t h = i2c_cmd_link_create();
     i2c_master_start(h);
     i2c_master_write_byte(h, (OLED_I2C_ADDR << 1) | I2C_MASTER_WRITE, true);
     i2c_master_write_byte(h, SSD_CTRL_DATA, true);
-    i2c_master_write(h, s_fb, sizeof(s_fb), true);
+    i2c_master_write(h, &s_fb[page * OLED_WIDTH], OLED_WIDTH, true);
     i2c_master_stop(h);
     i2c_master_cmd_begin(I2C_PORT, h, pdMS_TO_TICKS(200));
     i2c_cmd_link_delete(h);
@@ -144,11 +143,40 @@ static int fb_str(int x, int y, const char *s, int scale)
     return cx - x;
 }
 
+static int fb_str_inv(int x, int y, const char *s, int scale)
+{
+    int cx = x;
+    while (*s) {
+        char c=*s++;
+        if(c<0x20 || c > 0x7E) c ='?';
+        const uint8_t *glyph = font5x7[c - 0x20];
+        for (int col = 0; col < 5; col++){
+            for (int row =0; row<7;row++){
+                if(glyph[col] & (1 << row)){
+                    for (int sx = 0; sx < scale; sx++)
+                        for (int sy = 0; sy<scale; sy++)
+                            fb_pixel(x + col * scale + sx, y + row * scale + sy, false);
+                }
+            }
+        }
+        cx += 6*scale;
+    }
+
+    return cx - x;
+}
+
+
+static void fb_fill_rect(int x0, int y0, int x1, int y1){
+    for (int x=x0; x<x1; x++)
+        for (int y = y0; y<y1; y++)
+            fb_pixel(x,y,true);
+}
+/* Old code from SSD1309
 // Draw a horizontal line of width pixels
 static void fb_hline(int x, int y, int width)
 {
     for (int i = 0; i < width; i++) fb_pixel(x + i, y, true);
-}
+}*/
 
 //CLK FORMatter
 static void fmt_clock(int32_t ms, char *out)
@@ -182,36 +210,34 @@ esp_err_t display_init(void)
     ESP_ERROR_CHECK(i2c_param_config(I2C_PORT, &conf));
     ESP_ERROR_CHECK(i2c_driver_install(I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
 
-    /* SSD1306 initialisation sequence */
+    /* SSD1305 initialisation sequence */
     static const uint8_t init_seq[] = {
-        0xAE,       /* Display OFF                                    */
-        0x00,       /* Set lower column start = 0                     */
-        0x10,       /* Set higher column start = 0                    */
-        0x40,       /* Set display start line = 0                     */
-        0xB0,       /* Set page start address = 0                     */
-        0x81, 0xCF, /* Set contrast (0xCF = high)                     */
-        0xA1,       /* Set segment remap: col127→SEG0                 */
-        0xA6,       /* Normal display (not inverted)                  */
-        0xA8, 0x3F, /* Multiplex ratio = 64 rows                      */
-        0xC8,       /* COM scan direction: remapped (top→bottom)      */
-        0xD3, 0x00, /* Display offset = 0                             */
-        0xD5, 0x80, /* Clock divide ratio / oscillator freq           */
-        0xD9, 0xF1, /* Pre-charge period                              */
-        0xDA, 0x12, /* COM pins hardware config (alternative, not seq)*/
-        0xDB, 0x40, /* VCOMH deselect level                           */
-        0x20, 0x00, /* Memory addressing mode = Horizontal            */
-        0x8D, 0x14, /* Charge pump = Enable                           */
-        0xAF,       /* Display ON                                     */
+        0xAE,       // Display OFF                                    
+        0xD5, 0xF0, // Clock divide ratio / oscillator frequency      
+        0xA8, 0x1F, // Multiplex ratio = 32 rows (height - 1)         
+        0xD3, 0x00, // Display offset = 0                             
+        0x40,       // Display start line = 0                         
+        0xAD, 0x8E, // Master config: enable internal DC-DC converter 
+        0xA1,       // Segment remap: col127→SEG0                     
+        0xC8,       // COM output scan direction: remapped            
+        0xDA, 0x02, // COM pins config: sequential, no remap (32 rows)
+        0x81, 0x80, // Contrast control (mid-range)                   
+        0xD9, 0xF1, // Pre-charge period                              
+        0xDB, 0x34, // VCOMH deselect level                           
+        0xD8, 0x05, // Area color mode: normal monochrome (required)  
+        0xA4,       // Display all-on disable (normal mode)           
+        0xA6,       // Normal display (not inverted)                  
+        0xAF,       // Display ON                                     
     };
     esp_err_t err = i2c_write_cmds(init_seq, sizeof(init_seq));
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "SSD1306 init failed: %s", esp_err_to_name(err));
+        ESP_LOGE(TAG, "SSD1305 init failed: %s", esp_err_to_name(err));
         return err;
     }
 
     fb_clear();
     display_flush();
-    ESP_LOGI(TAG, "SSD1306 ready");
+    ESP_LOGI(TAG, "SSD1305 ready");
     return ESP_OK;
 }
 
@@ -234,13 +260,51 @@ void display_update(int32_t  clock_ms_w,
 {
     fb_clear();
 
-    // ROw 0-7
+    //Status bar
+    char status[24];
+    snprintf(status, sizeof(status), "Mv:%-3d Bat:%3d%% %c", move_number,battery_pct, (active == 0)? 'W', 'B');
+    fb_str(0,0,status,1);
+
+    //clock
+    char tw[8],tb[8];
+    fmt_clock(clock_ms_w,tw);
+    fmt_clock(clock_ms_b,tb);
+
+    const int clock_y= 9;
+    const int fill_y0 = 8;
+    const int fill_y1 = 24;
+
+    if(active == 0 ){
+        fb_fill_rect(0, fill_y0, 63, fill_y1);
+        fb_str_inv(1, clock_y, tw, 2);
+        fb_str(65, clock_y, tb, 2);
+    }else{
+        fb_str(1,clock, tw, 2);
+        fb_fill_rect(64, fill_y0, 128, fill_y1);
+        fb_str_inv(65, clock_y, tb, 2);
+    }
+
+    //divider
+    for (int y= fill_y0; y<fill_y1; y++) fb_pixel(63,y,true);
+
+    //Machine status
+    if (sf_thinking){
+        fb_str(0,25, "SF: thinking...",1);
+    } else if(sf_depth > 0){
+        char sf_info[24];
+        float pawns= (float) sf_score_cp / 100.0f;
+        snprintf(sf_info, sizeof(sf_info), "SF d%d %+.1fp",sf_depth, pawns);
+        fb_str(0,25, "SF: ready", 1);
+    }
+    display_flush();
+
+    /*// ROw 0-7
     if (active == 0) {
-        /* Fill white's label area with white pixels (invert) */
+        // Fill white's label area with white pixels (invert)
         for (int x = 0; x < 62; x++)
             for (int y = 0; y < 8; y++)
                 fb_pixel(x, y, true);
-        /* Text over white fill (pixels OFF on white background = black text) */
+        // Text over white fill (pixels OFF on white background = black text) 
         const char *wlabel = "WHITE";
         int wx = (62 - 5 * 6) / 2;
         int cx = wx;
@@ -270,16 +334,16 @@ void display_update(int32_t  clock_ms_w,
         }
     }
 
-    /*  Row 8-39: Clock digits (scale=3, 3×5-pixel font → ~15×21px)  */
+    //  Row 8-39: Clock digits (scale=3, 3×5-pixel font → ~15×21px)  
     
     char tw[8], tb[8];
     fmt_clock(clock_ms_w, tw);
     fmt_clock(clock_ms_b, tb);
 
-    /* White clock: left half (0–62) at scale 2 */
+    // White clock: left half (0–62) at scale 2 
     fb_str(1, 10, tw, 2);
 
-    /* Black clock: right half (64–127) at scale 2 */
+    // Black clock: right half (64–127) at scale 2 
     fb_str(65, 10, tb, 2);
 
     
@@ -288,12 +352,12 @@ void display_update(int32_t  clock_ms_w,
    //Separator
     fb_hline(0, 40, OLED_WIDTH);
 
-    /*  Row 48-55: Move count + battery*/
+    //  Row 48-55: Move count + battery
     char status[32];
     snprintf(status, sizeof(status), "M:%d  BAT:%d%%", move_number, battery_pct);
     fb_str(1, 49, status, 1);
 
-    /* Row 56-63: Machine status*/
+    // Row 56-63: Machine status
     if (sf_thinking) {
         fb_str(1, 57, "SF: thinking...", 1);
     } else if (sf_depth > 0) {
@@ -306,7 +370,7 @@ void display_update(int32_t  clock_ms_w,
         fb_str(1, 57, "SF: ready", 1);
     }
 
-    display_flush();
+    display_flush();*/
 }
 
 void display_message(const char *line1, const char *line2)
@@ -316,13 +380,13 @@ void display_message(const char *line1, const char *line2)
         int w = (int)(strlen(line1) * 6);
         int x = (OLED_WIDTH - w) / 2;
         if (x < 0) x = 0;
-        fb_str(x, 20, line1, 1);
+        fb_str(x, 2, line1, 1);
     }
     if (line2) {
         int w = (int)(strlen(line2) * 6);
         int x = (OLED_WIDTH - w) / 2;
         if (x < 0) x = 0;
-        fb_str(x, 36, line2, 1);
+        fb_str(x, 17, line2, 1);
     }
     display_flush();
 }

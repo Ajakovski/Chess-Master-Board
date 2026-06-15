@@ -57,7 +57,7 @@
 #define I2C_FREQ_HZ         400000
 #define OLED_I2C_ADDR       0x3C
 #define OLED_WIDTH          128
-#define OLED_HEIGHT         64
+#define OLED_HEIGHT         32
 #define OLED_PAGES          (OLED_HEIGHT / 8)
 
 
