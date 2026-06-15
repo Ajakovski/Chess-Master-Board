@@ -1,5 +1,5 @@
 Drill report for StockfishChess.kicad_pcb
-Created on 2026-06-15T09:05:50
+Created on 2026-06-15T21:40:03
 
 Copper Layer Stackup:
     =============================================================
@@ -12,39 +12,17 @@ Copper Layer Stackup:
 Drill file 'StockfishChess-PTH-drl.gbr' contains
     plated through holes:
     =============================================================
-    T1  0.200mm  0.0079"  (11 holes))
+    T1  0.200mm  0.0079"  (16 holes))
     T2  0.200mm  0.0079"  (12 holes))
-    T3  0.300mm  0.0118"  (8 holes))
-    T4  0.350mm  0.0138"  (1 hole)
-    T5  0.400mm  0.0157"  (8 holes))
-    T6  0.500mm  0.0197"  (9 holes))
+    T3  0.300mm  0.0118"  (18 holes))
+    T4  0.350mm  0.0138"  (3 holes))
+    T5  0.400mm  0.0157"  (22 holes))
+    T6  0.500mm  0.0197"  (10 holes))
     T7  0.850mm  0.0335"  (4 holes))
     T8  1.000mm  0.0394"  (4 holes))
     T9  1.320mm  0.0520"  (4 holes))
 
-    Total plated holes count 61
-
-
-Drill file 'StockfishChess-front-in1-drl.gbr' contains
-    holes connecting layer pair: 'F.Cu and In1.Cu' (blind vias):
-    =============================================================
-    T1  0.300mm  0.0118"  (10 holes))
-    T2  0.350mm  0.0138"  (2 holes))
-    T3  0.400mm  0.0157"  (4 holes))
-    T4  0.500mm  0.0197"  (2 holes))
-
-    Total plated holes count 18
-
-
-Drill file 'StockfishChess-front-in2-drl.gbr' contains
-    holes connecting layer pair: 'F.Cu and In2.Cu' (blind vias):
-    =============================================================
-    T1  0.200mm  0.0079"  (1 hole)
-    T2  0.300mm  0.0118"  (8 holes))
-    T3  0.400mm  0.0157"  (4 holes))
-    T4  0.500mm  0.0197"  (1 hole)
-
-    Total plated holes count 14
+    Total plated holes count 93
 
 
 Drill file 'StockfishChess-NPTH-drl.gbr' contains

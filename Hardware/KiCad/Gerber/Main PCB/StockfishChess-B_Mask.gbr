@@ -1,24 +1,24 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,10.0.1*%
-%TF.CreationDate,2026-06-15T09:04:18+02:00*%
+%TF.CreationDate,2026-06-15T21:39:27+02:00*%
 %TF.ProjectId,StockfishChess,53746f63-6b66-4697-9368-43686573732e,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Soldermask,Bot*%
 %TF.FilePolarity,Negative*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 10.0.1) date 2026-06-15 09:04:18*
+G04 Created by KiCad (PCBNEW 10.0.1) date 2026-06-15 21:39:27*
 %MOMM*%
 %LPD*%
 G01*
 G04 APERTURE LIST*
 %ADD10C,0.730000*%
-%ADD11C,3.240000*%
-%ADD12C,3.590000*%
-%ADD13C,2.430000*%
+%ADD11C,3.200000*%
+%ADD12C,3.550000*%
+%ADD13C,2.390000*%
 %ADD14C,2.184000*%
 %ADD15C,1.562000*%
-%ADD16C,0.640000*%
-%ADD17C,1.740000*%
+%ADD16C,0.600000*%
+%ADD17C,1.700000*%
 G04 APERTURE END LIST*
 D10*
 %TO.C,J2*%

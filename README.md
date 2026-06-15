@@ -258,7 +258,7 @@ Exit with 'Ctrl+]'.
 | U1 | MCU Module | ESP32-S3-WROOM-2 N32R16V | LCC-54 | 1 | $12 | [DigiKey](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-2-N32R16V/25811280) |
 | U79–U142 | Hall Effect Sensor | AH1806-W-7 | SOT-23 | 64 | $20 | [Mouser](https://www.mouser.com/ProductDetail/Diodes-Incorporated/AH1806-W-7?qs=eSfX1CQlHqqRKgthoXGrzg%3D%3D&srsltid=AfmBOoqvt9XKLP8jc6GHH0L_jmNus1_TszQpJJyJu60i3bDtAeJsRl4r) |
 | U6–U13 | Shift Register | 74HC165BQ_115 | QFN-17 | 8 | $12.60 | [DigiKey](https://www.digikey.com/en/products/detail/nexperia-usa-inc/74HC165BQ-115/1966015?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
-| U14–U77 | Addressable RGB LED | APA102C | SON-6 (5050) | 64 | $30 | [Sparkfun](https://www.sparkfun.com/apa102c-5050-smd-addressable-rgb-led-cut-tape.html) |
+| U14–U77 | Addressable RGB LED | APA102C | SON-6 (5050) | 64(100) | $10 | [AliExpress](https://www.aliexpress.com/item/1005008174203527.html) |
 | U143 | Level Shifter | SN74AHCT125D | SOIC-14 | 1 | $1.2 | [Ti](https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125D) |
 | DS2 | OLED Display | 128×32 2.23" I²C | SSD1305 | 1 | $9.5 | [AliExpress](https://www.aliexpress.com/item/1005008489357042.html?spm=a2g0o.productlist.main.9.1cd31P5n1P5nfd&algo_pvid=10006fad-7505-426f-8c02-2c3dbc745dfc&algo_exp_id=10006fad-7505-426f-8c02-2c3dbc745dfc-8&pdp_ext_f=%7B%22order%22%3A%229%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21567.22%21567.22%21%21%2165.40%2165.40%21%40212e520f17815127163675148eea9b%2112000045367691230%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=1Bi8k4hGK8K7&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008489357042%7C_p_origin_prod%3A#nav-description) |
 | BT1, BT2 | 18650 Battery Holder | Keystone 1043 | THT | 2 | $5.82 | [Mouser](https://www.mouser.com/ProductDetail/Keystone-Electronics/1043?utm_campaign=mouser&qs=%2F7TOpeL5Mz6j%2FnxeOA1rsg%3D%3D&utm_medium=online&utm_source=snapedaonline&utm_content=modelunipart_id=214578&manufacturer=Keystone) |
@@ -292,7 +292,14 @@ Exit with 'Ctrl+]'.
 | Neodymium magnets | Rectangular | N35-N52 | 5x10x2mm | 6(100) | $7.6 | [Amazon](https://www.amazon.com/dp/B0GK8XXS5P/ref=sspa_dk_detail_right_aax_0?sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfcmlnaHRfc2hhcmVk&th=1) |
 | BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
 | X | FFC Connector | 15-pin | 500mm | 3 | $5.79 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
-| **TOTAL** | *approx. $186* | | | | | |
+| X | Main PCB | | |5|76$|[PCBWay](https://www.pcbway.com/)|
+|X|Upper PCB| | |5|200$|[PCBWay](https://www.pcbway.com/)|
+|X|Clock PCB| | |5|25$|[PCBWay](https://www.pcbway.com/)|
+|X|Main Chess Board 3D| | |1|$80|[3dprintmk](https://www.3dprintmk.com)|
+|X|Chess Board Lid 3D| | |1|$20|[3dprintmk](https://www.3dprintmk.com)|
+|X|Buttons 3D| | |2|$7.5|[3dprintmk](https://www.3dprintmk.com)|
+|X|Chess Pieces 3D| | |2|$15|[3dprintmk](https://www.3dprintmk.com)|
+| **TOTAL** | *approx. $588* | | | | | |
  
 
 *Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
