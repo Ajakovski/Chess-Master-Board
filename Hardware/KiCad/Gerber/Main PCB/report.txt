@@ -1,0 +1,13 @@
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-F_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-In1_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-In2_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-B_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-F_Paste.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-B_Paste.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-F_Silkscreen.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-B_Silkscreen.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-F_Mask.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-B_Mask.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-Edge_Cuts.gbr'.
+Created Gerber job file 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\StockfishChess-job.gbrjob'.
+Info: Done.

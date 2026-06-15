@@ -1,0 +1,28 @@
+Drill report for Upper PCB.kicad_pcb
+Created on 2026-06-15T12:02:14
+
+Copper Layer Stackup:
+    =============================================================
+    L1 :  F.Cu                      front
+    L2 :  In1.Cu                    in1
+    L3 :  In2.Cu                    in2
+    L4 :  B.Cu                      back
+
+
+Drill file 'Upper PCB-PTH-drl.gbr' contains
+    plated through holes:
+    =============================================================
+    T1  0.200mm  0.0079"  (301 holes))
+    T2  0.300mm  0.0118"  (30 holes))
+    T3  0.400mm  0.0157"  (171 holes))
+    T4  0.500mm  0.0197"  (2 holes))
+
+    Total plated holes count 504
+
+
+Drill file 'Upper PCB-NPTH-drl.gbr' contains
+    unplated through holes:
+    =============================================================
+    T1  3.200mm  0.1260"  (4 holes))
+
+    Total unplated holes count 4

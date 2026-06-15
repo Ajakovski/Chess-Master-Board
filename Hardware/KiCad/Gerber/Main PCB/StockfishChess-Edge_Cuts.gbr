@@ -1,0 +1,23 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,10.0.1*%
+%TF.CreationDate,2026-06-15T09:04:18+02:00*%
+%TF.ProjectId,StockfishChess,53746f63-6b66-4697-9368-43686573732e,rev?*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Profile,NP*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 10.0.1) date 2026-06-15 09:04:18*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%TA.AperFunction,Profile*%
+%ADD10C,0.200000*%
+%TD*%
+G04 APERTURE END LIST*
+D10*
+X74721292Y-34775000D02*
+X174721292Y-34775000D01*
+X174721292Y-154775000D01*
+X74721292Y-154775000D01*
+X74721292Y-34775000D01*
+M02*
