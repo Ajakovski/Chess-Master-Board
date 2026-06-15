@@ -293,13 +293,13 @@ Exit with 'Ctrl+]'.
 | BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
 | X | FFC Connector | 15-pin | 500mm | 3 | $5.79 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
 | X | Main PCB | | |5|76$|[PCBWay](https://www.pcbway.com/)|
-|X|Upper PCB| | |5|200$|[PCBWay](https://www.pcbway.com/)|
+|X|Upper PCB| | |5|130$|[JLCPCB](https://jlcpcb.com/)|
 |X|Clock PCB| | |5|25$|[PCBWay](https://www.pcbway.com/)|
 |X|Main Chess Board 3D| | |1|$80|[3dprintmk](https://www.3dprintmk.com)|
 |X|Chess Board Lid 3D| | |1|$20|[3dprintmk](https://www.3dprintmk.com)|
 |X|Buttons 3D| | |2|$7.5|[3dprintmk](https://www.3dprintmk.com)|
 |X|Chess Pieces 3D| | |2|$15|[3dprintmk](https://www.3dprintmk.com)|
-| **TOTAL** | *approx. $588* | | | | | |
+| **TOTAL** | *approx. $518* | | | | | |
  
 
 *Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
