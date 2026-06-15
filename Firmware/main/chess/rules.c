@@ -3,9 +3,7 @@
 #include "config.h"
 #include <string.h>
 
-/* ============================================================
- * PRECOMPUTED ATTACK TABLES
- * ============================================================ */
+//Prethodno sozdadeni tabeli za napad
 static uint64_t s_knight_attacks[64];
 static uint64_t s_king_attacks[64];
 static bool     s_tables_ready = false;
@@ -14,10 +12,8 @@ void rules_init(void)
 {
     if (s_tables_ready) return;
 
-    static const int kdx[8] = { 1, 2, 2, 1,-1,-2,-2,-1};
-    static const int kdy[8] = { 2, 1,-1,-2,-2,-1, 1, 2};
-    static const int gx[8]  = { 1, 0,-1, 0, 1,-1, 1,-1};
-    static const int gy[8]  = { 0, 1, 0,-1, 1, 1,-1,-1};
+    static const int kdx[8] = { 1, 2, 2, 1,-1,-2,-2,-1}; static const int kdy[8] = { 2, 1,-1,-2,-2,-1, 1, 2};
+    static const int gx[8]  = { 1, 0,-1, 0, 1,-1, 1,-1}; static const int gy[8]  = { 0, 1, 0,-1, 1, 1,-1,-1};
 
     for (int sq = 0; sq < 64; sq++) {
         int f = SQ_FILE(sq), r = SQ_RANK(sq);
@@ -39,7 +35,7 @@ static bool leaves_in_check(const board_t *b, move_t m)
 {
     board_t copy = *b;
     board_apply_move(&copy, m);
-    /* After apply, active color has switched — check the side that just moved */
+    // Proveri Active Color dali e smeneno
     piece_color_t just_moved = (copy.active == PC_WHITE) ? PC_BLACK : PC_WHITE;
     return board_in_check(&copy, just_moved);
 }
@@ -50,8 +46,8 @@ static int gen_pawn(const board_t *b, int sq, move_t *out)
     int n = 0;
     piece_color_t col   = b->pieces[sq].color;
     int           dir   = (col == PC_WHITE) ? 1 : -1;
-    int           start = (col == PC_WHITE) ? 1 : 6;  /* Starting rank */
-    int           promo = (col == PC_WHITE) ? 7 : 0;  /* Promotion rank */
+    int           start = (col == PC_WHITE) ? 1 : 6;  //Start of ranks
+    int           promo = (col == PC_WHITE) ? 7 : 0;  // Promotion ranks
 
     int f = SQ_FILE(sq), r = SQ_RANK(sq);
 
@@ -61,7 +57,7 @@ static int gen_pawn(const board_t *b, int sq, move_t *out)
         int fwd = SQ(f, r1);
         if (b->pieces[fwd].type == PT_NONE) {
             if (r1 == promo) {
-                /* Generate all 4 promotion choices */
+                // TIpovi na promocija
                 static const piece_type_t promos[4] = {
                     PT_QUEEN, PT_ROOK, PT_BISHOP, PT_KNIGHT
                 };
@@ -70,7 +66,7 @@ static int gen_pawn(const board_t *b, int sq, move_t *out)
                 }
             } else {
                 out[n++] = (move_t){ (int8_t)sq, (int8_t)fwd, PT_NONE };
-                /* Forward two from starting rank */
+                // Starting pawn 2 squares forward
                 if (r == start) {
                     int r2 = r + 2*dir;
                     int fwd2 = SQ(f, r2);
@@ -80,7 +76,7 @@ static int gen_pawn(const board_t *b, int sq, move_t *out)
                 }
             }
         }
-        /* Diagonal captures */
+        // Diagonal captures
         for (int df = -1; df <= 1; df += 2) {
             int cf = f + df;
             if (cf >= 0 && cf < 8) {
@@ -135,7 +131,7 @@ static int gen_slider(const board_t *b, int sq, move_t *out,
                 if (b->pieces[to].color != col) {
                     out[n++] = (move_t){ (int8_t)sq, (int8_t)to, PT_NONE };
                 }
-                break;  /* Ray blocked */
+                break;
             }
             out[n++] = (move_t){ (int8_t)sq, (int8_t)to, PT_NONE };
             f += dfs[d]; r += drs[d];
@@ -171,7 +167,6 @@ static int gen_king(const board_t *b, int sq, move_t *out)
     piece_color_t col   = b->pieces[sq].color;
     piece_color_t enemy = (col == PC_WHITE) ? PC_BLACK : PC_WHITE;
 
-    /* Normal king moves */
     uint64_t atk = s_king_attacks[sq];
     while (atk) {
         int to = __builtin_ctzll(atk);
@@ -181,9 +176,9 @@ static int gen_king(const board_t *b, int sq, move_t *out)
         }
     }
 
-    /* Castling */
+    // Caslting
     int r = SQ_RANK(sq);
-    if (!board_sq_attacked(b, sq, enemy)) {  /* King must not be in check */
+    if (!board_sq_attacked(b, sq, enemy)) {  //Blockade check
         /* Kingside */
         uint8_t ks_right = (col == PC_WHITE) ? CASTLE_WK : CASTLE_BK;
         if ((b->castling & ks_right) &&
@@ -207,9 +202,7 @@ static int gen_king(const board_t *b, int sq, move_t *out)
     return n;
 }
 
-/* ============================================================
- * PUBLIC API
- * ============================================================ */
+// API PUBLIC
 
 int rules_gen_moves_from(const board_t *b, int from, move_t *moves)
 {
@@ -260,7 +253,6 @@ bool rules_is_legal(const board_t *b, int from, int to, piece_type_t promo)
     int np = rules_gen_moves_from(b, from, pseudo);
     for (int i = 0; i < np; i++) {
         if (pseudo[i].to == to) {
-            /* For promotion moves, require promo match if specified */
             if (pseudo[i].promo == PT_NONE || promo == PT_NONE ||
                 pseudo[i].promo == promo) {
                 return true;
@@ -305,7 +297,7 @@ bool rules_is_insufficient_material(const board_t *b)
         piece_t p = b->pieces[sq];
         if (p.type == PT_NONE) continue;
         total++;
-        /* Presence of pawn, rook, or queen = sufficient material */
+        //Check for piece presence
         if (p.type == PT_PAWN || p.type == PT_ROOK || p.type == PT_QUEEN) {
             return false;
         }
@@ -318,11 +310,11 @@ bool rules_is_insufficient_material(const board_t *b)
             else                     { bb++; if (light) bb_light=true; else bb_dark=true; }
         }
     }
-    /* K vs K */
+    // K vs K
     if (total == 2) return true;
-    /* K+B vs K or K+N vs K */
+    // K+B vs K or K+N vs K
     if (total == 3 && (wb == 1 || wn == 1 || bb == 1 || bn == 1)) return true;
-    /* K+B vs K+B (same color bishops) */
+    // K+B vs K+B (same color bishops)
     if (total == 4 && wb == 1 && bb == 1) {
         if ((wb_light && bb_light) || (wb_dark && bb_dark)) return true;
     }
@@ -337,7 +329,6 @@ uint64_t rules_capture_candidates(const board_t *b, int from,
     piece_color_t col   = b->pieces[from].color;
     piece_color_t enemy = (col == PC_WHITE) ? PC_BLACK : PC_WHITE;
 
-    /* All squares where an enemy piece is expected AND sensor still reads occupied */
     uint64_t enemy_expected = 0;
     for (int sq = 0; sq < 64; sq++) {
         if (b->pieces[sq].type  != PT_NONE &&
@@ -347,7 +338,6 @@ uint64_t rules_capture_candidates(const board_t *b, int from,
     }
     uint64_t candidates = enemy_expected & sensor_occupied;
 
-    /* Filter to reachable attack squares for this piece */
     move_t moves[MAX_MOVES_PER_POS];
     int n = rules_gen_moves_from(b, from, moves);
     uint64_t reach = 0;

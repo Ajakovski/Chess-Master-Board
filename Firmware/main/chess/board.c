@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 
-
+# Za main del povikuvanje
 void board_init_start(board_t *b)
 {
     memset(b, 0, sizeof(*b));
@@ -52,7 +52,7 @@ int board_king_sq(const board_t *b, piece_color_t color)
     return SQ_NONE;
 }
 
-
+#Varijacii na napadi
 bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
 {
     
@@ -130,7 +130,7 @@ bool board_sq_attacked(const board_t *b, int sq, piece_color_t by)
                 if (kf >= 0 && kf < 8 && kr >= 0 && kr < 8) {
                     int ks = SQ(kf, kr);
                     if (b->pieces[ks].type  == PT_KING &&
-                        b->pieces[ks].color == by) return true;
+                    b->pieces[ks].color == by) return true;
                 }
             }
         }
@@ -209,8 +209,8 @@ void board_apply_move(board_t *b, move_t m)
 
 //Castling right revoke
     if (from == SQ(0,0) || to == SQ(0,0)) b->castling &= ~CASTLE_WQ;
-    if (from == SQ(7,0) || to == SQ(7,0)) b->castling &= ~CASTLE_WK;
-    if (from == SQ(0,7) || to == SQ(0,7)) b->castling &= ~CASTLE_BQ;
+    if (from ==SQ(7,0) || to == SQ(7,0)) b->castling &= ~CASTLE_WK;
+    if (from== SQ(0,7) || to == SQ(0,7)) b->castling &= ~CASTLE_BQ;
     if (from == SQ(7,7) || to == SQ(7,7)) b->castling &= ~CASTLE_BK;
 
     if (b->active == PC_BLACK) {
@@ -257,7 +257,7 @@ void board_to_fen(const board_t *b, char *buf, size_t len)
         if ((b->castling & CASTLE_BQ) && p < end) *p++ = 'q';
     }
 
-    //en passant assign target
+    //en passant dodavanje na moznost
     if (b->en_passant == SQ_NONE) {
         p += snprintf(p, (size_t)(end - p), " -");
     } else {

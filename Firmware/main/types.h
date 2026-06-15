@@ -5,26 +5,21 @@
 #include <stddef.h>
 #include "config.h"
 
-/* ============================================================
- * COLOUR
- * ============================================================ */
-typedef struct {
+// color
+typedef struct{
     uint8_t r;
     uint8_t g;
     uint8_t b;
-} rgb_t;
+}rgb_t;
 
-/* ============================================================
- * CHESS PIECE
- * ============================================================ */
+// Pieces
 typedef enum {
-    PT_NONE   = 0,
-    PT_PAWN   = 1,
-    PT_KNIGHT = 2,
-    PT_BISHOP = 3,
-    PT_ROOK   = 4,
-    PT_QUEEN  = 5,
-    PT_KING   = 6
+    PT_NONE   = 0, PT_PAWN   = 1,
+    PT_KNIGHT= 2,
+    PT_BISHOP= 3,
+    PT_ROOK  = 4,
+    PT_QUEEN = 5,
+    PT_KING  = 6
 } piece_type_t;
 
 typedef enum {
@@ -37,9 +32,7 @@ typedef struct {
     piece_color_t color;
 } piece_t;
 
-/* ============================================================
- * CHESS BOARD
- * ============================================================ */
+// Chess board
 
 /* Castling rights bitmask */
 #define CASTLE_WK  (1 << 0)
@@ -56,9 +49,7 @@ typedef struct {
     uint16_t      fullmove;  
 } board_t;
 
-/* ============================================================
- * CHESS MOVE
- * ============================================================ */
+/* moving right*/
 typedef struct {
     int8_t       from;
     int8_t       to; 
@@ -68,9 +59,7 @@ typedef struct {
 #define MOVE_NULL   ((move_t){SQ_NONE, SQ_NONE, PT_NONE})
 #define MOVE_IS_NULL(m) ((m).from == SQ_NONE)
 
-/* ============================================================
- * MOVE DETECTION STATE
- * ============================================================ */
+// detect move
 typedef enum {
     MDS_IDLE,
     MDS_PIECE_LIFTED,
@@ -78,9 +67,7 @@ typedef enum {
     MDS_AWAITING_CONFIRM 
 } move_detect_state_t;
 
-/* ============================================================
- * GAME PHASE
- * ============================================================ */
+// gamephase
 typedef enum {
     GP_BOOT,        
     GP_WAIT_POSITION,
@@ -106,27 +93,20 @@ typedef enum {
     GO_DRAW_MATERIAL
 } game_over_reason_t;
 
-/* ============================================================
- * BUTTON EVENTS
- * ============================================================ */
+// button akcii
 typedef enum {
-    BTN_P1_SHORT,    /* Player-1 button: short press            */
-    BTN_P2_SHORT,    /* Player-2 button: short press            */
-    BTN_BOTH_HOLD,   /* Both held ≥ SLEEP_HOLD_BOTH_MS          */
+    BTN_P1_SHORT,   
+    BTN_P2_SHORT,   
+    BTN_BOTH_HOLD,   /* Both held*/
 } button_event_t;
 
-/* ============================================================
- * MOVE HISTORY (UCI notation strings)
- * Used to build the "position startpos moves …" command.
- * ============================================================ */
+
 typedef struct {
-    char entries[MAX_HALF_MOVES][6];  /* "e2e4\0", "e7e8q\0", etc. */
+    char entries[MAX_HALF_MOVES][6]; 
     int  count;
 } move_history_t;
 
-/* ============================================================
- * STOCKFISH STATUS
- * ============================================================ */
+/* MachineSTATUS*/
 typedef enum {
     SF_STATUS_IDLE,
     SF_STATUS_THINKING,
@@ -134,39 +114,37 @@ typedef enum {
     SF_STATUS_ERROR
 } sf_status_t;
 
-/* ============================================================
- * SHARED GAME STATE  (protected by game_mutex)
- * ============================================================ */
+// Game stae
 typedef struct {
     /* Board and move tracking */
     board_t           board;
     move_history_t    history;
-    uint64_t          sensor_occupied;   /* Live sensor bitmask (bit=1 → piece present) */
-    uint64_t          expected_occupied; /* What the board should look like now          */
+    uint64_t          sensor_occupied;   
+    uint64_t          expected_occupied; 
 
     /* Move detection */
     move_detect_state_t mds;
-    int8_t              lifted_sq;       /* Square where our piece was lifted   */
-    int8_t              enemy_lift_sq;   /* Enemy square also lifted (capture)  */
-    move_t              pending_move;    /* Move about to be confirmed          */
+    int8_t              lifted_sq; 
+    int8_t              enemy_lift_sq;   
+    move_t              pending_move;    
 
     /* Clock */
     int32_t  clock_ms[2];     /* Remaining time per player (ms)        */
-    bool     clock_running;   /* True while active player's clock ticks */
+    bool     clock_running;  
 
-    /* Game metadata */
+    
     game_phase_t     phase;
     game_over_reason_t over_reason;
     sf_side_t        sf_side;
     int              current_player;   /* 0 = white, 1 = black */
 
-    /* Stockfish output */
+    // outputs
     sf_status_t      sf_status;
-    move_t           sf_move;         /* Best move from Stockfish */
+    move_t           sf_move;  
 
-    /* LED display buffer — written by game task, read by led task */
+    /* LED display buffer*/
     rgb_t            leds[64];
 
-    /* Battery */
+   
     uint8_t          battery_pct;
 } game_state_t;

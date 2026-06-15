@@ -1,14 +1,3 @@
-/*
- * game/game.c — Chess board game logic
- *
- * State machine overview:
- *
- *  GP_BOOT → GP_WAIT_POSITION → GP_SELECT_SIDE → GP_PLAYING
- *             (32 pieces         (P1=White or       ↕
- *              present?)          P2=Black)       GP_GAME_OVER
- *                                               GP_SLEEPING ←→ GP_PLAYING
- */
-
 #include "game.h"
 #include "config.h"
 #include "types.h"
@@ -34,9 +23,8 @@
 
 static const char *TAG = "game";
 
-/* ============================================================
- * RTC-RETAINED GAME STATE  (survives deep sleep)
- * ============================================================ */
+// RTC-RETAINED GAME STATE  (deep sleep)
+
 RTC_DATA_ATTR static uint32_t     rtc_magic;
 RTC_DATA_ATTR static char         rtc_fen[128];
 RTC_DATA_ATTR static int32_t      rtc_clock_ms[2];
@@ -45,17 +33,14 @@ RTC_DATA_ATTR static char         rtc_moves[MAX_HALF_MOVES][6];
 RTC_DATA_ATTR static int          rtc_move_count;
 RTC_DATA_ATTR static uint8_t      rtc_active_color;
 
-/* ============================================================
- * SHARED GAME STATE
- * ============================================================ */
+
 static game_state_t  s_gs;
 static SemaphoreHandle_t s_mutex;
 
 QueueHandle_t g_button_queue;
 
-/* ============================================================
- * LED COLOUR CONSTANTS (from config.h macros)
- * ============================================================ */
+// LED Constants
+
 static const rgb_t COL_MOVE_FROM   = LED_COLOR_MOVE_FROM;
 static const rgb_t COL_SF_FROM     = LED_COLOR_SF_FROM;
 static const rgb_t COL_SF_TO       = LED_COLOR_SF_TO;
@@ -65,9 +50,8 @@ static const rgb_t COL_CHECK       = LED_COLOR_CHECK;
 static const rgb_t COL_CONFIRM_F   = LED_COLOR_CONFIRM_FROM;
 static const rgb_t COL_CONFIRM_T   = LED_COLOR_CONFIRM_TO;
 
-/* ============================================================
- * HELPERS
- * ============================================================ */
+//HELPERS
+
 
 static inline void gs_lock  (void) { xSemaphoreTake(s_mutex, portMAX_DELAY); }
 static inline void gs_unlock(void) { xSemaphoreGive(s_mutex); }
@@ -97,9 +81,8 @@ static uint64_t sq_added(uint64_t expected, uint64_t actual)
     return ~expected & actual;
 }
 
-/* ============================================================
- * LED BUFFER MANAGEMENT
- * ============================================================ */
+// LED BUFFER MANAGEMENT
+
 
 static void leds_clear_buf(void)
 {
@@ -133,13 +116,13 @@ static void rebuild_leds(void)
         leds_set(s_gs.sf_move.to,   COL_SF_TO);
     }
 
-    /* 2. Pending move awaiting confirmation */
+    // pending Move confirmation
     if (s_gs.mds == MDS_AWAITING_CONFIRM && !MOVE_IS_NULL(s_gs.pending_move)) {
         leds_set(s_gs.pending_move.from, COL_CONFIRM_F);
         leds_set(s_gs.pending_move.to,   COL_CONFIRM_T);
     }
 
-    /* 3. Piece-lifted: show valid destinations */
+    // lifted piece
     if (s_gs.mds == MDS_PIECE_LIFTED ||
         s_gs.mds == MDS_CAPTURE_PROGRESS) {
         uint64_t dests = rules_dest_mask(&s_gs.board, s_gs.lifted_sq);
@@ -151,7 +134,7 @@ static void rebuild_leds(void)
         leds_set(s_gs.lifted_sq, COL_MOVE_FROM);
     }
 
-    /* 4. Check — king square pulses (overrides everything) */
+    // Check making the king square blink
     if (board_in_check(&s_gs.board, (piece_color_t)s_gs.current_player)) {
         int ksq = board_king_sq(&s_gs.board,
                                  (piece_color_t)s_gs.current_player);
@@ -159,12 +142,7 @@ static void rebuild_leds(void)
     }
 }
 
-/* ============================================================
- * MOVE INFERENCE
- * When sensor shows a capture (piece gone, destination unchanged),
- * infer destination from game logic.
- * Returns SQ_NONE if ambiguous.
- * ============================================================ */
+//Move inference
 static int infer_capture_dest(int from_sq)
 {
     uint64_t candidates = rules_capture_candidates(&s_gs.board, from_sq,
@@ -175,9 +153,8 @@ static int infer_capture_dest(int from_sq)
     return SQ_NONE;   /* Ambiguous */
 }
 
-/* ============================================================
- * APPLY CONFIRMED MOVE
- * ============================================================ */
+// APPLY CONFIRMED MOVE
+
 static void apply_confirmed_move(move_t m)
 {
     /* Auto-promote to queen (physical board: no promotion UI) */
@@ -190,7 +167,7 @@ static void apply_confirmed_move(move_t m)
         }
     }
 
-    /* Record in UCI history */
+//UCI history
     if (s_gs.history.count < MAX_HALF_MOVES) {
         move_to_uci(m, s_gs.history.entries[s_gs.history.count]);
         s_gs.history.count++;
@@ -206,7 +183,7 @@ static void apply_confirmed_move(move_t m)
     s_gs.enemy_lift_sq = SQ_NONE;
     s_gs.pending_move  = MOVE_NULL;
 
-    /* Invalidate old Stockfish suggestion */
+    /* Invalidate old machine suggestion */
     s_gs.sf_move   = MOVE_NULL;
     s_gs.sf_status = SF_STATUS_IDLE;
 
@@ -218,7 +195,7 @@ static void apply_confirmed_move(move_t m)
 
     rebuild_leds();
 
-    /* Check for game-over conditions */
+    // Check for game-over
     if (rules_is_checkmate(&s_gs.board)) {
         s_gs.phase       = GP_GAME_OVER;
         s_gs.over_reason = GO_CHECKMATE;
@@ -242,10 +219,8 @@ static void apply_confirmed_move(move_t m)
     }
 }
 
-/* ============================================================
- * SENSOR CHANGE PROCESSING
- * Called from game_logic_task when a stable sensor change is detected.
- * ============================================================ */
+// SENSOR CHANGE processing
+
 static void process_sensor_change(uint64_t new_state)
 {
     if (s_gs.phase != GP_PLAYING) return;
@@ -256,9 +231,9 @@ static void process_sensor_change(uint64_t new_state)
 
     switch (s_gs.mds) {
 
-    /* ── IDLE: look for a piece being lifted ─────────────────── */
+    /* IDLE */
     case MDS_IDLE: {
-        if (removed == 0) break;  /* Nothing changed (spurious read) */
+        if (removed == 0) break;  /* if Nothing changed =spurious read */
 
         /* Find the first removed square that belongs to current player */
         uint64_t tmp = removed;
@@ -275,18 +250,15 @@ static void process_sensor_change(uint64_t new_state)
                 return;
             }
         }
-        /* If it's opponent's piece removed (player lifting capture piece first) */
-        if (added == 0) {
-            /* Ignore — might be accidental nudge */
-        }
+        /* If it's opponent's piece removed =player lifting capture piece first */
         break;
     }
 
-    /* ── PIECE_LIFTED: waiting for placement ─────────────────── */
+    /* PIECE_LIFTED and waiting*/
     case MDS_PIECE_LIFTED: {
         int from = s_gs.lifted_sq;
 
-        /* Player put piece back — undo */
+        /* Undo move */
         if (new_state == expected) {
             s_gs.mds       = MDS_IDLE;
             s_gs.lifted_sq = SQ_NONE;
@@ -294,7 +266,7 @@ static void process_sensor_change(uint64_t new_state)
             break;
         }
 
-        /* Normal move: a new square appeared */
+        /* Normal move=new square appeared */
         if (popcount64(added) == 1 && popcount64(removed) == 1) {
             int to = __builtin_ctzll(added);
             if (rules_is_legal(&s_gs.board, from, to, PT_NONE)) {
@@ -312,7 +284,7 @@ static void process_sensor_change(uint64_t new_state)
 
         /* Castling: 2 pieces moved */
         if (popcount64(added) == 2 && popcount64(removed) == 2) {
-            /* King must be one of the removed squares */
+// King replacement
             uint64_t r2 = removed;
             int sq1 = __builtin_ctzll(r2); r2 &= r2-1;
             int sq2 = __builtin_ctzll(r2);
@@ -320,11 +292,10 @@ static void process_sensor_change(uint64_t new_state)
             if (s_gs.board.pieces[sq1].type == PT_KING) { king_sq = sq1; }
             else if (s_gs.board.pieces[sq2].type == PT_KING) { king_sq = sq2; }
             if (king_sq != SQ_NONE) {
-                /* Determine castling direction from added squares */
                 uint64_t a2 = added;
                 int a1 = __builtin_ctzll(a2); a2 &= a2-1;
                 int a3 = __builtin_ctzll(a2);
-                /* King lands on g-file (kingside) or c-file (queenside) */
+                /* King side or queen side*/
                 int king_dest = (SQ_FILE(a1) == 6 || SQ_FILE(a1) == 2) ? a1 : a3;
                 if (rules_is_legal(&s_gs.board, king_sq, king_dest, PT_NONE)) {
                     s_gs.pending_move = (move_t){(int8_t)king_sq,(int8_t)king_dest,PT_NONE};
@@ -335,7 +306,7 @@ static void process_sensor_change(uint64_t new_state)
             break;
         }
 
-        /* En passant: capturing pawn moved + captured pawn removed */
+        /* En passant*/
         if (popcount64(added) == 1 && popcount64(removed) == 2) {
             int to_sq = __builtin_ctzll(added);
             if (to_sq == s_gs.board.en_passant) {
@@ -348,12 +319,12 @@ static void process_sensor_change(uint64_t new_state)
             break;
         }
 
-        /* Capture: piece gone, enemy piece also lifted (player removes enemy first) */
+        /* Capture*/
         if (popcount64(removed) == 2 && popcount64(added) == 0) {
             uint64_t r2 = removed;
             int sq1 = __builtin_ctzll(r2); r2 &= r2-1;
             int sq2 = __builtin_ctzll(r2);
-            /* Identify which is ours and which is enemy */
+            /* Identify which player*/
             bool sq1_ours = (s_gs.board.pieces[sq1].color == (piece_color_t)s_gs.current_player);
             int our_sq    = sq1_ours ? sq1 : sq2;
             int enemy_sq  = sq1_ours ? sq2 : sq1;
@@ -368,12 +339,12 @@ static void process_sensor_change(uint64_t new_state)
         break;
     }
 
-    /* ── CAPTURE_IN_PROGRESS: our piece in hand, enemy removed ── */
+    // Progres na zimanje na piun
     case MDS_CAPTURE_PROGRESS: {
         int from     = s_gs.lifted_sq;
         int enemy_sq = s_gs.enemy_lift_sq;
 
-        /* Our piece placed on the enemy's square */
+        
         if ((new_state & (1ULL << enemy_sq)) &&
             !(new_state & (1ULL << from)) &&
             rules_is_legal(&s_gs.board, from, enemy_sq, PT_NONE)) {
@@ -383,8 +354,7 @@ static void process_sensor_change(uint64_t new_state)
         }
         break;
     }
-
-    /* ── AWAITING_CONFIRM: wait for clock button — handled in button handler ─ */
+/*Aktivacija na saat dugme*/
     case MDS_AWAITING_CONFIRM:
         /* If board goes back to expected, cancel pending move */
         if (new_state == expected) {
@@ -396,12 +366,10 @@ static void process_sensor_change(uint64_t new_state)
     }
 }
 
-/* ============================================================
- * BUTTON EVENT PROCESSING
- * ============================================================ */
+// BUttion events
 static void process_button(button_event_t ev)
 {
-    /* Sleep/wake — handled in any phase */
+    /* Sleep/wake*/
     if (ev == BTN_BOTH_HOLD) {
         ESP_LOGI(TAG, "Both buttons held — entering deep sleep");
         /* Save state */
@@ -418,12 +386,11 @@ static void process_button(button_event_t ev)
         display_message("SLEEP", "Hold both to wake");
         leds_clear();
 
-        /* Wake on either button (active-LOW → wake on LOW) */
+        /* Wake on either button */
         esp_sleep_enable_ext1_wakeup(
             (1ULL << PIN_BTN_P1) | (1ULL << PIN_BTN_P2),
             ESP_EXT1_WAKEUP_ANY_LOW);
         esp_deep_sleep_start();
-        /* Does not return */
     }
 
     if (s_gs.phase == GP_SELECT_SIDE) {
@@ -443,46 +410,45 @@ static void process_button(button_event_t ev)
 
     if (s_gs.phase != GP_PLAYING) return;
 
-    /* Clock button pressed: confirm move and switch turn */
+    /* Clock button pressed*/
     bool is_p1 = (ev == BTN_P1_SHORT);
     bool is_p2 = (ev == BTN_P2_SHORT);
     bool correct_player = (is_p1 && s_gs.current_player == 0) ||
                           (is_p2 && s_gs.current_player == 1);
 
-    if (!correct_player) return;  /* Wrong player pressed clock */
+    if (!correct_player) return; //Proverka koj stisnal dugme
 
-    /* ── Confirm the pending move ─────────────────────────────── */
+    // Pending move
     if (s_gs.mds == MDS_AWAITING_CONFIRM && !MOVE_IS_NULL(s_gs.pending_move)) {
-        /* Stop current player's clock */
-        s_gs.clock_running = false;  /* Temporarily pause */
+        /* Stop current player clock */
+        s_gs.clock_running = false; 
 
         apply_confirmed_move(s_gs.pending_move);
         if (s_gs.phase == GP_GAME_OVER) return;
 
-        /* Start new active player's clock */
+        /* Start new active player clock */
         s_gs.clock_running = true;
 
-        /* Trigger Stockfish if it assists the new active player */
+        
         if ((s_gs.current_player == 0 && s_gs.sf_side == SF_SIDE_WHITE) ||
             (s_gs.current_player == 1 && s_gs.sf_side == SF_SIDE_BLACK)) {
-            s_gs.sf_status = SF_STATUS_THINKING;
-            /* Stockfish request is picked up by game_logic_task */
+        s_gs.sf_status = SF_STATUS_THINKING;
+           
         }
         return;
     }
 
-    /* ── Capture inference: player pressed clock while piece still in hand ─ */
+    // Inferences
     if (s_gs.mds == MDS_PIECE_LIFTED) {
         int cap_dest = infer_capture_dest(s_gs.lifted_sq);
         if (cap_dest != SQ_NONE) {
             s_gs.pending_move = (move_t){(int8_t)s_gs.lifted_sq,
                                          (int8_t)cap_dest, PT_NONE};
             s_gs.mds          = MDS_AWAITING_CONFIRM;
-            /* Re-process as confirmation */
             process_button(ev);
         } else {
             ESP_LOGW(TAG, "Ambiguous capture — cannot confirm");
-            /* Flash invalid colour on all candidate squares */
+           // Invalid mode za site svetla
             uint64_t cands = rules_capture_candidates(&s_gs.board,
                                                        s_gs.lifted_sq,
                                                        s_gs.sensor_occupied);
@@ -493,9 +459,7 @@ static void process_button(button_event_t ev)
     }
 }
 
-/* ============================================================
- * SLEEP WAKE RESTORE
- * ============================================================ */
+// Sleep restore
 static bool restore_from_sleep(void)
 {
     if (rtc_magic != RTC_MAGIC) return false;
@@ -517,7 +481,7 @@ static bool restore_from_sleep(void)
         vTaskDelay(pdMS_TO_TICKS(50));
     }
 
-    /* Full 5-second hold confirmed — restore game state */
+    /* Full 5-second hold confirmed*/
     ESP_LOGI(TAG, "Restoring game from RTC memory");
 
     s_gs.sf_side      = rtc_sf_side;
@@ -532,15 +496,11 @@ static bool restore_from_sleep(void)
     s_gs.phase           = GP_PLAYING;
     s_gs.clock_running   = true;
 
-    rtc_magic = 0;  /* Clear so next boot doesn't restore stale state */
+    rtc_magic = 0;
     return true;
 }
 
-/* ============================================================
- * SENSOR TASK  (Core 0)
- * Polls sensors every BOARD_POLL_MS ms and notifies game_logic_task
- * when a stable change is detected.
- * ============================================================ */
+// Senzori
 void game_sensor_task(void *arg)
 {
     (void)arg;
@@ -559,22 +519,21 @@ void game_sensor_task(void *arg)
         uint64_t current;
         sensors_read(&current);
 
-        /* Always refresh APA102C after HC165 read (shared CLK) */
         gs_lock();
-        leds_write(s_gs.leds);  /* Re-send last LED state */
+        leds_write(s_gs.leds);
         gs_unlock();
 
         uint32_t t = now_ms();
 
         if (current != prev_reading) {
-            /* Board changed — reset stability timer */
+            /* Board changed*/
             prev_reading  = current;
             stable_since  = t;
             stable_pending = true;
         }
 
         if (stable_pending && (t - stable_since) >= BOARD_STABLE_MS) {
-            /* Board has been stable for BOARD_STABLE_MS — process change */
+            /* Board has been stable for BOARD_STABLE_MS*/
             stable_pending = false;
             if (current != stable_reading) {
                 stable_reading = current;
@@ -587,25 +546,22 @@ void game_sensor_task(void *arg)
     }
 }
 
-/* ============================================================
- * GAME LOGIC TASK  (Core 0)
- * Handles button events, clock ticking, and Stockfish requests.
- * ============================================================ */
+// Logikas
 void game_logic_task(void *arg)
 {
     (void)arg;
     uint32_t last_clock_tick = now_ms();
 
     for (;;) {
-        /* ── Process button events ──────────────────────────────── */
+       
         button_event_t ev;
-        while (xQueueReceive(g_button_queue, &ev, 0) == pdTRUE) {
+        while (xQueueReceive(g_button_queue,&ev, 0)==pdTRUE) {
             gs_lock();
             process_button(ev);
             gs_unlock();
         }
 
-        /* ── Clock tick ─────────────────────────────────────────── */
+        // Tick clk
         uint32_t t = now_ms();
         if ((t - last_clock_tick) >= CLOCK_TICK_MS) {
             gs_lock();
@@ -625,12 +581,12 @@ void game_logic_task(void *arg)
             gs_unlock();
         }
 
-        /* ── Starting position check ────────────────────────────── */
+        /*  Starting position check  */
         gs_lock();
         if (s_gs.phase == GP_WAIT_POSITION) {
             uint64_t expected = sensors_start_mask();
             if (s_gs.sensor_occupied == expected) {
-                /* All 32 pieces in starting position — ask for side selection */
+                /* All 32 pieces in starting position*/
                 s_gs.phase = GP_SELECT_SIDE;
                 board_init_start(&s_gs.board);
                 s_gs.expected_occupied = board_expected(&s_gs.board);
@@ -646,7 +602,7 @@ void game_logic_task(void *arg)
         }
         gs_unlock();
 
-        /* ── Stockfish analysis request ─────────────────────────── */
+        /*  Machine analysis request */
         gs_lock();
         bool need_sf = (s_gs.phase == GP_PLAYING &&
                         s_gs.sf_status == SF_STATUS_THINKING &&
@@ -684,12 +640,7 @@ void game_logic_task(void *arg)
     }
 }
 
-/* ============================================================
- * LED TASK  (Core 0)
- * Writes LED buffer to hardware whenever it changes.
- * The sensor task calls leds_write() post-read; this task handles
- * any game-state-triggered changes between sensor polls.
- * ============================================================ */
+// LEDS task
 void game_led_task(void *arg)
 {
     (void)arg;
@@ -697,7 +648,7 @@ void game_led_task(void *arg)
     memset(last_sent, 0, sizeof(last_sent));
 
     for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(50));   /* 20 Hz refresh */
+        vTaskDelay(pdMS_TO_TICKS(50));
         gs_lock();
         bool changed = (memcmp(last_sent, s_gs.leds, sizeof(s_gs.leds)) != 0);
         rgb_t snapshot[64];
@@ -711,16 +662,14 @@ void game_led_task(void *arg)
     }
 }
 
-/* ============================================================
- * DISPLAY TASK  (Core 0)
- * ============================================================ */
+// dispaly task
 void game_display_task(void *arg)
 {
     (void)arg;
     char msg1[32];
 
     for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(200));  /* 5 Hz */
+        vTaskDelay(pdMS_TO_TICKS(200));
 
         gs_lock();
         game_phase_t phase    = s_gs.phase;
@@ -782,9 +731,7 @@ void game_display_task(void *arg)
     }
 }
 
-/* ============================================================
- * GAME INIT
- * ============================================================ */
+// GAME INIT
 
 esp_err_t game_init(void)
 {
@@ -804,7 +751,7 @@ esp_err_t game_init(void)
     s_gs.sf_move      = MOVE_NULL;
     s_gs.battery_pct  = 100;
 
-    /* Attempt wake-from-sleep restore */
+
     if (restore_from_sleep()) {
         ESP_LOGI(TAG, "Resumed from deep sleep");
     } else {
@@ -814,10 +761,10 @@ esp_err_t game_init(void)
         s_gs.clock_ms[1] = GAME_CLOCK_MS;
     }
 
-    /* Precompute chess move tables */
+    // Precompute basics
     rules_init();
 
-    /* ── Create tasks ────────────────────────────────────────── */
+    /*Create tasks*/
     xTaskCreatePinnedToCore(game_sensor_task,  "sensor",
                             TASK_STACK_SENSOR,  NULL,
                             TASK_PRIO_SENSOR,   NULL, CORE_GAME);
@@ -842,7 +789,7 @@ esp_err_t game_init(void)
                             TASK_STACK_BATTERY, NULL,
                             TASK_PRIO_BATTERY,  NULL, CORE_GAME);
 
-    /* Transition out of boot */
+    
     gs_lock();
     if (s_gs.phase == GP_BOOT) {
         s_gs.phase = GP_WAIT_POSITION;

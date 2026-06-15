@@ -1,10 +1,8 @@
-#pragma once
+#pragma once //code reference has been taken from official library sources in order to define
 
 #include "driver/gpio.h"
 
-/* ============================================================
- * GPIO PIN ASSIGNMENTS
- * ============================================================ */
+// GPIO
 #define PIN_BATTERY_ADC     GPIO_NUM_1
 #define PIN_BTN_P1          GPIO_NUM_6
 #define PIN_BTN_P2          GPIO_NUM_7
@@ -15,14 +13,10 @@
 #define PIN_CLK_SHARED      GPIO_NUM_12
 #define PIN_HC165_QH        GPIO_NUM_13
 
-/* ============================================================
- * BIT-BANG TIMING
- * ============================================================ */
+
 #define BB_HALF_CYCLE_US    1
 
-/* ============================================================
- * 74HC165 SHIFT REGISTERS
- * ============================================================ */
+//shift-register
 #define HC165_NUM_CHIPS     8
 #define HC165_TOTAL_BITS    64
 #define HC165_LATCH_US      2
@@ -39,15 +33,12 @@
      0, 1, 2, 3, 4, 5, 6, 7                                \
 }
 
-/* ============================================================
- * APA102C LEDs
- * ============================================================ */
+//LED
 #define LED_COUNT           64
 #define LED_GLOBAL_BRIGHT   0x08
 
-/* ============================================================
- * LED COLOURS
- * ============================================================ */
+/*LED COLOURS
+*/
 #define LED_COLOR_OFF           {  0,   0,   0}
 #define LED_COLOR_MOVE_FROM     {255, 140,   0}
 #define LED_COLOR_MOVE_TO       {  0, 220,   0}
@@ -61,9 +52,7 @@
 #define LED_COLOR_CONFIRM_FROM  {255, 200,   0}
 #define LED_COLOR_CONFIRM_TO    {  0, 255, 100}
 
-/* ============================================================
- * I2C / OLED
- * ============================================================ */
+/* I2c oled*/
 #define I2C_PORT            I2C_NUM_0
 #define I2C_FREQ_HZ         400000
 #define OLED_I2C_ADDR       0x3C
@@ -71,9 +60,7 @@
 #define OLED_HEIGHT         64
 #define OLED_PAGES          (OLED_HEIGHT / 8)
 
-/* ============================================================
- * BATTERY
- * ============================================================ */
+
 #define BATTERY_R1_KOHM         100.0f
 #define BATTERY_R2_KOHM         100.0f
 #define BATTERY_DIV             (BATTERY_R2_KOHM / (BATTERY_R1_KOHM + BATTERY_R2_KOHM))
@@ -84,16 +71,12 @@
 #define BATTERY_SAMPLES         16
 #define BATTERY_POLL_MS         30000
 
-/* ============================================================
- * BUTTONS
- * ============================================================ */
+/*button*/
 #define BTN_DEBOUNCE_MS         20
 #define BTN_SHORT_MAX_MS        1500
 #define SLEEP_HOLD_BOTH_MS      5000
 
-/* ============================================================
- * GAME
- * ============================================================ */
+/* GAME*/
 #define GAME_CLOCK_MS           (10 * 60 * 1000)
 #define CLOCK_TICK_MS           100
 #define BOARD_STABLE_MS         300
@@ -103,21 +86,17 @@
 #define MCU_MAX_HASH_KB         512
 #define MCU_MAX_TASK_STACK      (12 * 1024)
 
-/* Kept for API compatibility with uci.h / game.c */
+
 #define SF_CMD_BUF_SIZE         256
 #define SF_REPLY_BUF_SIZE       512
 #define SF_QUEUE_LEN            16
 #define SF_MOVE_TIMEOUT_MS      15000
 
-/* ============================================================
- * DEEP SLEEP / RTC
- * ============================================================ */
+// deep sleep
 #define RTC_MAGIC               0xCB3D1A7EU
 #define MAX_HALF_MOVES          500
 
-/* ============================================================
- * SQUARE INDEXING
- * ============================================================ */
+// indekuvanje na kvadrati
 #define SQ(file, rank)          ((rank) * 8 + (file))
 #define SQ_FILE(sq)             ((sq) % 8)
 #define SQ_RANK(sq)             ((sq) / 8)
@@ -134,9 +113,7 @@
 #define SQ_G8  SQ(6,7)
 #define SQ_H8  SQ(7,7)
 
-/* ============================================================
- * FREERTOS TASKS
- * ============================================================ */
+// Freertos poredeni naredbi
 #define TASK_PRIO_BUTTON        7
 #define TASK_PRIO_SENSOR        6
 #define TASK_PRIO_LED           6

@@ -21,7 +21,7 @@ void app_main(void)
     ESP_LOGI(TAG, "Chess Board Firmware — ESP32-S3-WROOM-2");
     ESP_LOGI(TAG, "Flash: 32 MB  PSRAM: 16 MB  CPU: 240 MHz");
 
-    /* NVS — required by some IDF components even if we don't use it */
+    /* NVS*/
     esp_err_t nvs_err = nvs_flash_init();
     if (nvs_err == ESP_ERR_NVS_NO_FREE_PAGES ||
         nvs_err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -29,7 +29,7 @@ void app_main(void)
         ESP_ERROR_CHECK(nvs_flash_init());
     }
 
-    /* ── HAL layer ───────────────────────────────────────────── */
+    // Hal
     ESP_ERROR_CHECK(sensors_init());
     ESP_ERROR_CHECK(leds_init());
     ESP_ERROR_CHECK(display_init());
@@ -38,7 +38,7 @@ void app_main(void)
 
     display_message("CHESS BOARD", "Loading engine...");
 
-    /* ── Stockfish UCI engine ─────────────────────────────────── */
+    // UCI engine
     esp_err_t sf_err = uci_init();
     if (sf_err != ESP_OK) {
         ESP_LOGE(TAG, "Stockfish init failed — running without engine");
@@ -46,10 +46,10 @@ void app_main(void)
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
 
-    /* ── Game state machine + tasks ──────────────────────────── */
+    // Moment na igra
     ESP_ERROR_CHECK(game_init());
 
-    /* app_main may now return; FreeRTOS scheduler keeps tasks alive */
+    
     ESP_LOGI(TAG, "Scheduler running — %d tasks",
              (int)uxTaskGetNumberOfTasks());
 }

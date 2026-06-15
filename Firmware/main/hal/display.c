@@ -1,12 +1,3 @@
-/*
- * hal/display.c — SSD1306 128×64 OLED I2C driver
- *
- * Framebuffer: 128 bytes × 8 pages = 1024 bytes in RAM.
- * All drawing goes into the framebuffer; display_flush() sends it.
- * Horizontal addressing mode is used so the whole buffer is written
- * in one I2C transaction.
- */
-
 #include "display.h"
 #include "config.h"
 #include "driver/i2c.h"
@@ -16,18 +7,14 @@
 
 static const char *TAG = "display";
 
-/* ============================================================
- * SSD1306 COMMAND CONSTANTS
- * ============================================================ */
+// SSD1309
 #define SSD_CTRL_CMD  0x00
 #define SSD_CTRL_DATA 0x40
 
-/* ============================================================
- * FRAMEBUFFER
- * ============================================================ */
+
 static uint8_t s_fb[OLED_WIDTH * OLED_PAGES];  /* 1024 bytes */
 
-/* ============================================================
+/* ============================================================ USED CODE REFERENCES FROM WEB FOR THIS SECTION
  * 5×7 ASCII FONT  (characters 0x20–0x7E)
  * Each entry: 5 column bytes. Bit0 = top row, Bit6 = bottom row.
  * Standard Adafruit/Arduino 5×7 font.
@@ -83,9 +70,7 @@ static const uint8_t font5x7[][5] = {
     {0x08,0x08,0x2A,0x1C,0x08}, /* 7E ~ */
 };
 
-/* ============================================================
- * LOW-LEVEL I2C HELPERS
- * ============================================================ */
+// Helper
 
 static esp_err_t i2c_write_cmds(const uint8_t *cmds, size_t n)
 {
@@ -102,10 +87,10 @@ static esp_err_t i2c_write_cmds(const uint8_t *cmds, size_t n)
 
 static void display_flush(void)
 {
-    /* Set column/page range for full-screen write */
+    
     static const uint8_t setup[] = {
-        0x21, 0x00, 0x7F,   /* Column address 0–127 */
-        0x22, 0x00, 0x07,   /* Page address   0–7   */
+        0x21, 0x00, 0x7F,   
+        0x22, 0x00, 0x07,   
     };
     i2c_write_cmds(setup, sizeof(setup));
 
@@ -119,13 +104,11 @@ static void display_flush(void)
     i2c_cmd_link_delete(h);
 }
 
-/* ============================================================
- * FRAMEBUFFER DRAWING PRIMITIVES
- * ============================================================ */
+// Framebuffer
 
 static void fb_clear(void) { memset(s_fb, 0, sizeof(s_fb)); }
 
-/* Set/clear a single pixel (0,0 = top-left) */
+/* Set/clear a single pixel */
 static void fb_pixel(int x, int y, bool on)
 {
     if (x < 0 || x >= OLED_WIDTH || y < 0 || y >= OLED_HEIGHT) return;
@@ -136,7 +119,7 @@ static void fb_pixel(int x, int y, bool on)
     else    s_fb[idx] &= ~(1 << bit);
 }
 
-/* Draw 5×7 character at pixel (x,y), with integer scale factor */
+/* Draw 5×7 character at pixel x,y*/
 static int fb_char(int x, int y, char c, int scale)
 {
     if (c < 0x20 || c > 0x7E) c = '?';
@@ -150,10 +133,10 @@ static int fb_char(int x, int y, char c, int scale)
             }
         }
     }
-    return 6 * scale;  /* advance width including 1-column gap, scaled */
+    return 6 * scale;
 }
 
-/* Draw a null-terminated string; returns pixel width consumed */
+
 static int fb_str(int x, int y, const char *s, int scale)
 {
     int cx = x;
@@ -161,15 +144,13 @@ static int fb_str(int x, int y, const char *s, int scale)
     return cx - x;
 }
 
-/* Draw a horizontal line of `width` pixels */
+// Draw a horizontal line of width pixels
 static void fb_hline(int x, int y, int width)
 {
     for (int i = 0; i < width; i++) fb_pixel(x + i, y, true);
 }
 
-/* ============================================================
- * CLOCK FORMATTER  "MM:SS"
- * ============================================================ */
+//CLK FORMatter
 static void fmt_clock(int32_t ms, char *out)
 {
     if (ms < 0) ms = 0;
@@ -185,13 +166,11 @@ static void fmt_clock(int32_t ms, char *out)
     out[5] = '\0';
 }
 
-/* ============================================================
- * INIT
- * ============================================================ */
+/Init
 
 esp_err_t display_init(void)
 {
-    /* I2C master init */
+
     i2c_config_t conf = {
         .mode             = I2C_MODE_MASTER,
         .sda_io_num       = PIN_I2C_SDA,
@@ -236,9 +215,7 @@ esp_err_t display_init(void)
     return ESP_OK;
 }
 
-/* ============================================================
- * PUBLIC API
- * ============================================================ */
+// PI PUBLIC
 
 void display_clear(void)
 {
@@ -257,8 +234,7 @@ void display_update(int32_t  clock_ms_w,
 {
     fb_clear();
 
-    /* ── Row 0-7: Player labels ──────────────────────────────────── */
-    /* Active player label is bright; inactive is dim (draw inverted block) */
+    // ROw 0-7
     if (active == 0) {
         /* Fill white's label area with white pixels (invert) */
         for (int x = 0; x < 62; x++)
@@ -294,13 +270,8 @@ void display_update(int32_t  clock_ms_w,
         }
     }
 
-    /* ── Row 8-39: Clock digits (scale=3, 3×5-pixel font → ~15×21px) ─ */
-    /*
-     * "MM:SS" = 5 chars × 6 columns × scale3 = 90 pixels wide
-     * Each half: 45 pixels. Centre in 63 px wide half.
-     * Offset: (63 - 5*6*3) / 2 = (63-90)/2 → -13, shift right
-     * Use scale=2 instead: 5×6×2 = 60 px wide, centred in 63: offset 1
-     */
+    /*  Row 8-39: Clock digits (scale=3, 3×5-pixel font → ~15×21px)  */
+    
     char tw[8], tb[8];
     fmt_clock(clock_ms_w, tw);
     fmt_clock(clock_ms_b, tb);
@@ -311,23 +282,23 @@ void display_update(int32_t  clock_ms_w,
     /* Black clock: right half (64–127) at scale 2 */
     fb_str(65, 10, tb, 2);
 
-    /* Vertical divider between halves */
+    
     for (int y = 0; y < 48; y++) fb_pixel(63, y, true);
 
-    /* ── Row 40-47: Separator line ──────────────────────────────── */
+   //Separator
     fb_hline(0, 40, OLED_WIDTH);
 
-    /* ── Row 48-55: Move count + battery ────────────────────────── */
+    /*  Row 48-55: Move count + battery*/
     char status[32];
     snprintf(status, sizeof(status), "M:%d  BAT:%d%%", move_number, battery_pct);
     fb_str(1, 49, status, 1);
 
-    /* ── Row 56-63: Stockfish status ────────────────────────────── */
+    /* Row 56-63: Machine status*/
     if (sf_thinking) {
         fb_str(1, 57, "SF: thinking...", 1);
     } else if (sf_depth > 0) {
         char sf_info[32];
-        /* Score: positive = white ahead. Convert to pawn units */
+       
         float pawns = (float)sf_score_cp / 100.0f;
         snprintf(sf_info, sizeof(sf_info), "SF d%d %+.1fp", sf_depth, pawns);
         fb_str(1, 57, sf_info, 1);

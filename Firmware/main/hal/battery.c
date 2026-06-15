@@ -20,7 +20,7 @@ static int32_t s_samples[BATTERY_SAMPLES];
 static int     s_idx    = 0;
 static bool    s_filled = false;
 
-/* ── One calibrated voltage reading (mV) ─────────────────────────────── */
+/*One calibrated voltage reading (mV)*/
 static int32_t read_mv(void)
 {
     int raw = 0;
@@ -38,7 +38,7 @@ static int32_t read_mv(void)
     return (int32_t)(mv_adc * (BATTERY_R1_KOHM + BATTERY_R2_KOHM) / BATTERY_R2_KOHM);
 }
 
-/* ── Convert mV to percentage ────────────────────────────────────────── */
+/*Convert mV to percentage*/
 static uint8_t mv_to_pct(int32_t mv)
 {
     if (mv >= BATTERY_VMAX_MV) return 100;
@@ -47,7 +47,7 @@ static uint8_t mv_to_pct(int32_t mv)
                      / (BATTERY_VMAX_MV - BATTERY_VMIN_MV));
 }
 
-/* ── Moving average over s_samples[] ─────────────────────────────────── */
+// Avarage od samlping
 static int32_t moving_avg_mv(int32_t new_mv)
 {
     s_samples[s_idx] = new_mv;
@@ -60,7 +60,7 @@ static int32_t moving_avg_mv(int32_t new_mv)
     return (int32_t)(sum / count);
 }
 
-/* ────────────────────────────────────────────────────────────────────── */
+
 
 esp_err_t battery_init(void)
 {
@@ -79,7 +79,6 @@ esp_err_t battery_init(void)
     ESP_ERROR_CHECK(adc_oneshot_config_channel(s_adc_handle,
                                                BATTERY_ADC_CHANNEL, &chan_cfg));
 
-    /* Calibration — curve fitting preferred, fall back to line fitting */
 #if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED
     adc_cali_curve_fitting_config_t cali_cfg = {
         .unit_id  = ADC_UNIT_1,
@@ -102,7 +101,7 @@ esp_err_t battery_init(void)
         ESP_LOGW(TAG, "ADC calibration unavailable — using raw approximation");
     }
 
-    /* Warm-up: fill the moving-average buffer */
+    /* fill the moving-average buffer */
     for (int i = 0; i < BATTERY_SAMPLES; i++) {
         int32_t mv = read_mv();
         if (mv > 0) moving_avg_mv(mv);
@@ -114,7 +113,7 @@ esp_err_t battery_init(void)
     return ESP_OK;
 }
 
-/* ────────────────────────────────────────────────────────────────────── */
+
 
 uint8_t battery_percent(void) { return s_percent; }
 

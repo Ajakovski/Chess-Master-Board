@@ -21,9 +21,8 @@ static MessageBufferHandle_t s_cmd_buf   = NULL;
 static MessageBufferHandle_t s_reply_buf = NULL;
 static volatile bool         s_ready     = false;
 
-/* ============================================================
- * ENGINE-SIDE I/O HOOKS  (called from within mcu-max.c)
- * ============================================================ */
+/*
+ ENGINE-SIDE I/O HOOKS  (called from within mcu-max.c)*/
 
 void uci_engine_getline(char *buf, size_t sz)
 {
@@ -43,9 +42,8 @@ void uci_engine_puts(const char *line)
     xMessageBufferSend(s_reply_buf, line, strlen(line), pdMS_TO_TICKS(20));
 }
 
-/* ============================================================
- * HOST-SIDE HELPERS
- * ============================================================ */
+/*
+HOST-SIDE HELPERS*/
 
 static void send_cmd(const char *cmd)
 {
@@ -64,9 +62,7 @@ static bool recv_reply(char *buf, size_t sz, uint32_t timeout_ms)
     return true;
 }
 
-/* ============================================================
- * ENGINE TASK  (Core 1, 12 KB internal stack)
- * ============================================================ */
+// Engine task
 
 void stockfish_task(void *arg)
 {
@@ -76,10 +72,7 @@ void stockfish_task(void *arg)
     vTaskDelete(NULL);
 }
 
-/* ============================================================
- * INIT + HANDSHAKE
- * ============================================================ */
-
+// INIT  
 esp_err_t uci_init(void)
 {
     static StaticMessageBuffer_t cmd_sb, reply_sb;
@@ -95,7 +88,7 @@ esp_err_t uci_init(void)
         return ESP_ERR_NO_MEM;
     }
 
-    /* ── Launch mcu-max task on Core 1 (12 KB stack, internal RAM) */
+    // Launch mcu-max task on Core 1
     static StackType_t  engine_stack[MCU_MAX_TASK_STACK / sizeof(StackType_t)];
     static StaticTask_t engine_tcb;
     xTaskCreateStaticPinnedToCore(
@@ -109,7 +102,7 @@ esp_err_t uci_init(void)
         CORE_STOCKFISH
     );
 
-    /* ── UCI handshake ────────────────────────────────────────── */
+    // UCI
     char reply[256];
 
     send_cmd("uci");
@@ -148,9 +141,7 @@ esp_err_t uci_init(void)
     return ESP_OK;
 }
 
-/* ============================================================
- * PUBLIC API  (unchanged interface — game.c needs no edits)
- * ============================================================ */
+// API PUBLIC
 
 void uci_send_position(const move_history_t *history)
 {

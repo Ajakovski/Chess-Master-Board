@@ -1,5 +1,5 @@
-#include "mcu-max.h"
-#include "config.h"
+#include "mcu-max.h" // THis code section include implementaiton of a code from the web
+#include "config.h" // license has been applied and used appropriately by the creator of mcu_max engine
 #include "esp_heap_caps.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -8,19 +8,13 @@
 #include <stdio.h>
 #include <ctype.h>
 
-/* ── UCI bridge hooks — explicit forward declarations (defined in uci.c) */
+
 extern void uci_engine_getline(char *buf, size_t sz);
 extern void uci_engine_puts(const char *line);
 
-/* ============================================================
- * CONSTANTS
- * ============================================================ */
+// konstanti
 
-/*
- * config.h defines SQ/SQ_FILE/SQ_RANK for the 8×8 game board.
- * mcu-max uses a 0x88 board with different formulas.
- * Undefine config.h versions before defining our own.
- */
+
 #ifdef SQ
 #undef SQ
 #endif
@@ -31,13 +25,13 @@ extern void uci_engine_puts(const char *line);
 #undef SQ_RANK
 #endif
 
-/* 0x88 square helpers */
+
 #define SQ(f,r)         (uint8_t)(((r) << 4) | (f))
 #define SQ_FILE(s)      ((s) & 7)
 #define SQ_RANK(s)      ((s) >> 4)
 #define ON_BOARD(s)     (!((s) & 0x88))
 
-/* Named squares */
+// Imenueni squares
 #define A1  SQ(0,0)
 #define E1  SQ(4,0)
 #define H1  SQ(7,0)
@@ -59,7 +53,7 @@ extern void uci_engine_puts(const char *line);
 #define BP 9
 #define BN 10
 #define BB 11
-#define BRK 12  /* Black Rook — BR conflicts with Xtensa specreg.h */
+#define BRK 12  
 #define BQ 13
 #define BK 14
 
@@ -80,22 +74,19 @@ extern void uci_engine_puts(const char *line);
 /* Search */
 #define MAX_PLY         20
 #define INF             30000
-#define MATE_BASE       29000   /* MATE_BASE - ply = score for mate in ply moves */
+#define MATE_BASE       29000 
 #define IS_MATE(s)      (abs(s) > 28000)
 
-/* Hash table entry types */
+//
 #define HT_EXACT  0
 #define HT_LOWER  1
 #define HT_UPPER  2
 
-/* Null square */
+
 #define NO_SQ   0xFF
 
-/* ============================================================
- * PIECE VALUES AND TABLES
- * ============================================================ */
+// vrednosti na pinue
 
-/* Centipawn material values indexed by piece code 0-14 */
 static const int16_t PIECE_VAL[16] = {
     0,   /* 0  empty  */
     100, /* 1  WP     */
@@ -115,14 +106,7 @@ static const int16_t PIECE_VAL[16] = {
     0,   /* 15 unused */
 };
 
-/*
- * Piece-square bonus table for white (positive = good for white).
- * Indexed by sq (0x88 format), so only valid squares (& ~0x88) are used.
- * Values in centipawns.  Mirrors are applied for black pieces.
- *
- * Layout is rank 0 (bottom) to rank 7 (top), left to right.
- * Stored in a flat 128-element array matching the 0x88 board.
- */
+
 static const int8_t PST_PAWN[128] = {
      0,  0,  0,  0,  0,  0,  0,  0,  0,0,0,0,0,0,0,0,
      5, 10, 10,-20,-20, 10, 10,  5,  0,0,0,0,0,0,0,0,
@@ -212,9 +196,6 @@ static int pst_score(uint8_t piece, uint8_t sq)
     }
 }
 
-/* ============================================================
- * ZOBRIST HASHING
- * ============================================================ */
 
 static uint64_t s_zobrist_piece[128][16];
 static uint64_t s_zobrist_ep[16];
@@ -239,28 +220,25 @@ static void zobrist_init(void)
     #undef RAND64
 }
 
-/* ============================================================
- * TRANSPOSITION TABLE
- * ============================================================ */
+
 
 typedef struct {
     uint64_t key;
     int16_t  score;
     uint8_t  depth;
-    uint8_t  type;   /* HT_EXACT / HT_LOWER / HT_UPPER */
+    uint8_t  type;
     uint8_t  from;
     uint8_t  to;
     uint8_t  promo;
     uint8_t  _pad;
-} ht_entry_t;        /* 16 bytes */
+} ht_entry_t;//16B
 
 static ht_entry_t *s_ht      = NULL;
-static uint32_t    s_ht_mask = 0;   /* power-of-2 size minus 1 */
-
+static uint32_t    s_ht_mask = 0;
 static void ht_alloc(uint32_t kb)
 {
     uint32_t entries = (kb * 1024U) / sizeof(ht_entry_t);
-    /* Round down to power of 2 */
+    
     uint32_t po2 = 1;
     while (po2 * 2 <= entries) po2 <<= 1;
 
@@ -268,7 +246,7 @@ static void ht_alloc(uint32_t kb)
     s_ht = heap_caps_calloc(po2, sizeof(ht_entry_t),
                              MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     if (!s_ht) {
-        /* Fallback: 64 entries in internal RAM */
+        /* Fallback */
         s_ht   = calloc(64, sizeof(ht_entry_t));
         po2    = 64;
     }
@@ -295,27 +273,25 @@ static inline void ht_store(uint64_t key, int score, int depth,
     e->promo = promo;
 }
 
-/* ============================================================
- * BOARD STATE
- * ============================================================ */
+// momentaln sosotjba na board
 
 typedef struct {
     uint8_t  board[128];
     uint8_t  side;       /* WHITE or BLACK */
     uint8_t  castling;   /* CWK|CWQ|CBK|CBQ */
-    uint8_t  ep_sq;      /* En passant target, NO_SQ if none */
+    uint8_t  ep_sq;      /* En passant target*/
     uint64_t hash;
 } pos_t;
 
-static pos_t s_pos;      /* Current live position */
+static pos_t s_pos;
 
-/* Incrementally update hash on piece set/clear */
+
 static inline void hash_piece(pos_t *p, uint8_t sq, uint8_t piece)
 {
     p->hash ^= s_zobrist_piece[sq][(uint8_t)piece & 15];
 }
 
-/* Full hash rebuild from scratch */
+// hash rebiold
 static void rebuild_hash(pos_t *p)
 {
     p->hash = 0;
@@ -330,9 +306,7 @@ static void rebuild_hash(pos_t *p)
         p->hash ^= s_zobrist_black;
 }
 
-/* ============================================================
- * FEN PARSING
- * ============================================================ */
+// FEN
 
 static const char *START_FEN =
     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -356,7 +330,7 @@ static void pos_set_fen(pos_t *p, const char *fen)
     p->castling = 0;
     p->ep_sq    = NO_SQ;
 
-    /* ── Piece placement: FEN rank 8 down to rank 1 ─────────── */
+    // Piece placement
     int rank = 7, file = 0;
     const char *ptr = fen;
     while (*ptr && *ptr != ' ') {
@@ -375,13 +349,13 @@ static void pos_set_fen(pos_t *p, const char *fen)
         ptr++;
     }
 
-    /* ── Active color ────────────────────────────────────────── */
+    // active color
     while (*ptr == ' ') ptr++;
     p->side = (*ptr == 'b') ? BLACK : WHITE;
     while (*ptr && *ptr != ' ') ptr++;
     while (*ptr == ' ') ptr++;
 
-    /* ── Castling ────────────────────────────────────────────── */
+    // castle
     while (*ptr && *ptr != ' ') {
         if      (*ptr == 'K') p->castling |= CWK;
         else if (*ptr == 'Q') p->castling |= CWQ;
@@ -391,7 +365,7 @@ static void pos_set_fen(pos_t *p, const char *fen)
     }
     while (*ptr == ' ') ptr++;
 
-    /* ── En passant ──────────────────────────────────────────── */
+    // en passant
     if (*ptr != '-') {
         int ep_file = ptr[0] - 'a';
         int ep_rank = ptr[1] - '1';
@@ -402,12 +376,9 @@ static void pos_set_fen(pos_t *p, const char *fen)
     rebuild_hash(p);
 }
 
-/* ============================================================
- * MAKE / UNMAKE  (copy-make approach)
- * ============================================================ */
+// unmake and make
 
-/* Apply a UCI move string ("e2e4", "e7e8q", etc.) to position p.
- * Returns false if the move string is malformed. */
+
 static bool pos_apply_uci(pos_t *p, const char *mv)
 {
     if (!mv || strlen(mv) < 4) return false;
@@ -435,7 +406,7 @@ static bool pos_apply_uci(pos_t *p, const char *mv)
     p->board[from] = EMPTY;
     hash_piece(p, to, mover);
 
-    /* ── Castling: move rook ─────────────────────────────────── */
+    // rook move caslte
     if (mtype == 6 /* KING */) {
         int df = ft - ff;
         if (df == 2) {
@@ -458,17 +429,17 @@ static bool pos_apply_uci(pos_t *p, const char *mv)
         else                  p->castling &= ~(CBK | CBQ);
     }
 
-    /* ── En passant capture ──────────────────────────────────── */
+    /* en passant capture*/
     p->ep_sq = NO_SQ;
     if (mtype == 1 /* PAWN */) {
-        /* En passant capture */
+
         if (ft != ff && !captured) {
-            int cap_rank = rf;   /* Captured pawn is on same rank as FROM */
+            int cap_rank = rf;   
             uint8_t cap_sq = SQ(ft, cap_rank);
             hash_piece(p, cap_sq, p->board[cap_sq]);
             p->board[cap_sq] = EMPTY;
         }
-        /* Set new EP target on double push */
+        
         int dr = rt - rf;
         if (dr == 2 || dr == -2) {
             p->ep_sq = SQ(ff, rf + dr / 2);
@@ -489,57 +460,55 @@ static bool pos_apply_uci(pos_t *p, const char *mv)
         }
     }
 
-    /* ── Revoke castling rights on rook moves / captures ──────── */
+    /*Revoke castling rights on rook moves or captured*/
     if (from == SQ(0,0) || to == SQ(0,0)) p->castling &= ~CWQ;
     if (from == SQ(7,0) || to == SQ(7,0)) p->castling &= ~CWK;
     if (from == SQ(0,7) || to == SQ(0,7)) p->castling &= ~CBQ;
     if (from == SQ(7,7) || to == SQ(7,7)) p->castling &= ~CBK;
 
-    /* ── Update hash with new castle/EP state ────────────────── */
+    // updejtiran hash u zavisnost na caslte ili enpasant
     p->hash ^= s_zobrist_castling[p->castling & 15];
     if (p->ep_sq != NO_SQ)
         p->hash ^= s_zobrist_ep[SQ_FILE(p->ep_sq) & 15];
 
-    /* ── Switch sides ───────────────────────────────────────── */
+    
     p->side ^= 1;
     p->hash ^= s_zobrist_black;
     return true;
 }
 
-/* ============================================================
- * ATTACK DETECTION
- * ============================================================ */
+//Detekcija za napad
 
 static bool sq_attacked(const pos_t *p, uint8_t sq, uint8_t by_color)
 {
-    uint8_t ep = MAKE_PIECE(1, by_color);   /* enemy pawn   */
-    uint8_t en = MAKE_PIECE(2, by_color);   /* enemy knight */
-    uint8_t eb = MAKE_PIECE(3, by_color);   /* enemy bishop */
-    uint8_t er = MAKE_PIECE(4, by_color);   /* enemy rook   */
-    uint8_t eq = MAKE_PIECE(5, by_color);   /* enemy queen  */
-    uint8_t ek = MAKE_PIECE(6, by_color);   /* enemy king   */
+    uint8_t ep = MAKE_PIECE(1, by_color); 
+    uint8_t en = MAKE_PIECE(2, by_color); 
+    uint8_t eb = MAKE_PIECE(3, by_color); 
+    uint8_t er = MAKE_PIECE(4, by_color); 
+    uint8_t eq = MAKE_PIECE(5, by_color); 
+    uint8_t ek = MAKE_PIECE(6, by_color); 
 
-    /* ── Pawn attacks ───────────────────────────────────────── */
+    // napad so piun
     if (by_color == WHITE) {
-        /* White pawn at sq-15 or sq-17 attacks sq */
+        
         uint8_t s1 = sq - 15, s2 = sq - 17;
         if (ON_BOARD(s1) && p->board[s1] == ep) return true;
         if (ON_BOARD(s2) && p->board[s2] == ep) return true;
     } else {
-        /* Black pawn at sq+15 or sq+17 attacks sq */
+        
         uint8_t s1 = sq + 15, s2 = sq + 17;
         if (ON_BOARD(s1) && p->board[s1] == ep) return true;
         if (ON_BOARD(s2) && p->board[s2] == ep) return true;
     }
 
-    /* ── Knight attacks ─────────────────────────────────────── */
+    /*  Knight attacks*/
     static const int8_t N_DELTA[8] = {33, 31, 18, 14, -14, -18, -31, -33};
     for (int i = 0; i < 8; i++) {
         uint8_t ns = sq + (uint8_t)N_DELTA[i];
         if (ON_BOARD(ns) && p->board[ns] == en) return true;
     }
 
-    /* ── Diagonal rays (bishop + queen) ─────────────────────── */
+    /*  Diagonal attack*/
     static const int8_t D_DELTA[4] = {17, 15, -15, -17};
     for (int d = 0; d < 4; d++) {
         uint8_t s = sq;
@@ -551,7 +520,7 @@ static bool sq_attacked(const pos_t *p, uint8_t sq, uint8_t by_color)
         }
     }
 
-    /* ── Orthogonal rays (rook + queen) ─────────────────────── */
+    /*orthogal attack*/
     static const int8_t O_DELTA[4] = {16, -16, 1, -1};
     for (int d = 0; d < 4; d++) {
         uint8_t s = sq;
@@ -563,7 +532,7 @@ static bool sq_attacked(const pos_t *p, uint8_t sq, uint8_t by_color)
         }
     }
 
-    /* ── King adjacency ─────────────────────────────────────── */
+    /* king adjenc*/
     static const int8_t K_DELTA[8] = {16,-16,1,-1,17,15,-15,-17};
     for (int i = 0; i < 8; i++) {
         uint8_t ks = sq + (uint8_t)K_DELTA[i];
@@ -574,21 +543,17 @@ static bool sq_attacked(const pos_t *p, uint8_t sq, uint8_t by_color)
 
 static inline bool in_check(const pos_t *p)
 {
-    /* Find king of side-to-move */
+    
     uint8_t our_king = MAKE_PIECE(6, p->side);
     for (int sq = 0; sq < 128; sq++) {
         if (ON_BOARD(sq) && p->board[sq] == our_king) {
             return sq_attacked(p, (uint8_t)sq, p->side ^ 1);
         }
     }
-    return false; /* No king found — shouldn't happen */
+    return false; 
 }
 
-/* ============================================================
- * EVALUATION
- * Returns score from the current side's perspective.
- * ============================================================ */
-
+// score
 static int evaluate(const pos_t *p)
 {
     int score = 0;
@@ -605,19 +570,15 @@ static int evaluate(const pos_t *p)
     return (p->side == WHITE) ? score : -score;
 }
 
-/* ============================================================
- * MOVE GENERATION AND ORDERING
- * ============================================================ */
-
+// move generator
 typedef struct {
     uint8_t from;
     uint8_t to;
-    uint8_t promo;   /* Promotion piece type (1-6), 0 if none */
-    int16_t score;   /* Move ordering score */
+    uint8_t promo;
+    int16_t score; 
 } smove_t;
 
-/* Generate all pseudo-legal moves for position p.
- * Returns count; moves[] must hold at least 256 entries. */
+/* Generate all pseudo-legal moves for position p.*/
 static int gen_moves(const pos_t *p, smove_t *moves)
 {
     int n = 0;
@@ -626,14 +587,14 @@ static int gen_moves(const pos_t *p, smove_t *moves)
     /* Direction tables */
     static const int8_t B_DIR[] = { 17, 15,-15,-17, 0 };
     static const int8_t R_DIR[] = { 16, 1, -1, -16, 0 };
-    static const int8_t Q_DIR[] = { 17,16,15,1,-1,-15,-16,-17, 0 };
+    static const int8_t Q_DIR[] ={ 17,16,15,1,-1,-15,-16,-17, 0 };
     static const int8_t K_DIR[] = { 17,16,15,1,-1,-15,-16,-17, 0 };
-    static const int8_t N_DIR[] = { 33,31,18,14,-14,-18,-31,-33, 0 };
+    static const int8_t N_DIR[]= { 33,31,18,14,-14,-18,-31,-33, 0 };
 
     #define ADD_MOVE(F,T,PR) do { \
         if (n < 255) { moves[n].from=(F); moves[n].to=(T); \
-                       moves[n].promo=(PR); moves[n].score=0; n++; } \
-    } while(0)
+                    moves[n].promo=(PR); moves[n].score=0; n++; } \
+    }while(0)
 
     for (int sq = 0; sq < 128; sq++) {
         if (!ON_BOARD(sq)) continue;
@@ -642,7 +603,7 @@ static int gen_moves(const pos_t *p, smove_t *moves)
 
         uint8_t ptype = PIECE_TYPE(pc);
 
-        /* ── Pawns ────────────────────────────────────────────── */
+        //piun
         if (ptype == 1) {
             int dir  = (our_color == WHITE) ? 16 : -16;
             int start_rank = (our_color == WHITE) ? 1 : 6;
@@ -681,7 +642,7 @@ static int gen_moves(const pos_t *p, smove_t *moves)
             continue;
         }
 
-        /* ── Knights ──────────────────────────────────────────── */
+        /* knight*/
         if (ptype == 2) {
             for (int i = 0; N_DIR[i]; i++) {
                 uint8_t to = (uint8_t)((int)sq + N_DIR[i]);
@@ -691,7 +652,7 @@ static int gen_moves(const pos_t *p, smove_t *moves)
             continue;
         }
 
-        /* ── Sliding pieces ───────────────────────────────────── */
+        /* Sliding pieces*/
         const int8_t *dirs = NULL;
         bool sliding = true;
         if (ptype == 3) dirs = B_DIR;
@@ -712,7 +673,7 @@ static int gen_moves(const pos_t *p, smove_t *moves)
         }
     }
 
-    /* ── Castling ─────────────────────────────────────────────── */
+    /*caslte */
     if (our_color == WHITE) {
         uint8_t enemy = BLACK;
         if ((p->castling & CWK) &&
@@ -735,14 +696,14 @@ static int gen_moves(const pos_t *p, smove_t *moves)
             p->board[SQ(5,7)] == EMPTY && p->board[SQ(6,7)] == EMPTY &&
             !sq_attacked(p, SQ(4,7), enemy) &&
             !sq_attacked(p, SQ(5,7), enemy) &&
-            !sq_attacked(p, SQ(6,7), enemy))
+            !sq_attacked(p,SQ(6,7), enemy))
             ADD_MOVE(SQ(4,7), SQ(6,7), 0);
 
         if ((p->castling & CBQ) &&
             p->board[SQ(3,7)] == EMPTY && p->board[SQ(2,7)] == EMPTY &&
             p->board[SQ(1,7)] == EMPTY &&
             !sq_attacked(p, SQ(4,7), enemy) &&
-            !sq_attacked(p, SQ(3,7), enemy) &&
+            !sq_attacked(p,SQ(3,7), enemy) &&
             !sq_attacked(p, SQ(2,7), enemy))
             ADD_MOVE(SQ(4,7), SQ(2,7), 0);
     }
@@ -803,15 +764,13 @@ static void move_to_uci(smove_t m, char *out)
     }
 }
 
-/* ============================================================
- * SEARCH
- * ============================================================ */
+//search
 
 static volatile bool  s_stop;
-static smove_t        s_root_best;   /* Best move from completed iteration */
+static smove_t        s_root_best;
 static long           s_nodes;
 
-/* Quiescence search — only captures */
+// Quiescence search 
 static int quiesce(pos_t pos, int alpha, int beta)
 {
     s_nodes++;
@@ -827,15 +786,13 @@ static int quiesce(pos_t pos, int alpha, int beta)
     sort_moves(moves, n);
 
     for (int i = 0; i < n; i++) {
-        if (pos.board[moves[i].to] == EMPTY) continue; /* Quiet move */
+        if (pos.board[moves[i].to] == EMPTY) continue;
         pos_t child = pos;
         char mv_str[6];
         move_to_uci(moves[i], mv_str);
         pos_apply_uci(&child, mv_str);
         if (in_check(&child) && child.side != pos.side) {
-            /* Illegal move (left own king in check) — skip */
-            /* Actually after apply, child.side is flipped.
-             * We need to check if the side that JUST MOVED is in check. */
+            //Illegal move
             pos_t check_p = child;
             check_p.side ^= 1;
             if (in_check(&check_p)) continue;
@@ -847,7 +804,7 @@ static int quiesce(pos_t pos, int alpha, int beta)
     return alpha;
 }
 
-/* Negamax with alpha-beta, returns score from current side's perspective */
+//
 static int negamax(pos_t pos, int alpha, int beta, int depth, int ply)
 {
     s_nodes++;
@@ -885,10 +842,10 @@ static int negamax(pos_t pos, int alpha, int beta, int depth, int ply)
         move_to_uci(moves[i], mv_str);
         pos_apply_uci(&child, mv_str);
 
-        /* Legality check: did we leave own king in check? */
+        /* Legality check*/
         {
             pos_t check_pos = child;
-            check_pos.side ^= 1;   /* Switch back to the side that just moved */
+            check_pos.side ^= 1;  
             if (in_check(&check_pos)) continue;
         }
         legal_moves++;
@@ -920,7 +877,7 @@ static int negamax(pos_t pos, int alpha, int beta, int depth, int ply)
     return best_score;
 }
 
-/* Iterative deepening search.  Fills s_root_best with best move. */
+/* Iterative deepening search*/
 static int search(int max_depth, long max_nodes)
 {
     s_stop  = false;
@@ -932,13 +889,13 @@ static int search(int max_depth, long max_nodes)
         smove_t prev_best = s_root_best;
         int score = negamax(s_pos, -INF, INF, depth, 0);
         if (s_stop) {
-            /* Restore best move from completed shallower search */
+           
             s_root_best = prev_best;
             break;
         }
         final_score = score;
 
-        /* Emit info line */
+        
         char info[128];
         char mv[6];
         move_to_uci(s_root_best, mv);
@@ -953,9 +910,7 @@ static int search(int max_depth, long max_nodes)
     return final_score;
 }
 
-/* ============================================================
- * UCI LOOP
- * ============================================================ */
+//UCi loop
 
 void mcumax_uci_loop(void)
 {
@@ -972,10 +927,10 @@ void mcumax_uci_loop(void)
     for (;;) {
         uci_engine_getline(line, sizeof(line));
 
-        /* ── uci ───────────────────────────────────────────── */
+       
         if (strncmp(line, "uci", 3) == 0) {
             uci_engine_puts("id name mcu-max");
-            uci_engine_puts("id author H.G.Muller / Gissio / chess-board-fw");
+        uci_engine_puts("id author H.G.Muller / Gissio / chess-board-fw");
             snprintf(reply, sizeof(reply),
                      "option name Hash type spin default %d min 1 max 256",
                      MCU_MAX_HASH_KB / 1024);
@@ -986,21 +941,21 @@ void mcumax_uci_loop(void)
             uci_engine_puts(reply);
             uci_engine_puts("uciok");
 
-        /* ── setoption ─────────────────────────────────────── */
+       
         } else if (strncmp(line, "setoption name Hash value ", 26) == 0) {
             int mb = atoi(line + 26);
             if (mb >= 1 && mb <= 256) ht_alloc((uint32_t)mb * 1024);
 
-        /* ── isready ───────────────────────────────────────── */
+        
         } else if (strncmp(line, "isready", 7) == 0) {
             uci_engine_puts("readyok");
 
-        /* ── ucinewgame ────────────────────────────────────── */
+       
         } else if (strncmp(line, "ucinewgame", 10) == 0) {
             if (s_ht) memset(s_ht, 0, (s_ht_mask + 1) * sizeof(ht_entry_t));
             pos_set_fen(&s_pos, START_FEN);
 
-        /* ── position ──────────────────────────────────────── */
+        
         } else if (strncmp(line, "position ", 9) == 0) {
             const char *p = line + 9;
 
@@ -1010,7 +965,7 @@ void mcumax_uci_loop(void)
             } else if (strncmp(p, "fen ", 4) == 0) {
                 p += 4;
                 pos_set_fen(&s_pos, p);
-                /* Advance past the FEN fields (6 space-separated tokens) */
+                
                 int spaces = 0;
                 while (*p && spaces < 6) {
                     if (*p == ' ') spaces++;
@@ -1018,7 +973,7 @@ void mcumax_uci_loop(void)
                 }
             }
 
-            /* Apply move list */
+            
             if (*p && strncmp(p, " moves ", 7) == 0) p += 7;
             else if (*p && strncmp(p, "moves ", 6) == 0) p += 6;
             while (*p) {
@@ -1031,7 +986,7 @@ void mcumax_uci_loop(void)
                 pos_apply_uci(&s_pos, mv);
             }
 
-        /* ── go ────────────────────────────────────────────── */
+        
         } else if (strncmp(line, "go", 2) == 0) {
             int depth     = SF_SEARCH_DEPTH;
             long max_nodes = 0;
@@ -1051,15 +1006,15 @@ void mcumax_uci_loop(void)
             snprintf(reply, sizeof(reply), "bestmove %s", mv_str);
             uci_engine_puts(reply);
 
-        /* ── stop ──────────────────────────────────────────── */
+        /*stop*/
         } else if (strncmp(line, "stop", 4) == 0) {
             s_stop = true;
 
-        /* ── quit ──────────────────────────────────────────── */
+        /* quit */
         } else if (strncmp(line, "quit", 4) == 0) {
             return;
         }
 
-        taskYIELD();  /* Be polite to other FreeRTOS tasks */
+        taskYIELD();
     }
 }

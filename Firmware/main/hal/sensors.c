@@ -7,13 +7,12 @@
 
 static const char *TAG = "sensors";
 
-/* ── Fast register-level GPIO for bit-bang (pins 0-31 only) ─────────── */
+
 #define _SET(pin)  REG_WRITE(GPIO_OUT_W1TS_REG, 1UL << (pin))
 #define _CLR(pin)  REG_WRITE(GPIO_OUT_W1TC_REG, 1UL << (pin))
-#define _RD(pin)   ((REG_READ(GPIO_IN_REG) >> (pin)) & 1U)
+#define _RD(pin) ((REG_READ(GPIO_IN_REG) >> (pin)) & 1U)
 
-/* ── Sensor-bit → square-index lookup table ─────────────────────────── */
-/* Matches SENSOR_MAP_DEFAULT from config.h.  Adjust for PCB routing.   */
+// sensor bit mapirane
 static const int8_t s_sensor_map[HC165_TOTAL_BITS] = SENSOR_MAP_DEFAULT;
 
 /* ────────────────────────────────────────────────────────────────────── */
@@ -21,24 +20,24 @@ static const int8_t s_sensor_map[HC165_TOTAL_BITS] = SENSOR_MAP_DEFAULT;
 esp_err_t sensors_init(void)
 {
     gpio_config_t out_cfg = {
-        .pin_bit_mask = (1ULL << PIN_HC165_PL),
-        .mode         = GPIO_MODE_OUTPUT,
-        .pull_up_en   = GPIO_PULLUP_DISABLE,
+        .pin_bit_mask = (1ULL<< PIN_HC165_PL),
+        .mode      = GPIO_MODE_OUTPUT,
+        .pull_up_en  = GPIO_PULLUP_DISABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type    = GPIO_INTR_DISABLE,
+        .intr_type   = GPIO_INTR_DISABLE,
     };
     ESP_ERROR_CHECK(gpio_config(&out_cfg));
 
     gpio_config_t in_cfg = {
         .pin_bit_mask = (1ULL << PIN_HC165_QH),
         .mode         = GPIO_MODE_INPUT,
-        .pull_up_en   = GPIO_PULLUP_ENABLE,  /* Fail-safe: no piece if wire break */
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type    = GPIO_INTR_DISABLE,
+        .pull_up_en   =GPIO_PULLUP_ENABLE,  
+        .pull_down_en= GPIO_PULLDOWN_DISABLE,
+        .intr_type= GPIO_INTR_DISABLE,
     };
     ESP_ERROR_CHECK(gpio_config(&in_cfg));
 
-    /* CLK and MOSI are configured by leds_init(); verify they exist */
+    
     gpio_config_t clk_cfg = {
         .pin_bit_mask = (1ULL << PIN_CLK_SHARED) | (1ULL << PIN_APA_DATA),
         .mode         = GPIO_MODE_OUTPUT,
@@ -49,15 +48,14 @@ esp_err_t sensors_init(void)
     ESP_ERROR_CHECK(gpio_config(&clk_cfg));
 
     /* Safe initial states */
-    _SET(PIN_HC165_PL);   /* PL HIGH = shift mode (no latch) */
-    _CLR(PIN_CLK_SHARED); /* CLK idle LOW                    */
-    _CLR(PIN_APA_DATA);   /* MOSI idle LOW                   */
+    _SET(PIN_HC165_PL);  
+    _CLR(PIN_CLK_SHARED); 
+    _CLR(PIN_APA_DATA);   
 
     ESP_LOGI(TAG, "HC165 sensor chain ready (%d bits)", HC165_TOTAL_BITS);
     return ESP_OK;
 }
 
-/* ────────────────────────────────────────────────────────────────────── */
 
 void sensors_read(uint64_t *occupied)
 {
@@ -66,12 +64,11 @@ void sensors_read(uint64_t *occupied)
 
     _CLR(PIN_APA_DATA);
 
-    /* ── 1. Latch all 64 sensor inputs simultaneously ─────────────── */
-    _CLR(PIN_HC165_PL);            /* PL LOW → load parallel inputs   */
+    // Povlekuvanje na data od site senzori
+    _CLR(PIN_HC165_PL);   
     ets_delay_us(HC165_LATCH_US);
-    _SET(PIN_HC165_PL);            /* PL HIGH → shift mode            */
-    ets_delay_us(1);               /* Tco setup before first read     */
-
+    _SET(PIN_HC165_PL);     
+    ets_delay_us(1); 
 
     for (int i = 0; i < HC165_TOTAL_BITS; i++) {
         /* Read current Q7 */
@@ -88,13 +85,13 @@ void sensors_read(uint64_t *occupied)
         }
     }
 
-    /* Ensure CLK returns to idle LOW */
+
     _CLR(PIN_CLK_SHARED);
 
 
     uint64_t occ = 0;
     for (int i = 0; i < HC165_TOTAL_BITS; i++) {
-        if (!(raw & (1ULL << i))) {          /* Active-LOW inversion */
+        if (!(raw & (1ULL << i))) {   
             int sq = s_sensor_map[i];
             if (sq >= 0 && sq < 64) {
                 occ |= (1ULL << sq);
