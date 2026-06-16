@@ -409,7 +409,7 @@ Key design requirements met:
 ### Clock PCB
 <img src="./Pictures/Clock PCBA.png" width="50%">
 
-*Sorry for not including every 3D model, i had issues with the library assignment. Folder will be included for each module*
+*Sorry for not including every 3D model (2.23" OLED, 2 push buttons and the BQ2407RGT charger). The folders that i managed to find from the web didn't have a 3D .step model*
 
 </div>
 
@@ -422,7 +422,7 @@ Key design requirements met:
 - Tolerances given accordingly
 - Chess Pieces are made out of PLA
 
-*Feel free to change the materials according to your desire*
+*Feel free to change the material type according to your desire but PETG is most recommended for transparency*
 
 ---
 
