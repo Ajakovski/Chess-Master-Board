@@ -65,7 +65,7 @@ The project is also an increidible journey into embedded hardware and PCB design
 
 ## Hardware
 
-*** Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware***
+***Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware***
 
 ### 1. Order the PCBs and 3D Model
 
@@ -121,7 +121,7 @@ Recommended tools:
 
 Solder the power subsystem in order - validate each stage before starting the next:
 
-- **U3** (BQ24074RGT) - LiOn charger, VQFN-16. Solder with hot air; confirm EPAD contact/
+- **U3** (BQ24074RGT) - Li-Ion charger, VQFN-16. Solder with hot air; confirm EPAD contact/
 - **TH1** (NTC thermistor) - battery temperature input for the charger IC
 (Notice: If you are unable to find an NTC thermisto, a 10K ohm resistor will work just fine as a subsitude)
 - **U4** (TPS61023DRLT) + **1uH1** (XEL4030-102MEC) - 5V boost converter for LED rail.
@@ -262,7 +262,7 @@ Exit with 'Ctrl+]'.
 | U143 | Level Shifter | SN74AHCT125D | SOIC-14 | 1 | $1.2 | [Ti](https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125D) |
 | DS2 | OLED Display | 128×32 2.23" I²C | SSD1305 | 1 | $9.5 | [AliExpress](https://www.aliexpress.com/item/1005008489357042.html?spm=a2g0o.productlist.main.9.1cd31P5n1P5nfd&algo_pvid=10006fad-7505-426f-8c02-2c3dbc745dfc&algo_exp_id=10006fad-7505-426f-8c02-2c3dbc745dfc-8&pdp_ext_f=%7B%22order%22%3A%229%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21567.22%21567.22%21%21%2165.40%2165.40%21%40212e520f17815127163675148eea9b%2112000045367691230%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=1Bi8k4hGK8K7&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008489357042%7C_p_origin_prod%3A#nav-description) |
 | BT1, BT2 | 18650 Battery Holder | Keystone 1043 | THT | 2 | $5.82 | [Mouser](https://www.mouser.com/ProductDetail/Keystone-Electronics/1043?utm_campaign=mouser&qs=%2F7TOpeL5Mz6j%2FnxeOA1rsg%3D%3D&utm_medium=online&utm_source=snapedaonline&utm_content=modelunipart_id=214578&manufacturer=Keystone) |
-| U3 | LiOn Charger IC | BQ24074RGT | VQFN-16 | 1 | $2.48 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/BQ24074RGTR/2047269) |
+| U3 | Li-Ion Charger IC | BQ24074RGT | VQFN-16 | 1 | $2.48 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/BQ24074RGTR/2047269) |
 | U4 | Boost Converter (5V) | TPS61023DRLT | SOT-6 | 1 | $1.2 | [Ti](https://www.ti.com/product/TPS61023/part-details/TPS61023DRLT?HQS=ocb-tistore-invf-buynowlink_model-invf-store-snapeda-wwe) |
 | 1uH1 | Power Inductor | XEL4030-102MEC (1µH) | XEL4030 | 1 | $2.17 | [Mouser](https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=4653188&manufacturer=Coilcraft&part_name=XEL4030-102MEC&search_term=None) |
 | U5 | 3.3V LDO Regulator | AP2112K-3.3TRG1 | SOT-25 | 1 | $0.25 | [DigiKey](https://www.digikey.com/en/products/detail/diodes-incorporated/AP2112K-3-3TRG1/4470746?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
@@ -292,6 +292,8 @@ Exit with 'Ctrl+]'.
 | Neodymium magnets | Rectangular | N35-N52 | 5x10x2mm | 6(100) | $7.6 | [Amazon](https://www.amazon.com/dp/B0GK8XXS5P/ref=sspa_dk_detail_right_aax_0?sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfcmlnaHRfc2hhcmVk&th=1) |
 | BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
 | X | FFC Connector | 15-pin | 500mm | 3 | $5.79 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
+| X | M3 Screws | M3 | 10mm | 50 | $5 | [AliExpress](https://www.aliexpress.com/item/33028169759.html?spm=a2g0o.productlist.main.48.53865b5fAhCGwY&algo_pvid=629709d9-a21f-428c-aced-7c4376ca24fc&algo_exp_id=629709d9-a21f-428c-aced-7c4376ca24fc-45&pdp_ext_f=%7B%22order%22%3A%22366%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21AED%215.37%213.75%21%21%211.42%210.99%21%402102f0cc17811144146558226e9158%2112000025630870148%21sea%21AE%216550317333%21ABX%211%210%21n_tag%3A-29910%3Bd%3A9c10be3c%3Bm03_new_user%3A-29895%3BpisId%3A5000000204469934&curPageLogUid=FOQQuqUMxISX&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A33028169759%7C_p_origin_prod%3A&gatewayAdapt=ara2glo) |
+| X | M3 Nuts | M3 | | 25 | $3 | [AliExpress](https://www.aliexpress.com/item/32978551452.html?spm=a2g0o.productlist.main.1.7c154ece9D2Th2&algo_pvid=84088476-8a89-43b9-a92f-5755b7a463e3&algo_exp_id=84088476-8a89-43b9-a92f-5755b7a463e3-0&pdp_ext_f=%7B%22order%22%3A%222796%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21254.64%21254.06%21%21%214.36%214.35%21%40210156fc17816089059113153e1450%2112000015835866719%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=wct4KENxKUYh&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A32978551452%7C_p_origin_prod%3A)|
 | X | Main PCB | | |5|76$|[PCBWay](https://www.pcbway.com/)|
 |X|Upper PCB| | |5|130$|[JLCPCB](https://jlcpcb.com/)|
 |X|Clock PCB| | |5|25$|[PCBWay](https://www.pcbway.com/)|
@@ -299,7 +301,7 @@ Exit with 'Ctrl+]'.
 |X|Chess Board Lid 3D| | |1|$20|[3dprintmk](https://www.3dprintmk.com)|
 |X|Buttons 3D| | |2|$7.5|[3dprintmk](https://www.3dprintmk.com)|
 |X|Chess Pieces 3D| | |2|$15|[3dprintmk](https://www.3dprintmk.com)|
-| **TOTAL** | *approx. $518* | | | | | |
+| **TOTAL** | *approx. $526* | | | | | |
  
 
 *Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
@@ -312,7 +314,7 @@ Exit with 'Ctrl+]'.
 - **Onboard Chess Engine** - mcu-max, ~1800-2000 ELO at depth 8-10, fully integrated
 - **Dual Player Clocks** - dedicated hardware button per player
 - **OLED Display** - game state, clocks, engine status, battery level
-- **18650 Battery Powered** - dual LiOn with onboard USB-C charging
+- **18650 Battery Powered** - dual Li-Ion with onboard USB-C charging
 - **Deep Sleep** - power saving mode and game state retained in RTC memory across scleep cycles
 - **Protected Power Rails** - PTC fuses and USB ESD protection on all external-facing lines
 - **Fully Custom PCB** - designed for shipping standards
@@ -357,6 +359,7 @@ Key design requirements met:
 - Every piece is precisely placed according to the 3D chess board for the best workfoll
 
 ## PCB Layout
+
 ### Main PCB
 
 *Some pictures may have been deformed in order to adjust their dimensions*
@@ -500,6 +503,7 @@ If you build one, open an issue with photos.
 # Creator
 
 ### Ajakovski aka. Marsovac
+
 Hey my name is Andrej and im from Macedonia, Kratovo. Im 17 years old and i really enjoy making cool project which are all posted on my github.
 
 Main focus while building the project:
