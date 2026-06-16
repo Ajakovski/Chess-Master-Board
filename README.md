@@ -36,7 +36,7 @@ Built as an open-source hardware product - every schematic, PCB file and line of
 
 <div align="center">
 
-<img src="./Pictures/Master Chess Board Zine.png" width="100%">
+<img src="./Pictures/Chess Master Board Zine.png" width="100%">
 
 </div>
 
