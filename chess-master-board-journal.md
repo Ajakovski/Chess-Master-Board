@@ -1,8 +1,8 @@
 # Chess Master Board — Journal Export
 
-- Exported at: 2026-06-15T13:27:21Z
+- Exported at: 2026-06-16T14:20:01Z
 - Project ID: 2256
-- Entries: 51
+- Entries: 53
 
 ## Entry 1
 - ID: 2718
@@ -997,3 +997,37 @@ Fixed the issues from sanity check. Massive error that i found was the footprint
 ### Recording Links
 
 - https://lookout.hackclub.com/api/media/e9ff715d-9659-4160-a9b3-fc0aaefa91bd/video.mp4
+
+## Entry 52
+- ID: 14314
+- Author: ajakovski07
+- Created At: 2026-06-15T20:37:38Z
+
+### Content
+
+I randomly asked if BOM for printing PCB and 3D is needed and they said yes so i made it. And i also made 100hours now. Kinda scary on how much money they ask for the PCBs tho, hopefully i get a discount for ordering more at once. Other than that now i really hope that i have finished the project.
+![image.png](/user-attachments/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzQwNTksInB1ciI6ImJsb2JfaWQifX0=--fdc5d8438eccd9ebb75d0c5477f6b8bd19217dfe/image.png)
+![image.png](/user-attachments/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzQwNjAsInB1ciI6ImJsb2JfaWQifX0=--8b724f62ae7d96a69f36dbd6452ac9143b8cecf3/image.png)
+
+
+### Recording Links
+
+- https://lookout.hackclub.com/api/media/973fe481-cdf6-45b3-9daa-a70e270cf884/video.mp4
+
+## Entry 53
+- ID: 14527
+- Author: ajakovski07
+- Created At: 2026-06-16T14:01:57Z
+
+### Content
+
+Post submit fixing. I had some errors notified by myself and thanks to sanity checking by others. I hope that everything is fine and fulfill the requirements even better now. I will continue looking for issues tho. The problems that i found is that my BOM is incomplete with the price of manufacturing the PCB and 3D model which is kinda redundant because everyone has local printer that are cheaper so me giving them a link is kinda redundand as i said. I also fixed the visual reading capability of my main schematic thanks to the sanity check from fallout slack members and i improved the zine and changed the QR code because the older one was going to expire soon which i didnt know. This one is permanent :)
+![qr-code.png](/user-attachments/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzQ0NTEsInB1ciI6ImJsb2JfaWQifX0=--cfabd09736b95480d7a03ec1ea08cbd31c6e7cb0/qr-code.png)
+![Master Chess Board Zine.png](/user-attachments/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzQ0NTIsInB1ciI6ImJsb2JfaWQifX0=--01c90b2943f2402cc30bbe98ff98989586c57b77/Master Chess Board Zine.png)
+![Main_PCB.png](/user-attachments/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzQ0NTMsInB1ciI6ImJsb2JfaWQifX0=--a0977382b61cce9493a915d42566fe954b05ad36/Main_PCB.png)
+
+
+### Recording Links
+
+- https://lookout.hackclub.com/api/media/5e70e249-e9fd-4b2f-a255-21d7ad7c2e8d/video.mp4
+- https://lookout.hackclub.com/api/media/99232c82-ed20-4056-a04c-665f962b9515/video.mp4
