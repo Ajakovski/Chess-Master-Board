@@ -375,6 +375,9 @@ Key design requirements met:
 
 
 ## Schematic
+
+***Refer to the PDF file for better overview*** [PDF](Pictures/Schematic_Print.pdf)
+
 ### Main PCB
 #### MCU/IC section
 <img src="./Pictures/MCU_Main_Sch.png" width="100%"> <br>
