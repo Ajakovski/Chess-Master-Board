@@ -1724,7 +1724,7 @@
 	)
 	(text "SDA: GPIO 8   SCL: GPIO 9"
 		(exclude_from_sim no)
-		(at 109.728 91.186 0)
+		(at 109.728 93.218 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1732,7 +1732,7 @@
 		)
 		(uuid "d4e9d17f-3c2a-41b5-89d3-6cf7d1cee3b9")
 	)
-	(text "Needs to be 2.42\" OLED screen\n"
+	(text "Needs to be 2.23\" OLED screen\n"
 		(exclude_from_sim no)
 		(at 184.15 134.62 0)
 		(effects
@@ -1785,6 +1785,12 @@
 		(uuid "da790740-0872-4575-b981-49adbe55fe40")
 	)
 	(junction
+		(at 138.43 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f2c302d8-f18e-4ae1-9ebd-9f75b03579e2")
+	)
+	(junction
 		(at 101.6 121.92)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1795,12 +1801,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f635ffb0-cb6d-4d17-9249-3822c9c96505")
-	)
-	(junction
-		(at 143.51 100.33)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fd44bcaf-0813-439f-bebf-44aba093726c")
 	)
 	(no_connect
 		(at 92.71 91.44)
@@ -2000,6 +2000,16 @@
 	)
 	(wire
 		(pts
+			(xy 138.43 91.44) (xy 142.24 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "743fc6ab-2170-4855-8e20-edd4223a592d")
+	)
+	(wire
+		(pts
 			(xy 194.31 97.79) (xy 97.79 97.79)
 		)
 		(stroke
@@ -2060,6 +2070,16 @@
 	)
 	(wire
 		(pts
+			(xy 138.43 100.33) (xy 138.43 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90db678b-fa6f-4e85-9800-4eae9c47b082")
+	)
+	(wire
+		(pts
 			(xy 137.16 119.38) (xy 143.51 119.38)
 		)
 		(stroke
@@ -2067,16 +2087,6 @@
 			(type default)
 		)
 		(uuid "90efd25d-dadd-4bd7-93a2-ae6957bb9747")
-	)
-	(wire
-		(pts
-			(xy 143.51 95.25) (xy 143.51 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "92fd5558-82f5-4200-a249-f8fcc269d6b6")
 	)
 	(wire
 		(pts
@@ -2120,16 +2130,6 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 100.33) (xy 143.51 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ad188b12-f8db-4211-8518-d0813ad56d78")
-	)
-	(wire
-		(pts
 			(xy 96.52 129.54) (xy 101.6 129.54)
 		)
 		(stroke
@@ -2160,7 +2160,7 @@
 	)
 	(wire
 		(pts
-			(xy 134.62 100.33) (xy 143.51 100.33)
+			(xy 134.62 100.33) (xy 138.43 100.33)
 		)
 		(stroke
 			(width 0)
@@ -2177,6 +2177,16 @@
 			(type default)
 		)
 		(uuid "c06ca2f6-b0b2-44e1-b9f1-4eeea2d8ef49")
+	)
+	(wire
+		(pts
+			(xy 138.43 100.33) (xy 148.59 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c5a25b7d-7fbf-4132-97de-7008d1a1415a")
 	)
 	(wire
 		(pts
@@ -2333,7 +2343,7 @@
 	)
 	(hierarchical_label "GND"
 		(shape output)
-		(at 143.51 96.52 0)
+		(at 142.24 91.44 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2514,6 +2524,12 @@
 			(uuid "b4de38de-6bd0-4ea5-b2d7-d00d60151f57")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "100nF70")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "100nF70")
@@ -2524,7 +2540,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 95.25 88.9 90)
+		(at 95.25 88.9 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2535,7 +2551,7 @@
 		(fields_autoplaced yes)
 		(uuid "42e43df3-2f77-4559-955d-ac6fd869c7ab")
 		(property "Reference" "#PWR064"
-			(at 101.6 88.9 0)
+			(at 95.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2546,14 +2562,14 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 99.06 88.8999 90)
+			(at 97.79 90.1699 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -2593,6 +2609,12 @@
 			(uuid "b67540dd-ed05-4e4a-9512-84b8478a4980")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "#PWR064")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "#PWR064")
@@ -2671,6 +2693,12 @@
 			(uuid "4fa4c5fd-66e9-4bd5-8261-da9ff36a979a")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "#PWR075")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "#PWR075")
@@ -2681,7 +2709,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 95.25 86.36 270)
+		(at 95.25 86.36 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2692,7 +2720,7 @@
 		(fields_autoplaced yes)
 		(uuid "51e3d50b-d673-4f99-8539-53ef55457754")
 		(property "Reference" "#PWR063"
-			(at 91.44 86.36 0)
+			(at 95.25 90.17 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2703,7 +2731,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 99.06 86.3599 90)
+			(at 97.79 85.0899 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2750,6 +2778,12 @@
 			(uuid "7cc3ea39-16fd-4329-91e2-ba87a97779bc")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "#PWR063")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "#PWR063")
@@ -2760,7 +2794,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 143.51 95.25 180)
+		(at 142.24 91.44 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2768,10 +2802,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "584152b7-b38c-4473-87c7-20aafc96dbd0")
 		(property "Reference" "#PWR065"
-			(at 143.51 88.9 0)
+			(at 142.24 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2782,17 +2815,18 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 143.51 90.17 0)
+			(at 143.764 93.218 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 143.51 95.25 0)
+			(at 142.24 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2803,7 +2837,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 143.51 95.25 0)
+			(at 142.24 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2814,7 +2848,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 143.51 95.25 0)
+			(at 142.24 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2828,6 +2862,12 @@
 			(uuid "bf75dc7a-2280-4679-8d9a-9f6ccb1a3f41")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "#PWR065")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "#PWR065")
@@ -3170,6 +3210,12 @@
 			(uuid "41277f22-47bb-4553-8293-0b8b256d7fff")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "J7")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "J7")
@@ -3329,6 +3375,12 @@
 			(uuid "9a2c8711-7210-4dc8-a0f3-f57cd33038bc")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "R16")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "R16")
@@ -3488,6 +3540,12 @@
 			(uuid "d92bfe6b-d1be-48cb-9164-c9b36b17f0b9")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "R19")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "R19")
@@ -3739,6 +3797,12 @@
 			(uuid "57835044-e085-4825-98df-f5e95e9f5b8c")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "S3")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "S3")
@@ -3769,7 +3833,7 @@
 				)
 			)
 		)
-		(property "Value" "OLED_128X64_1.3_I2C"
+		(property "Value" "OLED_128X32_2.23_I2C"
 			(at 163.83 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3779,7 +3843,7 @@
 				)
 			)
 		)
-		(property "Footprint" "OLED_128X64_1.3_I2C:LCD_OLED_128X64_1.3_I2C"
+		(property "Footprint" "OLED_128X64_1.3_I2C:LCD_OLED_128X32_2.23_I2C"
 			(at 163.83 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -4012,6 +4076,12 @@
 			(uuid "b732c811-57d0-423f-a763-9bd32ae759cf")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "DS2")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "DS2")
@@ -4171,6 +4241,12 @@
 			(uuid "541eadb3-d658-47e2-a01d-2636a82fe921")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "R17")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "R17")
@@ -4329,6 +4405,12 @@
 			(uuid "f3637854-55e0-409f-81ad-4b149700a7ae")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "10uF7")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "10uF7")
@@ -4488,6 +4570,12 @@
 			(uuid "2387c6cb-1914-48fa-8bbe-89619b4c1692")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "R18")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "R18")
@@ -4566,6 +4654,12 @@
 			(uuid "9d3aed3f-84d5-4f9b-8400-aa1583d6c0a3")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "#PWR074")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "#PWR074")
@@ -4817,6 +4911,12 @@
 			(uuid "7613f3a1-fcef-4ea6-863a-a036f417e7ac")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "S4")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "S4")
@@ -4895,6 +4995,12 @@
 			(uuid "c870245f-0bd6-4691-8708-049e3f59c819")
 		)
 		(instances
+			(project "Clock PCB"
+				(path "/7f3c47f2-1a05-49da-84f6-af3328144f29"
+					(reference "#PWR066")
+					(unit 1)
+				)
+			)
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f/83544a14-6c08-41fb-841d-407afd354856"
 					(reference "#PWR066")
@@ -4903,4 +5009,10 @@
 			)
 		)
 	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
 )
