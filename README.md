@@ -75,17 +75,18 @@ Navigate to: (For PCBs)
 Hardware/KiCad/Gerbers/
 ```
 
-Upload the included Gerber files to your preferred PCB manufacturer and order the boards.
+*Upload the included Gerber files to your preferred PCB manufacturer and order the boards.*
 
 Navigate to: (For 3D Model)
 ```bash
 Hardware/3D_Printing/ (Both zip files.)
 ```
-Due to github memory restrictions they are split into 2 files. G-code Pieces features the black/white collection of pieces ready for printing and the V3 Chess 3D zip is equipped with the full set of information and g-code files for printing the board.
+Due to github memory restrictions they are split into 2 files. G-code Pieces features the black/white collection of pieces ready for printing and the V3 Chess 3D.zip is equipped with the full set of information and g-code files for printing the board.
+There is also a step version of the files from V3 Chess 3D.zip file, use those also if you need them.
 
-Upload the G-Code files to your preferred manufacturer and order the parts.
+*Upload the G-Code files to your preferred manufacturer and order the parts.*
 
-The latest version is recommended but if you prefer any older version feel free to use it.
+*The latest version is recommended but if you prefer any older version feel free to use it.*
 
 ### 2. Order the Components
 
