@@ -67,6 +67,12 @@ The project is also an increidible journey into embedded hardware and PCB design
 
 ***Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware***
 
+***A visual representation of the whole project has been given with the file:***
+
+```bash
+Hardware/FULLY_ASSEMBLED_PROJECT.step
+```
+
 ### 1. Order the PCBs and 3D Model
 
 Navigate to: (For PCBs)
@@ -79,7 +85,7 @@ Hardware/KiCad/Gerbers/
 
 Navigate to: (For 3D Model)
 ```bash
-Hardware/3D_Printing/ (Both zip files.)
+Hardware/3D_Printing/ (Both zip files)
 ```
 Due to github memory restrictions they are split into 2 files. G-code Pieces features the black/white collection of pieces ready for printing and the V3 Chess 3D.zip is equipped with the full set of information and g-code files for printing the board.
 There is also a step version of the files from V3 Chess 3D.zip file, use those also if you need them.
