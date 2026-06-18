@@ -7,8 +7,8 @@
 
 <p>
 
-<img src="./Pictures/Full_Chess_Board-removebg-preview.png" width="40%" height= "500">
-<img src="./Pictures/STL_Chess_Board-removebg-preview.png" width="40%" height= "450">
+<img src="./Pictures/Full_Board_set__2_-removebg-preview.png" width="40%" height= "500">
+<img src="./Pictures/Transparent_Chess_board-removebg-preview.png" width="40%" height= "450">
 </p>
 
 ### _A chess board that sees every piece, lights every move, and thinks alongside you - no external modules required._
@@ -68,6 +68,8 @@ The project is also an increidible journey into embedded hardware and PCB design
 ***Notice: Always follow the order Main→Upper→Clock PCB for assembling the hardware***
 
 ***A visual representation of the whole project has been given with the file:***
+
+***If you dont prefer via the files you can always refer to the visual representation via [OnShape](https://cad.onshape.com/documents/13dd493447813ae98dcbc5b6/w/f13770b66ce0189c65580405/e/d896ca2ed77523ba709b8a3c?renderMode=0&uiState=6a33bc9ec68ee69fbb85f0c4).***
 
 ```bash
 Hardware/FULLY_ASSEMBLED_PROJECT.step
@@ -262,54 +264,60 @@ Exit with 'Ctrl+]'.
 
 | Designator | Function | Value / Part | Package | Qty | Price (USD) | Link |
 |---|---|---|---|---|---|---|
-| U1 | MCU Module | ESP32-S3-WROOM-2 N32R16V | LCC-54 | 1 | $12 | [DigiKey](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-2-N32R16V/25811280) |
+| U1 | MCU Module | ESP32-S3-WROOM-2 N32R16V | LCC-54 | 1 | $12 | [Mouser](https://www.mouser.bg/ProductDetail/Espressif-Systems/ESP32-S3-WROOM-2-N32R16V?qs=%252BHhoWzUJg4Kf%2FwmS40wg%252BQ%3D%3D&srsltid=AfmBOopjud5fwNEdPJr_Fcp_F6RRXBi_0mpNTvMmjx49w7TWEqiv5xGV) |
 | U79–U142 | Hall Effect Sensor | AH1806-W-7 | SOT-23 | 64 | $20 | [Mouser](https://www.mouser.com/ProductDetail/Diodes-Incorporated/AH1806-W-7?qs=eSfX1CQlHqqRKgthoXGrzg%3D%3D&srsltid=AfmBOoqvt9XKLP8jc6GHH0L_jmNus1_TszQpJJyJu60i3bDtAeJsRl4r) |
-| U6–U13 | Shift Register | 74HC165BQ_115 | QFN-17 | 8 | $12.60 | [DigiKey](https://www.digikey.com/en/products/detail/nexperia-usa-inc/74HC165BQ-115/1966015?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
-| U14–U77 | Addressable RGB LED | APA102C | SON-6 (5050) | 64(100) | $10 | [AliExpress](https://www.aliexpress.com/item/1005008174203527.html) |
-| U143 | Level Shifter | SN74AHCT125D | SOIC-14 | 1 | $1.2 | [Ti](https://www.ti.com/product/SN74AHCT125/part-details/SN74AHCT125D) |
-| DS2 | OLED Display | 128×32 2.23" I²C | SSD1305 | 1 | $9.5 | [AliExpress](https://www.aliexpress.com/item/1005008489357042.html?spm=a2g0o.productlist.main.9.1cd31P5n1P5nfd&algo_pvid=10006fad-7505-426f-8c02-2c3dbc745dfc&algo_exp_id=10006fad-7505-426f-8c02-2c3dbc745dfc-8&pdp_ext_f=%7B%22order%22%3A%229%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21567.22%21567.22%21%21%2165.40%2165.40%21%40212e520f17815127163675148eea9b%2112000045367691230%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=1Bi8k4hGK8K7&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008489357042%7C_p_origin_prod%3A#nav-description) |
-| BT1, BT2 | 18650 Battery Holder | Keystone 1043 | THT | 2 | $5.82 | [Mouser](https://www.mouser.com/ProductDetail/Keystone-Electronics/1043?utm_campaign=mouser&qs=%2F7TOpeL5Mz6j%2FnxeOA1rsg%3D%3D&utm_medium=online&utm_source=snapedaonline&utm_content=modelunipart_id=214578&manufacturer=Keystone) |
-| U3 | Li-Ion Charger IC | BQ24074RGT | VQFN-16 | 1 | $2.48 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/BQ24074RGTR/2047269) |
-| U4 | Boost Converter (5V) | TPS61023DRLT | SOT-6 | 1 | $1.2 | [Ti](https://www.ti.com/product/TPS61023/part-details/TPS61023DRLT?HQS=ocb-tistore-invf-buynowlink_model-invf-store-snapeda-wwe) |
+| U6–U13 | Shift Register | 74HC165BQ_115 | QFN-17 | 8(10) | $2.21 | [Mouser](https://www.mouser.bg/ProductDetail/Nexperia/74HC165BQ115?qs=P62ublwmbi86viaf9iloMA%3D%3D&srsltid=AfmBOop67e87aW457vff1BOXmou8TWC8JPC6vrp5882xNvyS27eVy15c) |
+| U14–U77 | Addressable RGB LED | APA102C | SON-6 (5050) | 64(100) | $10.5 | [AliExpress](https://www.aliexpress.com/item/1005008174203527.html) |
+| U143 | Level Shifter | SN74AHCT125DR | SOIC-14 | 1 | $0.46 | [Mouser](https://www.mouser.bg/ProductDetail/Texas-Instruments/SN74AHCT125DR?qs=B7lSdIxWQkm9VQkJOjfRaA%3D%3D) |
+| DS2 | OLED Display | 128×32 2.23" I²C | SSD1305 | 1 | $10 | [AliExpress](https://www.aliexpress.com/item/1005008489357042.html?spm=a2g0o.productlist.main.9.1cd31P5n1P5nfd&algo_pvid=10006fad-7505-426f-8c02-2c3dbc745dfc&algo_exp_id=10006fad-7505-426f-8c02-2c3dbc745dfc-8&pdp_ext_f=%7B%22order%22%3A%229%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21567.22%21567.22%21%21%2165.40%2165.40%21%40212e520f17815127163675148eea9b%2112000045367691230%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=1Bi8k4hGK8K7&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008489357042%7C_p_origin_prod%3A#nav-description) |
+| BT1, BT2 | 18650 Battery Holder | Keystone 1043 | THT | 2 | $6.82 | [Mouser](https://www.mouser.com/ProductDetail/Keystone-Electronics/1043?utm_campaign=mouser&qs=%2F7TOpeL5Mz6j%2FnxeOA1rsg%3D%3D&utm_medium=online&utm_source=snapedaonline&utm_content=modelunipart_id=214578&manufacturer=Keystone) |
+| U3 | Li-Ion Charger IC | BQ24074RGT | VQFN-16 | 1 | $2.48 | [Mouser](https://www.mouser.bg/ProductDetail/Texas-Instruments/BQ24074RGTR?qs=ZV%2Fxhq4oszp2Nll7fIx5wg%3D%3D&srsltid=AfmBOopf_GDP2yO0D5PAa7cuepwFxpUxXFdTjUaKyMCHw1c4K6qqB7_Z) |
+| U4 | Boost Converter (5V) | TPS61023DRLT | SOT-6 | 1 | $1.4 | [Mouser](https://www.mouser.bg/ProductDetail/Texas-Instruments/TPS61023DRLT?qs=BJlw7L4Cy78Zr3IJIU3gNw%3D%3D) |
 | 1uH1 | Power Inductor | XEL4030-102MEC (1µH) | XEL4030 | 1 | $2.17 | [Mouser](https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=4653188&manufacturer=Coilcraft&part_name=XEL4030-102MEC&search_term=None) |
-| U5 | 3.3V LDO Regulator | AP2112K-3.3TRG1 | SOT-25 | 1 | $0.25 | [DigiKey](https://www.digikey.com/en/products/detail/diodes-incorporated/AP2112K-3-3TRG1/4470746?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
-| U144 | USB ESD Protection | USBLC6-2P6 | SOT-666 | 1 | $0.63 | [DigiKey](https://www.digikey.com/en/products/detail/stmicroelectronics/USBLC6-2P6/1007440?utm_campaign=buynow&utm_medium=aggregator&utm_source=snapeda) |
-| U145, U146 | PTC Resettable Fuse | RUEF300 (3A) | Radial | 2 | $1.04 | [DigiKey](https://www.digikey.com/en/products/detail/littelfuse-inc/RUEF300/5015983) |
-| TH1 | NTC Thermistor | NTCG103JF103FT1 | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/tdk/NTCG103JF103FT1/614628) |
+| U5 | 3.3V LDO Regulator | AP2112K-3.3TRG1 | SOT-25 | 1 | $0.25 | [Mouser](https://www.mouser.bg/ProductDetail/Diodes-Incorporated/AP2112K-3.3TRG1?qs=x6A8l6qLYDDPYHosCdzh%2FA%3D%3D) |
+| U144 | USB ESD Protection | USBLC6-2P6 | SOT-666 | 1 | $0.63 | [Mouser](https://www.mouser.bg/ProductDetail/STMicroelectronics/USBLC6-2P6?qs=6ARB0lp6jlViGcbUSvj1Mw%3D%3D) |
+| U145, U146 | PTC Resettable Fuse | RUEF300 (3A) | Radial | 2 | $1 | [AliExpress](https://www.aliexpress.com/item/1005003699936643.html?spm=a2g0o.productlist.main.2.1515qUETqUETL7&algo_pvid=1ab326b7-57ac-4a5e-9c91-1f0688d12436&algo_exp_id=1ab326b7-57ac-4a5e-9c91-1f0688d12436-1&pdp_ext_f=%7B%22order%22%3A%2269%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%2140.94%2140.94%21%21%210.70%210.70%21%402101529317817805763092080ee682%2112000026854019128%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Acd05e435%3Bm03_new_user%3A-29895&curPageLogUid=hEJCwyMy2faS&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005003699936643%7C_p_origin_prod%3A) |
+| TH1 | NTC Thermistor | NTCG103JF103FT1S | 0402 | 1 | $0.11 | [Mouser](https://www.mouser.bg/ProductDetail/TDK/NTCG103JF103FT1S?qs=cNoPOocMWw11FEwwc%2F4vOg%3D%3D) |
 | J2 | USB-C Receptacle | USB4110GFA | SMD | 1 | $1.27 | [Mouser](https://www.mouser.com/ProductDetail/GCT/USB4110-GF-A?qs=KUoIvG%2F9IlYiZvIXQjyJeA%3D%3D&srsltid=AfmBOoqFJ-91enIyu9A26tSaC9mGIXgz0BrHN1BArDjjXIR4G4HD0bAR) |
-| J1, J3, J4, J7 | Board Connector | Samtec ZF1-15-02-X-WT-X | SMD | 4 | $6.8 | [Samtec](https://www.samtec.com/products/zf1-15-02-tm-wt?utm_source=snapeda.com&utm_medium=referral&utm_campaign=%20s2x_snapeda_ppc) |
-| S3, S4 | Player Clock Button | TL3315NF250Q | SMD | 2 | $0.21 | [SG](https://sg.element14.com/e-switch/tl3315nf250q/switch-tactile-spst-50ma-15vdc/dp/2773594) |
-| SW2 | Boot Switch | Omron B3FS | SMD | 1 | €0.64 | [DigiKey](https://www.digikey.ee/en/products/detail/omron-electronics-inc-emc-div/B3FS-1000P/277814) |
+| J1, J3, J4, J7 | Board Connector | Samtec ZF1-15-02-X-WT-X | SMD | 4 | $6.8 | [Mouser](https://www.mouser.bg/ProductDetail/Samtec/ZF1-15-02-TM-WT?qs=%252BZP6%2F%252BtExtBQirvzLIJzEA%3D%3D) |
+| S3, S4 | Player Clock Button | TL3315NF250Q | SMD | 2 | $0.28 | [Mouser](https://www.mouser.bg/ProductDetail/E-Switch/TL3315NF250Q?qs=g35H13458Kaz43%252B3owu1iQ%3D%3D) |
+| SW2 | Boot Switch | Omron B3FS | SMD | 1 | €0.62 | [Mouser](https://www.mouser.bg/ProductDetail/Omron-Electronics/B3FS-1000P?qs=ImaqFqjHA4k6odVF2%2FXWpQ%3D%3D) |
 | D1, D2 | Charging LED | Q65111A7377 | 0402 | 2 | $0.92 | [Mouser](https://www.mouser.com/ProductDetail/ams-OSRAM/Q65111A7377?qs=sGAEpiMZZMv0DJfhVcWlKwb9uSCDLxPf%2FYHVt4kOg1XhmEL4WLxLEQ%3D%3D) |
-| R3, R4 | USB-C CC Resistor | 5.1kΩ | 0402 | 2 | $0.32 | [DigiKey](https://www.digikey.ca/en/products/detail/yageo/RC0402FR-075K1L/726624) |
-| R5 | Charge Current Set | 800Ω | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0402FT806R/1761693) |
-| R6 | Charge Set | 1.2kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402JR-071K2L/726411) |
-| R7 | Charge Set | 2kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402FR-072KL/2827565) |
-| R8, R11, R13, R35, R36 | Pull / Bias | 100kΩ | 0603 | 5 | $0.50 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889) |
-| R9 | Pull / Bias | 100kΩ | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402FR-07100KL/726526) |
-| R12 | Bias | 750kΩ | 0805 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/bourns-inc/CR0805-FX-7503ELF/3785110) |
-| R10 | Current Limit | 330Ω | 0402 | 1 | $0.10 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402FR-07330RL/726594) |
-| R14, R15, R24, R25, R41, R42 | Series Damping | 33Ω | 01005 | 6 | $0.96 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0100JR-0733RL/5916398) |
-| R16–R19 | Pull-up / Pull-down | 10kΩ | 0402 | 4 | $0.40 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/AC0402FR-0710KL/5895030) |
-| R23, R34, R43, R44 | Pull-up / Pull-down | 10kΩ | 0201 | 4 | $0.40 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0201FR-0710KL/1948870) |
-| R22, R30, R31 | Series Damping | 33Ω | 0402 | 3 | $0.30 | [DigiKey](https://www.digikey.com/en/products/detail/yageo/RC0402JR-0733RL/726467) |
+| R3, R4 | USB-C CC Resistor | 5.1kΩ | 0402 | 2 | $0.20 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-075K1L?qs=YUgVZYePFqCSmQuaha43RA%3D%3D) |
+| R5 | Charge Current Set | 800Ω | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/SEI-Stackpole/RMCF0402FT806R?qs=IPgv5n7u5Qa32gYJEFJiUQ%3D%3D) |
+| R6 | Charge Set | 1.2kΩ | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402JR-071K2L?qs=KuCtQF8z8nDVvRd2gRh7cw%3D%3D) |
+| R7 | Charge Set | 2kΩ | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-072KL?qs=V1yeUXFNrkkvY0qFpE7ijg%3D%3D) |
+| R8, R11, R13, R35, R36 | Pull / Bias | 100kΩ | 0603 | 5 | $0.50 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0603FR-07100KL?qs=e1ok2LiJcmaihem8Va5%2Fsw%3D%3D) |
+| R9 | Pull / Bias | 100kΩ | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-07100KL?qs=mnq%2FyloZIXzTlUn7JAHSWg%3D%3D) |
+| R12 | Bias | 750kΩ | 0805 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/Bourns/CR0805-FX-7503ELF?qs=Ek4EPvi0xiD1ZaaiTWdU0w%3D%3D) |
+| R10 | Current Limit | 330Ω | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-07330RL?qs=V1yeUXFNrkngRWHRQxns%2Fg%3D%3D) |
+| R16–R19, R23, R43, R44 | Pull-up / Pull-down | 10kΩ | 0402 | 7 | $0.77 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/AC0402FR-0710KL?qs=yhV1fb9g%2FKYkR5U3B7upEQ%3D%3D) |
+| R34 | Pull-up / Pull-down | 10kΩ | 0201 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0201FR-0710KL?qs=FLc6udek5PS1AiJCgpc6bQ%3D%3D) |
+| R14, R15, R22, R24, R25, R30, R31, R41, R42 | Series Damping | 33Ω | 0402 | 9 | $0.9 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402JR-0733RL?qs=uM1JSSdPjOAuJ%2F4ZF3IeKA%3D%3D) |
 | C (various) | Decoupling / Bulk | 100nF, 1µF, 4.7µF, 10µF, 22µF | 0402/0603/0805/1206 | 105 | $16 | [Amazon](https://www.amazon.com/Bridgold-111Types-Capacitor-1pF-10uF-3-9pF-22uF/dp/B0C196FBK3/ref=sr_1_10?dib=eyJ2IjoiMSJ9.Sik-1N6T3B22pMHx3gZwssQe9HV9aXahGuDaX-uB1yfBLuMOqud5ObrWRTFUEP5qQT2cI_n6L6fgTxfF61UY6m7jwAR2JlYfwWtNi5UCKX4QVam3zu4P14UT01DyXCllphzxt5CmLBpMIcKJr-lpdFgCHgOWfw1AMDWRa0VJgoOHSTB1Ejcqxwg_bRNHyVE3csjNCQKdCS_s7IOfQRityBtC0y6ZoSuw4EYrFxCoT9w.R-0uFALOYO601m_UiLGERn05S21OQveJX7LUG-RrBD0&dib_tag=se&keywords=SMD%2BCapacitor&qid=1781345348&sr=8-10&th=1) |
-| C17, C18 | CP_EIA-7343-20_Kemet-V | 100µF | 2917 | 2 | $8.68 | [DigiKey](https://www.digikey.com/en/products/detail/kemet/T494V107K016AT/818726) |
+| C17, C18 | CP_EIA-7343-20_Kemet-V | 100µF | 2917 | 2 | $8.68 | [Mouser](https://www.mouser.bg/ProductDetail/KEMET/T494V107K016AT?qs=esDHISMOsl1F06bDLafyPA%3D%3D) |
 | Neodymium magnets | Circle | N35-N52 | 20x5cm | 32(40) | $20 | [Amazon](https://www.amazon.com/TRYMAG-Decorative-Neodymium-Powerful-Scientific/dp/B0G4D78X7T/ref=pd_ci_mcx_di_int_sccai_cn_d_sccl_1_7/136-7378115-7020437?pd_rd_w=JVAsz&content-id=amzn1.sym.751acc83-5c05-42d0-a15e-303622651e1e&pf_rd_p=751acc83-5c05-42d0-a15e-303622651e1e&pf_rd_r=S49NM63KZQJV9PRHP6W2&pd_rd_wg=72OFc&pd_rd_r=0b37500f-f078-4104-9d5c-44c4b33a4363&pd_rd_i=B0FG839Q2X&th=1) | 
 | Neodymium magnets | Rectangular | N35-N52 | 5x10x2mm | 6(100) | $7.6 | [Amazon](https://www.amazon.com/dp/B0GK8XXS5P/ref=sspa_dk_detail_right_aax_0?sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfcmlnaHRfc2hhcmVk&th=1) |
-| BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
-| X | FFC Connector | 15-pin | 500mm | 3 | $5.79 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
-| X | M3 Screws | M3 | 10mm | 50 | $5 | [AliExpress](https://www.aliexpress.com/item/33028169759.html?spm=a2g0o.productlist.main.48.53865b5fAhCGwY&algo_pvid=629709d9-a21f-428c-aced-7c4376ca24fc&algo_exp_id=629709d9-a21f-428c-aced-7c4376ca24fc-45&pdp_ext_f=%7B%22order%22%3A%22366%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21AED%215.37%213.75%21%21%211.42%210.99%21%402102f0cc17811144146558226e9158%2112000025630870148%21sea%21AE%216550317333%21ABX%211%210%21n_tag%3A-29910%3Bd%3A9c10be3c%3Bm03_new_user%3A-29895%3BpisId%3A5000000204469934&curPageLogUid=FOQQuqUMxISX&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A33028169759%7C_p_origin_prod%3A&gatewayAdapt=ara2glo) |
-| X | M3 Nuts | M3 | | 25 | $3 | [AliExpress](https://www.aliexpress.com/item/32978551452.html?spm=a2g0o.productlist.main.1.7c154ece9D2Th2&algo_pvid=84088476-8a89-43b9-a92f-5755b7a463e3&algo_exp_id=84088476-8a89-43b9-a92f-5755b7a463e3-0&pdp_ext_f=%7B%22order%22%3A%222796%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21254.64%21254.06%21%21%214.36%214.35%21%40210156fc17816089059113153e1450%2112000015835866719%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=wct4KENxKUYh&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A32978551452%7C_p_origin_prod%3A)|
-| X | Main PCB | | |5|76$|[PCBWay](https://www.pcbway.com/)|
-|X|Upper PCB| | |5|130$|[JLCPCB](https://jlcpcb.com/)|
-|X|Clock PCB| | |5|25$|[PCBWay](https://www.pcbway.com/)|
-|X|Main Chess Board 3D| | |1|$80|[3dprintmk](https://www.3dprintmk.com)|
-|X|Chess Board Lid 3D| | |1|$20|[3dprintmk](https://www.3dprintmk.com)|
-|X|Buttons 3D| | |2|$7.5|[3dprintmk](https://www.3dprintmk.com)|
-|X|Chess Pieces 3D| | |2|$15|[3dprintmk](https://www.3dprintmk.com)|
-| **TOTAL** | *approx. $526* | | | | | |
+| BT1, BT2 | Li-ion Battery  | 3.7V 3400mAh | 18650 | 2 | $5.76 (I have them) | [AliExpress](https://www.aliexpress.com/item/1005008704323807.html?spm=a2g0o.productlist.main.11.41426338JMDLOG&algo_pvid=5468ca2c-7ea9-4975-b4e9-84117a248739&algo_exp_id=5468ca2c-7ea9-4975-b4e9-84117a248739-10&pdp_ext_f=%7B%22order%22%3A%22594%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21589.61%21306.60%21%21%2168.00%2135.36%21%40212a70c017813517499738402e1745%2112000046318715827%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=c8XERDHzRrxn&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008704323807%7C_p_origin_prod%3A)
+| X | FFC Connector | 15-pin | 500mm | 3 | $6.82 | [Amazon](https://www.amazon.com.be/-/en/Flexible-Ribbon-Cable-Camera-Module/dp/B07P8Z27ZY?language=en_GB)|
+| X | M3 Screws | M3 | 10mm | 50 | $5.5 | [AliExpress](https://www.aliexpress.com/item/33028169759.html?spm=a2g0o.productlist.main.48.53865b5fAhCGwY&algo_pvid=629709d9-a21f-428c-aced-7c4376ca24fc&algo_exp_id=629709d9-a21f-428c-aced-7c4376ca24fc-45&pdp_ext_f=%7B%22order%22%3A%22366%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21AED%215.37%213.75%21%21%211.42%210.99%21%402102f0cc17811144146558226e9158%2112000025630870148%21sea%21AE%216550317333%21ABX%211%210%21n_tag%3A-29910%3Bd%3A9c10be3c%3Bm03_new_user%3A-29895%3BpisId%3A5000000204469934&curPageLogUid=FOQQuqUMxISX&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A33028169759%7C_p_origin_prod%3A&gatewayAdapt=ara2glo) |
+| X | M3 Nuts | M3 | | 25 | $3.5 | [AliExpress](https://www.aliexpress.com/item/32978551452.html?spm=a2g0o.productlist.main.1.7c154ece9D2Th2&algo_pvid=84088476-8a89-43b9-a92f-5755b7a463e3&algo_exp_id=84088476-8a89-43b9-a92f-5755b7a463e3-0&pdp_ext_f=%7B%22order%22%3A%222796%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MKD%21254.64%21254.06%21%21%214.36%214.35%21%40210156fc17816089059113153e1450%2112000015835866719%21sea%21MK%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aaeed944%3Bm03_new_user%3A-29895&curPageLogUid=wct4KENxKUYh&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A32978551452%7C_p_origin_prod%3A)|
+| X | Main PCB | PCBWAY as second alternative | |5|70$|[JLCPCB](https://jlcpcb.com/)|
+| X |Upper PCB| | |5|130$|[JLCPCB](https://jlcpcb.com/)|
+| X |Clock PCB| PCBWAY as second alternative | |5|58$|[JLCPCB](https://jlcpcb.com/)|
+| X |Main Chess Board 3D| | |1|$80|[3dprintmk](https://www.3dprintmk.com)|
+| X |Chess Board Lid 3D| | |1|$15|[3dprintmk](https://www.3dprintmk.com)|
+| X |Buttons 3D| | |2|$7.5|[3dprintmk](https://www.3dprintmk.com)|
+| X |Chess Pieces 3D| | |2|$15|[3dprintmk](https://www.3dprintmk.com)|
+| *Mouser Total* | $104| with cargo  | | | | | |
+| *Amazon Total* | $71.79 | with cargo  | | | | | |
+| *AliExpress Total* | $56 | with cargo  | without batteries | | | | |
+| *PCB Printing* | $332 | with cargo | | | | | | 
+| *3D Printing* | $120 | with cargo | | | | | |
+| **TOTAL** | *approx. $680* | | | | | |
  
+*Notice: Theese shipping costs are for a 3rd world country so if you are from the EU or USA there are high chances of having lower shipping costs*
+
 
 *Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
 ---
