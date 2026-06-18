@@ -1,13 +1,13 @@
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-F_Cu.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-In1_Cu.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-In2_Cu.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-B_Cu.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-F_Paste.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-B_Paste.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-F_Silkscreen.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-B_Silkscreen.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-F_Mask.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-B_Mask.gbr'.
-Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-Edge_Cuts.gbr'.
-Created Gerber job file 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB\StockfishChess-job.gbrjob'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-F_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-In1_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-In2_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-B_Cu.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-F_Paste.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-B_Paste.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-F_Silkscreen.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-B_Silkscreen.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-F_Mask.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-B_Mask.gbr'.
+Plotted to 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-Edge_Cuts.gbr'.
+Created Gerber job file 'C:\Users\User\Desktop\Stockfish Chess Board\Hardware\Gerber\V2\Main PCB New\StockfishChess-job.gbrjob'.
 Info: Done.

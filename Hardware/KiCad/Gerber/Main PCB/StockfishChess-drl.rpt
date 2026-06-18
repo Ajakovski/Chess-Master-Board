@@ -1,5 +1,5 @@
 Drill report for StockfishChess.kicad_pcb
-Created on 2026-06-15T21:40:03
+Created on 2026-06-18T14:31:25
 
 Copper Layer Stackup:
     =============================================================
@@ -12,11 +12,11 @@ Copper Layer Stackup:
 Drill file 'StockfishChess-PTH-drl.gbr' contains
     plated through holes:
     =============================================================
-    T1  0.200mm  0.0079"  (16 holes))
+    T1  0.200mm  0.0079"  (17 holes))
     T2  0.200mm  0.0079"  (12 holes))
     T3  0.300mm  0.0118"  (18 holes))
     T4  0.350mm  0.0138"  (3 holes))
-    T5  0.400mm  0.0157"  (22 holes))
+    T5  0.400mm  0.0157"  (21 holes))
     T6  0.500mm  0.0197"  (10 holes))
     T7  0.850mm  0.0335"  (4 holes))
     T8  1.000mm  0.0394"  (4 holes))
