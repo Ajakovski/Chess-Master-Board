@@ -27,6 +27,8 @@ With the power of electro-magnetism this master board is capable of reading ever
 
 A completely standalone project that requires no external connection gives us the ability to use this board anywhere that we want to. Thanks to the sleep-mode option we recieve a massive battery life extention and we can move on with the game just in case if we decided to pause it.
 
+The chess machine follows every official chess rule and it has included every possible recommendation pattern thanks to the RGB LED matrix. Just put the pieces on their starting squares, press the two buttons for a short period of time and ***ENJOYYY***
+
 Built as an open-source hardware product - every schematic, PCB file and line of firmware is available to reproduce, modify and improve.
 
 ---
