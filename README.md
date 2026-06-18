@@ -21,11 +21,11 @@
 
 # Overview
 
-**Chess Master Board** is a fully self-contained phisical chess board with unique design built on a custom PCB.
+**Chess Master Board**
 
-64 hall effect sensors beneath the board that give us the ability to track every single piece in real time. 64 addressable RGB LEDs that communicate with us about the game state directly trough the board surface - valid moves, check warnings, captures and chess engine suggestions in order for the player to achieve the best results againts its opponent or achieve a greater knowledge.
+With the power of electro-magnetism this master board is capable of reading every move that the players are making. The powerfull chip with the built in machine gives us the power of a ~2000 ELO player that computes the best moves ***within 2 seconds*** and finally the built in RGB LED matrix sends light signals towards the player with the best move suggestions for you to beat every opponent.
 
-The entire system runs standalone on an **ESP32-S3-WROOM-2**. No companion app, no Bluetooth pairing step, no internet connection. The onboard chess engine (mcu-max, with the power of giving the player ~2000ELO suggestions at a depth of 8-10) computes the best move and with the power of the RGB LEDs the player recieves the recommendations and dangers on the board itself.
+A completely standalone project that requires no external connection gives us the ability to use this board anywhere that we want to. Thanks to the sleep-mode option we recieve a massive battery life extention and we can move on with the game just in case if we decided to pause it.
 
 Built as an open-source hardware product - every schematic, PCB file and line of firmware is available to reproduce, modify and improve.
 
@@ -44,17 +44,18 @@ Built as an open-source hardware product - every schematic, PCB file and line of
 
 # Motivation
 
-Some people (like me :)) want to play the game in real life but seem to lack the power of quick computer suggestions while they lose to their opponent. Ofcourse you can achieve that on your smartphone or a PC but what if you dont want to use your digital hardware for playing the game???
+Some people (like me :)) want to play the game in real life but seem to lack the power of quick decision making while they lose to their opponent. Ofcourse you can achieve that on your smartphone or a PC with a helper like stockfish but what if you dont want to use your digital hardware for playing the game???
 
 With that issue on my mind i created **Chess Master Board** with a different concept:
 
 > _What if the board itself was the computer?_
 
-The design is inspired by the tactile satisfaction of phisical chess and analytical depth of computer engines:
+**The helping buddy that you need!** Hidden inside of the medium sized chess board with just a 5 second double hold on the buttons you awake the mastermind that will help you againts any enemy.
+
+The design is inspired by the tactile satisfaction of phisical chess and will to win your opponents while they struggle for survial:
 
 - No screen needed - the board communicates through light
-- No connection needed - the engine runs entirely on device
-- No compromise on piece feel - real magnets, real sensors, real board
+- No IoT connection needed - the engine runs entirely on device
 - Shipped and open-sourced product so anyone can build it, modify it and improve it
 
 The project is also an increidible journey into embedded hardware and PCB design for any enthusiast willing to endulge himself into the type of engineering.
@@ -324,16 +325,17 @@ Exit with 'Ctrl+]'.
 
 # Features
 
-- **Real Piece Detection** - 64 hall effect sensors, one per square
-- **RGB LED Feedback** - valid moves, check, captures, engine suggestions
-- **Onboard Chess Engine** - mcu-max, ~1800-2000 ELO at depth 8-10, fully integrated
+- **Piece Detection** - 64 hall effect sensors, one per square and magnets inside the chess pieces
+- **RGB LED Feedback** - the guide for your victory, shows active checks, best move and more!
+- **Onboard Chess Engine** - mcu-max, ~2000 ELO at depth 8-10
 - **Dual Player Clocks** - dedicated hardware button per player
-- **OLED Display** - game state, clocks, engine status, battery level
+- **OLED Display** - Cool visual representation of time left, current player, machine state and battery percentage
 - **18650 Battery Powered** - dual Li-Ion with onboard USB-C charging
 - **Deep Sleep** - power saving mode and game state retained in RTC memory across scleep cycles
 - **Protected Power Rails** - PTC fuses and USB ESD protection on all external-facing lines
 - **Fully Custom PCB** - designed for shipping standards
 - **Open Source** - complete hardware + firmware available
+- **Closing Lid** - high quality lid with magnets for a neat experience if you decide to change the batteries
 
 ---
 
