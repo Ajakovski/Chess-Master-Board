@@ -39,9 +39,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.8,
-          "height": 1.27,
-          "width": 2.54
+          "drill": 0.0,
+          "height": 0.64,
+          "width": 0.54
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -130,7 +130,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.1,
+        "min_clearance": 0.127,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -663,7 +663,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "../Gerber/V2/Upper PCB/",
+      "plot": "../Gerber/V3/Upper PCB/",
       "specctra_dsn": "",
       "vrml": ""
     },
@@ -784,13 +784,18 @@
       {
         "filename": "Upper PCB.kicad_sch",
         "name": "Upper PCB",
-        "uuid": "00000000-0000-0000-0000-000000000000"
+        "uuid": "24398fe4-437d-490b-909c-bdd0fd4a255c"
       }
     ],
-    "used_designators": "#PWR2-25,#PWR49-58,#SYM1,U6-77,U79-142,100nF2-65,10uF5,C1-16,J3,J5",
+    "used_designators": "#PWR2-48,#PWR54-65,#PWR78,#SYM1-2,100nF2-129,10uF5-6,C1-36,22uF2-3,R39-40,R45-106,J5-6,U6-277",
     "variants": []
   },
-  "sheets": [],
+  "sheets": [
+    [
+      "24398fe4-437d-490b-909c-bdd0fd4a255c",
+      "Upper PCB"
+    ]
+  ],
   "text_variables": {},
   "tuning_profiles": {
     "meta": {

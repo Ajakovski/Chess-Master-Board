@@ -289,14 +289,16 @@ Exit with 'Ctrl+]'.
 | R3, R4 | USB-C CC Resistor | 5.1kΩ | 0402 | 2 | $0.20 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-075K1L?qs=YUgVZYePFqCSmQuaha43RA%3D%3D) |
 | R5 | Charge Current Set | 800Ω | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/SEI-Stackpole/RMCF0402FT806R?qs=IPgv5n7u5Qa32gYJEFJiUQ%3D%3D) |
 | R6 | Charge Set | 1.2kΩ | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402JR-071K2L?qs=KuCtQF8z8nDVvRd2gRh7cw%3D%3D) |
-| R7 | Charge Set | 2kΩ | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-072KL?qs=V1yeUXFNrkkvY0qFpE7ijg%3D%3D) |
+| R7, R107, R108 | Charge Set | 2kΩ | 0402 | 3 | $0.30 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-072KL?qs=V1yeUXFNrkkvY0qFpE7ijg%3D%3D) |
 | R8, R11, R13, R35, R36 | Pull / Bias | 100kΩ | 0603 | 5 | $0.50 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0603FR-07100KL?qs=e1ok2LiJcmaihem8Va5%2Fsw%3D%3D) |
 | R9 | Pull / Bias | 100kΩ | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-07100KL?qs=mnq%2FyloZIXzTlUn7JAHSWg%3D%3D) |
 | R12 | Bias | 750kΩ | 0805 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/Bourns/CR0805-FX-7503ELF?qs=Ek4EPvi0xiD1ZaaiTWdU0w%3D%3D) |
 | R10 | Current Limit | 330Ω | 0402 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402FR-07330RL?qs=V1yeUXFNrkngRWHRQxns%2Fg%3D%3D) |
-| R16–R19, R23, R43, R44 | Pull-up / Pull-down | 10kΩ | 0402 | 7 | $0.77 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/AC0402FR-0710KL?qs=yhV1fb9g%2FKYkR5U3B7upEQ%3D%3D) |
+| R16–R19, R23, 39,40, R43, R44, R45-R106 | Pull-up / Pull-down | 10kΩ | 0402 | 71 | $0.77 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/AC0402FR-0710KL?qs=yhV1fb9g%2FKYkR5U3B7upEQ%3D%3D) |
 | R34 | Pull-up / Pull-down | 10kΩ | 0201 | 1 | $0.10 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0201FR-0710KL?qs=FLc6udek5PS1AiJCgpc6bQ%3D%3D) |
 | R14, R15, R22, R24, R25, R30, R31, R41, R42 | Series Damping | 33Ω | 0402 | 9 | $0.9 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402JR-0733RL?qs=uM1JSSdPjOAuJ%2F4ZF3IeKA%3D%3D) |
+| R37 | Voltage-divider | 3.3kΩ | 0402 | 1 |$0.1 | [Mouser](https://www.mouser.bg/ProductDetail/YAGEO/RC0402JR-103K3L?qs=qpJ%252B%252B%252Bdg6p211Yj14a%2Fidg%3D%3D)
+| R38 | Voltage-divider | 6.8kΩ | 0402 | 1 |$0.27 | [Mouser](https://www.mouser.bg/ProductDetail/Panasonic/ERJ-H2RD6801X?qs=sGAEpiMZZMtlubZbdhIBIGXWvNSLmQjepnVQul72bkc%3D)
 | C (various) | Decoupling / Bulk | 100nF, 1µF, 4.7µF, 10µF, 22µF | 0402/0603/0805/1206 | 105 | $16 | [Amazon](https://www.amazon.com/Bridgold-111Types-Capacitor-1pF-10uF-3-9pF-22uF/dp/B0C196FBK3/ref=sr_1_10?dib=eyJ2IjoiMSJ9.Sik-1N6T3B22pMHx3gZwssQe9HV9aXahGuDaX-uB1yfBLuMOqud5ObrWRTFUEP5qQT2cI_n6L6fgTxfF61UY6m7jwAR2JlYfwWtNi5UCKX4QVam3zu4P14UT01DyXCllphzxt5CmLBpMIcKJr-lpdFgCHgOWfw1AMDWRa0VJgoOHSTB1Ejcqxwg_bRNHyVE3csjNCQKdCS_s7IOfQRityBtC0y6ZoSuw4EYrFxCoT9w.R-0uFALOYO601m_UiLGERn05S21OQveJX7LUG-RrBD0&dib_tag=se&keywords=SMD%2BCapacitor&qid=1781345348&sr=8-10&th=1) |
 | C17, C18 | CP_EIA-7343-20_Kemet-V | 100µF | 2917 | 2 | $8.68 | [Mouser](https://www.mouser.bg/ProductDetail/KEMET/T494V107K016AT?qs=esDHISMOsl1F06bDLafyPA%3D%3D) |
 | Neodymium magnets | Circle | N35-N52 | 20x5cm | 32(40) | $20 | [Amazon](https://www.amazon.com/TRYMAG-Decorative-Neodymium-Powerful-Scientific/dp/B0G4D78X7T/ref=pd_ci_mcx_di_int_sccai_cn_d_sccl_1_7/136-7378115-7020437?pd_rd_w=JVAsz&content-id=amzn1.sym.751acc83-5c05-42d0-a15e-303622651e1e&pf_rd_p=751acc83-5c05-42d0-a15e-303622651e1e&pf_rd_r=S49NM63KZQJV9PRHP6W2&pd_rd_wg=72OFc&pd_rd_r=0b37500f-f078-4104-9d5c-44c4b33a4363&pd_rd_i=B0FG839Q2X&th=1) | 
@@ -312,7 +314,7 @@ Exit with 'Ctrl+]'.
 | X |Chess Board Lid 3D| | |1|$15|[3dprintmk](https://www.3dprintmk.com)|
 | X |Buttons 3D| | |2|$7.5|[3dprintmk](https://www.3dprintmk.com)|
 | X |Chess Pieces 3D| | |2|$15|[3dprintmk](https://www.3dprintmk.com)|
-| *Mouser Total* | $104| with cargo  | | | | | |
+| *Mouser Total* | $105| with cargo  | | | | | |
 | *Amazon Total* | $71.79 | with cargo  | | | | | |
 | *AliExpress Total* | $56 | with cargo  | without batteries | | | | |
 | *PCB Printing* | $332 | with cargo | | | | | | 
