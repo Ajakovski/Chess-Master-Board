@@ -6539,16 +6539,6 @@
 		)
 		(uuid "00c41601-5fa9-48a0-b8cd-2cf92be32015")
 	)
-	(text "Voltage divider 5V -> 3.3V"
-		(exclude_from_sim no)
-		(at 100.838 125.222 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "09b7897f-2b78-44ac-a09d-a1dcdf7c0b5e")
-	)
 	(text "Internal pull-ups available via ESP32-S3 software"
 		(exclude_from_sim no)
 		(at 110.49 76.962 0)
@@ -6725,12 +6715,6 @@
 		(uuid "00c49d43-989e-4c50-a576-bc0af29f0d91")
 	)
 	(junction
-		(at 82.55 88.9)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0954301f-0440-438b-824e-922f2e46488c")
-	)
-	(junction
 		(at 275.59 205.74)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6843,12 +6827,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4ba61974-ff1e-49a2-a91a-dcc4995c8558")
-	)
-	(junction
-		(at 110.49 119.38)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4cbe7f9d-22ca-4b3a-819d-c8cd9c6e5c55")
 	)
 	(junction
 		(at 224.79 228.6)
@@ -7598,16 +7576,6 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 106.68) (xy 110.49 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0ba3341f-cab2-4609-8233-dbf89f162ce4")
-	)
-	(wire
-		(pts
 			(xy 185.42 96.52) (xy 185.42 100.33)
 		)
 		(stroke
@@ -8305,16 +8273,6 @@
 			(type default)
 		)
 		(uuid "4341a528-0927-4efa-b2c8-8933685ab7bf")
-	)
-	(wire
-		(pts
-			(xy 107.95 119.38) (xy 110.49 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "44d5ca77-7db9-477b-93cc-1b1774db614f")
 	)
 	(wire
 		(pts
@@ -9108,7 +9066,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 119.38) (xy 100.33 119.38)
+			(xy 72.39 119.38) (xy 138.43 119.38)
 		)
 		(stroke
 			(width 0)
@@ -9318,16 +9276,6 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 106.68) (xy 110.49 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8e782e92-a577-44b4-b878-25b235001bcc")
-	)
-	(wire
-		(pts
 			(xy 153.67 125.73) (xy 161.29 125.73)
 		)
 		(stroke
@@ -9405,16 +9353,6 @@
 			(type default)
 		)
 		(uuid "9560d676-8789-4410-b0dc-e2966bb3aef9")
-	)
-	(wire
-		(pts
-			(xy 80.01 88.9) (xy 82.55 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "97e051b6-1603-4081-b254-249db82731aa")
 	)
 	(wire
 		(pts
@@ -9585,16 +9523,6 @@
 			(type default)
 		)
 		(uuid "a19dc4d4-1c0d-49a0-89db-91cac6414f2a")
-	)
-	(wire
-		(pts
-			(xy 80.01 106.68) (xy 80.01 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a2b1496a-062b-459d-881d-401f05d17e07")
 	)
 	(wire
 		(pts
@@ -10285,16 +10213,6 @@
 			(type default)
 		)
 		(uuid "dbfb295a-ae7f-44b5-832f-b4b45f6b8bc8")
-	)
-	(wire
-		(pts
-			(xy 110.49 119.38) (xy 138.43 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dcdfd8cc-3163-464e-bc87-f4d4264534de")
 	)
 	(wire
 		(pts
@@ -11609,164 +11527,6 @@
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f"
 					(reference "J8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 110.49 115.57 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "05d0da27-f91d-43c2-a5ae-f6520b2c74e5")
-		(property "Reference" "R38"
-			(at 116.078 115.824 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "6.8K"
-			(at 116.332 118.364 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 108.712 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 110.49 115.57 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 110.49 115.57 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Arrow Part Number" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Arrow Price/Stock" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Height" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer_Name" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer_Part_Number" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Mouser Part Number" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" ""
-			(at 110.49 115.57 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "89364a44-aecb-4d27-b3e9-b8e635ec8c33")
-		)
-		(pin "2"
-			(uuid "e6f791b3-57ae-4a9c-b59f-1c06bba16351")
-		)
-		(instances
-			(project "StockfishChess"
-				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f"
-					(reference "R38")
 					(unit 1)
 				)
 			)
@@ -25761,164 +25521,6 @@
 			(project "StockfishChess"
 				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f"
 					(reference "J1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 104.14 119.38 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "ebceb78a-657b-4976-b4b0-07a3ecb63607")
-		(property "Reference" "R37"
-			(at 99.314 121.92 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "3.3K"
-			(at 103.886 121.92 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 104.14 121.158 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 104.14 119.38 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 104.14 119.38 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Arrow Part Number" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Arrow Price/Stock" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Height" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer_Name" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer_Part_Number" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Mouser Part Number" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" ""
-			(at 104.14 119.38 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "59ff9778-1e86-4aea-b96d-2804da31e1a1")
-		)
-		(pin "2"
-			(uuid "fe72c9c2-097c-40fe-bdc5-78fd69ca5be0")
-		)
-		(instances
-			(project "StockfishChess"
-				(path "/e9cb1197-186c-4036-91fc-6928f1600b5f"
-					(reference "R37")
 					(unit 1)
 				)
 			)
