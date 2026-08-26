@@ -325,6 +325,7 @@ Exit with 'Ctrl+]'.
 
 
 *Notice: These are just recommendations that i have found to be secure and hopefully the cheapest option. Do your own research if you think that better deals exist on the current market depending on when you are buying it.*
+
 ---
 
 # Features
@@ -333,7 +334,7 @@ Exit with 'Ctrl+]'.
 - **RGB LED Feedback** - the guide for your victory, shows active checks, best move and more!
 - **Onboard Chess Engine** - mcu-max, ~2000 ELO at depth 8-10
 - **Dual Player Clocks** - dedicated hardware button per player
-- **OLED Display** - Cool visual representation of time left, current player, machine state and battery percentage
+- **OLED Display** - cool visual representation of time left, current player, machine state and battery percentage
 - **18650 Battery Powered** - dual Li-Ion with onboard USB-C charging
 - **Deep Sleep** - power saving mode and game state retained in RTC memory across scleep cycles
 - **Protected Power Rails** - PTC fuses and USB ESD protection on all external-facing lines
@@ -345,14 +346,14 @@ Exit with 'Ctrl+]'.
 
 # Hardware Stack
 
-| Subsystem | Component | Description|
+| Subsystem | Component | Description |
 |---|---|---|
 | MCU | ESP32-S3-WROOM2 | 32MB Flash, 16MB PSRAM, Xtensa LX7 dual-core |
 | Sensors | AH1806-W-7 x 64 | Active-LOW hall effect, SOT-23|
 | Sensor Interface | 74HC165BQ x 8 | Parallel-in shift registers, daisy-chained |
 | LEDs | APA102C x 64 | Addressable RGB, SPI-compatible, 5V |
 | Level Shifter | SN74AHCT125D | 3.3V → 5V for APA102C DATA + CLK |
-| Display | 128x32 OLED 2.23" | I²C Interface |
+| Display | 128x32 OLED 2.23' | I²C Interface |
 | Battery | Li-Ion 18650 batteries | |
 | Charger | BQ2407RGT | Single-cell Li-ion, USB-C input, NTC-monitored |
 | 5V Rail | TPS61023DRLT + XEL4030-102MEC | Boost converter for LED chain |
@@ -435,6 +436,7 @@ Key design requirements met:
 </div>
 
 ---
+
 # Enclosure
 - Simple to assemble
 - Firm and high-quality material for premium feel
@@ -482,6 +484,7 @@ Chess-Master-Board/
 ---
 
 # Current Status
+
 - [X] Initial Concept
 - [X] Layout Finalized
 - [X] PCB Design
@@ -516,7 +519,7 @@ cd chess-master-board
 
 2. Create your feature branch (if forked)
 3. Commit your changes
-4. Opena a pull request
+4. Open a pull request
 
 For significant hardware changes, open an issue first to discuss before investing time in layout work. Any new HAL driver must be self-contained in its own `.c`/`.h` pair.
 
@@ -531,6 +534,7 @@ If you build one, open an issue with photos.
 Hey my name is Andrej and im from Macedonia, Kratovo. Im 17 years old and i really enjoy making cool project which are all posted on my github.
 
 Main focus while building the project:
+- Individual planning and structuring
 - embedded systems engineering
 - schematic construction and following electrical concepts
 - first PCB construction EVER!!!
@@ -549,7 +553,7 @@ Chess engine: [mcu-max](https://github.com/Gissio/mcu-max) - MIT License
 
 ---
 
-<div align="center>
+<div align="center">
 
 ## CHESS MASTER BOARD
 
